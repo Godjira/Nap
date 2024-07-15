@@ -5,10 +5,10 @@
 [ext_resource type="PackedScene" uid="uid://bkt7i6qo3g88a" path="res://characters/skeleton_rogue.tscn" id="4_kdrq0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vbepg"]
-radius = 20.0
+radius = 50.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cork7"]
-radius = 50.0
+radius = 15.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_oc0jx"]
 shader = ExtResource("2_lshbq")
@@ -25,16 +25,21 @@ slide_on_ceiling = false
 script = ExtResource("1_qjhg0")
 
 [node name="Attract" type="Area2D" parent="."]
+collision_layer = 2
+priority = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Attract"]
 position = Vector2(0, -10.4624)
 shape = SubResource("CircleShape2D_vbepg")
+debug_color = Color(0.00372304, 0.640541, 0.346932, 0.42)
 
 [node name="Attack" type="Area2D" parent="."]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Attack"]
 position = Vector2(0, -10.4624)
 shape = SubResource("CircleShape2D_cork7")
+debug_color = Color(0.981281, 0, 0.372427, 0.42)
 
 [node name="ViewportSprite" type="Sprite2D" parent="."]
 process_priority = 1
@@ -69,6 +74,7 @@ scale = Vector2(153.738, 744206)
 offset = Vector2(2.08165e-12, 2.08165e-12)
 zoom = Vector2(5.32, 5.32)
 limit_left = -9997320
+limit_smoothed = true
 position_smoothing_enabled = true
 position_smoothing_speed = 8.72
 rotation_smoothing_enabled = true
@@ -79,6 +85,8 @@ position = Vector2(0.834906, -9.65756)
 
 [connection signal="body_entered" from="Attract" to="." method="_on_attract_body_entered"]
 [connection signal="body_exited" from="Attract" to="." method="_on_attract_body_exited"]
+[connection signal="body_shape_entered" from="Attract" to="." method="_on_attract_body_shape_entered"]
+[connection signal="body_shape_exited" from="Attract" to="." method="_on_attract_body_shape_exited"]
 [connection signal="body_entered" from="Attack" to="." method="_on_attack_body_entered"]
 [connection signal="body_exited" from="Attack" to="." method="_on_attack_body_exited"]
 [connection signal="visibility_changed" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_visibility_changed"]

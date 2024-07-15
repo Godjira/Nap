@@ -1,0 +1,53 @@
+[gd_scene load_steps=8 format=3 uid="uid://dqnkrq0m4648p"]
+
+[ext_resource type="FontFile" uid="uid://jgumakw2jrae" path="res://assets/fonts/Xolonium-Regular.ttf" id="1_4sori"]
+[ext_resource type="Shader" path="res://ui/Helths.gdshader" id="1_ouc7c"]
+[ext_resource type="Shader" path="res://ui/Mana.gdshader" id="2_b565w"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q44pt"]
+shader = ExtResource("1_ouc7c")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_gkbad"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2my2c"]
+shader = ExtResource("2_b565w")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_iaq0l"]
+
+[node name="PlayerUI" type="CanvasLayer"]
+follow_viewport_enabled = true
+
+[node name="ManaLabel" type="Label" parent="."]
+offset_left = 987.0
+offset_top = 629.0
+offset_right = 1058.0
+offset_bottom = 652.0
+theme_override_fonts/font = ExtResource("1_4sori")
+theme_override_font_sizes/font_size = 16
+text = "MANA
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HelthsLabel" type="Label" parent="."]
+offset_left = 105.0
+offset_top = 629.0
+offset_right = 176.0
+offset_bottom = 652.0
+theme_override_fonts/font = ExtResource("1_4sori")
+theme_override_font_sizes/font_size = 16
+text = "HELTHS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Healths" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_q44pt")
+position = Vector2(20, 623)
+scale = Vector2(150, 150)
+texture = SubResource("CanvasTexture_gkbad")
+
+[node name="Mana" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_2my2c")
+position = Vector2(1133, 623)
+scale = Vector2(150, 150)
+texture = SubResource("CanvasTexture_iaq0l")

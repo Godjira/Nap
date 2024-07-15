@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://crhs5hxatv3m1"]
+[gd_scene load_steps=36 format=3 uid="uid://crhs5hxatv3m1"]
 
 [ext_resource type="Script" path="res://levels/Entry0.gd" id="1_o2k86"]
 [ext_resource type="Texture2D" uid="uid://mu2wpsfdq82s" path="res://assets/Dungeon Gathering Free Version/BlueCoin Sheet.png" id="2_tdens"]
@@ -16,9 +16,9 @@
 [ext_resource type="Texture2D" uid="uid://b5jyh7ck06vhi" path="res://assets/Dungeon Gathering Free Version/Set 1.png" id="13_m3kux"]
 [ext_resource type="PackedScene" uid="uid://b4dmwb5ebu3qy" path="res://characters/Player0.tscn" id="16_qiqib"]
 [ext_resource type="PackedScene" uid="uid://b5euuwsw60c5n" path="res://characters/Mob0.tscn" id="17_816q5"]
-[ext_resource type="PackedScene" uid="uid://bupyyihhpsfrc" path="res://levels/ScreenUI.tscn" id="19_yyyej"]
+[ext_resource type="PackedScene" uid="uid://bupyyihhpsfrc" path="res://ui/ScreenUI.tscn" id="19_yyyej"]
 [ext_resource type="AudioStream" uid="uid://c4kn7c6bug08w" path="res://addons/kenney sci-fi sounds/space_engine_low_001.ogg" id="20_4whss"]
-[ext_resource type="Shader" path="res://levels/MainScreen.gdshader" id="20_owepj"]
+[ext_resource type="PackedScene" uid="uid://dqnkrq0m4648p" path="res://ui/PlayerUI.tscn" id="20_gobaf"]
 [ext_resource type="AudioStream" uid="uid://b21x5xitvjqqg" path="res://addons/kenney sci-fi sounds/low_frequency_explosion_001.ogg" id="21_e64ik"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_whjqi"]
@@ -2189,31 +2189,26 @@ texture = ExtResource("13_m3kux")
 22:5/0 = 0
 22:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 22:5/0/physics_layer_0/angular_velocity = 0.0
-22:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 22:5/0/physics_layer_1/linear_velocity = Vector2(0, 0)
 22:5/0/physics_layer_1/angular_velocity = 0.0
 23:5/0 = 0
 23:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 23:5/0/physics_layer_0/angular_velocity = 0.0
-23:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 23:5/0/physics_layer_1/linear_velocity = Vector2(0, 0)
 23:5/0/physics_layer_1/angular_velocity = 0.0
 24:5/0 = 0
 24:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 24:5/0/physics_layer_0/angular_velocity = 0.0
-24:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 24:5/0/physics_layer_1/linear_velocity = Vector2(0, 0)
 24:5/0/physics_layer_1/angular_velocity = 0.0
 25:5/0 = 0
 25:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 25:5/0/physics_layer_0/angular_velocity = 0.0
-25:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 25:5/0/physics_layer_1/linear_velocity = Vector2(0, 0)
 25:5/0/physics_layer_1/angular_velocity = 0.0
 26:5/0 = 0
 26:5/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 26:5/0/physics_layer_0/angular_velocity = 0.0
-26:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 26:5/0/physics_layer_1/linear_velocity = Vector2(0, 0)
 26:5/0/physics_layer_1/angular_velocity = 0.0
 27:5/0 = 0
@@ -2334,31 +2329,26 @@ texture = ExtResource("13_m3kux")
 22:6/0 = 0
 22:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 22:6/0/physics_layer_0/angular_velocity = 0.0
-22:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 22:6/0/physics_layer_1/linear_velocity = Vector2(0, 0)
 22:6/0/physics_layer_1/angular_velocity = 0.0
 23:6/0 = 0
 23:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 23:6/0/physics_layer_0/angular_velocity = 0.0
-23:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 23:6/0/physics_layer_1/linear_velocity = Vector2(0, 0)
 23:6/0/physics_layer_1/angular_velocity = 0.0
 24:6/0 = 0
 24:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 24:6/0/physics_layer_0/angular_velocity = 0.0
-24:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 24:6/0/physics_layer_1/linear_velocity = Vector2(0, 0)
 24:6/0/physics_layer_1/angular_velocity = 0.0
 25:6/0 = 0
 25:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 25:6/0/physics_layer_0/angular_velocity = 0.0
-25:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 25:6/0/physics_layer_1/linear_velocity = Vector2(0, 0)
 25:6/0/physics_layer_1/angular_velocity = 0.0
 26:6/0 = 0
 26:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 26:6/0/physics_layer_0/angular_velocity = 0.0
-26:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 26:6/0/physics_layer_1/linear_velocity = Vector2(0, 0)
 26:6/0/physics_layer_1/angular_velocity = 0.0
 27:6/0 = 0
@@ -2474,31 +2464,26 @@ texture = ExtResource("13_m3kux")
 22:7/0 = 0
 22:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 22:7/0/physics_layer_0/angular_velocity = 0.0
-22:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 22:7/0/physics_layer_1/linear_velocity = Vector2(0, 0)
 22:7/0/physics_layer_1/angular_velocity = 0.0
 23:7/0 = 0
 23:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 23:7/0/physics_layer_0/angular_velocity = 0.0
-23:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 23:7/0/physics_layer_1/linear_velocity = Vector2(0, 0)
 23:7/0/physics_layer_1/angular_velocity = 0.0
 24:7/0 = 0
 24:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 24:7/0/physics_layer_0/angular_velocity = 0.0
-24:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 24:7/0/physics_layer_1/linear_velocity = Vector2(0, 0)
 24:7/0/physics_layer_1/angular_velocity = 0.0
 25:7/0 = 0
 25:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 25:7/0/physics_layer_0/angular_velocity = 0.0
-25:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 25:7/0/physics_layer_1/linear_velocity = Vector2(0, 0)
 25:7/0/physics_layer_1/angular_velocity = 0.0
 26:7/0 = 0
 26:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 26:7/0/physics_layer_0/angular_velocity = 0.0
-26:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 26:7/0/physics_layer_1/linear_velocity = Vector2(0, 0)
 26:7/0/physics_layer_1/angular_velocity = 0.0
 27:7/0 = 0
@@ -2609,31 +2594,26 @@ texture = ExtResource("13_m3kux")
 22:8/0 = 0
 22:8/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 22:8/0/physics_layer_0/angular_velocity = 0.0
-22:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 22:8/0/physics_layer_1/linear_velocity = Vector2(0, 0)
 22:8/0/physics_layer_1/angular_velocity = 0.0
 23:8/0 = 0
 23:8/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 23:8/0/physics_layer_0/angular_velocity = 0.0
-23:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 23:8/0/physics_layer_1/linear_velocity = Vector2(0, 0)
 23:8/0/physics_layer_1/angular_velocity = 0.0
 24:8/0 = 0
 24:8/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 24:8/0/physics_layer_0/angular_velocity = 0.0
-24:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 24:8/0/physics_layer_1/linear_velocity = Vector2(0, 0)
 24:8/0/physics_layer_1/angular_velocity = 0.0
 25:8/0 = 0
 25:8/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 25:8/0/physics_layer_0/angular_velocity = 0.0
-25:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 25:8/0/physics_layer_1/linear_velocity = Vector2(0, 0)
 25:8/0/physics_layer_1/angular_velocity = 0.0
 26:8/0 = 0
 26:8/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 26:8/0/physics_layer_0/angular_velocity = 0.0
-26:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 26:8/0/physics_layer_1/linear_velocity = Vector2(0, 0)
 26:8/0/physics_layer_1/angular_velocity = 0.0
 27:8/0 = 0
@@ -2768,31 +2748,26 @@ texture = ExtResource("13_m3kux")
 22:9/0 = 0
 22:9/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 22:9/0/physics_layer_0/angular_velocity = 0.0
-22:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 22:9/0/physics_layer_1/linear_velocity = Vector2(0, 0)
 22:9/0/physics_layer_1/angular_velocity = 0.0
 23:9/0 = 0
 23:9/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 23:9/0/physics_layer_0/angular_velocity = 0.0
-23:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 23:9/0/physics_layer_1/linear_velocity = Vector2(0, 0)
 23:9/0/physics_layer_1/angular_velocity = 0.0
 24:9/0 = 0
 24:9/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 24:9/0/physics_layer_0/angular_velocity = 0.0
-24:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 24:9/0/physics_layer_1/linear_velocity = Vector2(0, 0)
 24:9/0/physics_layer_1/angular_velocity = 0.0
 25:9/0 = 0
 25:9/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 25:9/0/physics_layer_0/angular_velocity = 0.0
-25:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 25:9/0/physics_layer_1/linear_velocity = Vector2(0, 0)
 25:9/0/physics_layer_1/angular_velocity = 0.0
 26:9/0 = 0
 26:9/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 26:9/0/physics_layer_0/angular_velocity = 0.0
-26:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 26:9/0/physics_layer_1/linear_velocity = Vector2(0, 0)
 26:9/0/physics_layer_1/angular_velocity = 0.0
 27:9/0 = 0
@@ -3734,17 +3709,14 @@ _data = {
 }
 point_count = 5
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_lah0h"]
-shader = ExtResource("20_owepj")
-shader_parameter/blurAmount = 0.1
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_yobux"]
-
 [node name="Entry0" type="Node2D"]
 position = Vector2(0, 2.01)
 script = ExtResource("1_o2k86")
 mob_scene = ExtResource("17_816q5")
 mobs = []
+
+[node name="PlayerUI" parent="." instance=ExtResource("20_gobaf")]
+follow_viewport_enabled = false
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_10kvq")
@@ -3784,12 +3756,5 @@ pitch_scale = 0.12
 
 [node name="DeathSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("21_e64ik")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-z_as_relative = false
-material = SubResource("ShaderMaterial_lah0h")
-position = Vector2(703.75, 586.25)
-scale = Vector2(1408.5, 1173.5)
-texture = SubResource("CanvasTexture_yobux")
 
 [connection signal="start_game" from="ScreenUI" to="." method="_on_screen_ui_start_game"]
