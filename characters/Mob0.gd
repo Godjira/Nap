@@ -1,25 +1,26 @@
-extends RigidBody2D
+extends CharacterBody2D
 class_name Mob0
 
 # Variables from current context
 @onready var sub_viewport = $SubViewport
 @onready var sprite_texture = $Sprite2D
 @onready var attack_timer = $AttackTimer
+
 # Controls
-@export var jump_speed = 8.0
+var jump_speed = 8.0
 var anim_state = null
 var anim_tree = null
 var model = null
 var camera_3D = null
 var acceleration = 0.8
-@export var gravity = Vector2.ZERO
-@export var jumping = false
-@export var running = false
-@export var velocity = Vector2(0, 0)
+var gravity = Vector2.ZERO
+var jumping = false
+var running = false
 var player
 var random_num
 var target
 var velocity_sub_viewport = Vector3.ZERO
+var vissible_on_screen = false
 
 var attacks = [
 	"1h_slice_diagonal",
@@ -30,10 +31,11 @@ var attacks = [
 enum {
 	SURROUND,
 	ATTACK,
-	HIT
+	HIT,
+	IDLE
 }
 
-var state = SURROUND
+var state = IDLE
 
 
 
@@ -60,16 +62,26 @@ func get_viewport_context():
 
 
 func move(target, delta):
-	var direction = (target - global_position).normalized()
-	var speed = 50
+	# var direction = (target - global_position).normalized()
+	# var speed = 50
+	# var desired_velocity = direction * speed
+	# var stearing = (desired_velocity - velocity) * delta * 2.5
+	# velocity += stearing
+	var speed = 30
+	var direction  = (target - global_position).normalized()
 	var desired_velocity = direction * speed
-	var stearing = (desired_velocity - linear_velocity) * delta * 2.5
-	linear_velocity += stearing
-	#linear_velocity = move_and_collide(linear_velocity, false)
+	var steering = (desired_velocity - velocity) * delta * 2.5
+	velocity += steering
+
+	# rotate Y axis of 3d model
+	model.rotation.y = atan2(-velocity.x, -velocity.y)
+	move_and_slide()
 	
 func _physics_process(delta):
 	var speed = 50	
 	match state:
+		IDLE:
+			pass
 		SURROUND:
 			move(get_circle_position(random_num), delta)
 		ATTACK:
@@ -78,17 +90,9 @@ func _physics_process(delta):
 			anim_state.travel(attacks.pick_random())
 			move(global_position, delta)
 			
-	var direction = Input.get_vector("left", "right", "up", "down")
-	if direction:
-		velocity = direction * speed * delta * 50
-		var dir = Vector3(direction.x, 0, direction.y).rotated(Vector3.UP, camera_3D.rotation.y)
-		velocity_sub_viewport = lerp(velocity_sub_viewport, dir * speed, acceleration * delta)
-		var vl = velocity_sub_viewport * model.transform.basis
-		anim_tree.set("parameters/IWR/blend_position", Vector2(vl.x, -vl.z) / speed)
-	else:
-		velocity = Vector2.ZERO
-		velocity_sub_viewport = Vector3(0, velocity_sub_viewport.y, 0)
-		anim_tree.set("parameters/IWR/blend_position", Vector2.ZERO)
+	var direction = velocity.angle_to(player.global_position)
+	var vl = velocity_sub_viewport * model.transform.basis
+	anim_tree.set("parameters/IWR/blend_position", vl)
 
 func get_circle_position(random):
 	var kill_circle_center = player.global_position
@@ -108,10 +112,15 @@ func _ready():
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	queue_free()
+	print("Mob not visible")
+	vissible_on_screen = false
+	state = IDLE
 
 func _on_visible_on_screen_notifier_2d_screen_entered():
-	pass
+	print('Mob visible')
+	vissible_on_screen = true
 
 
 func _on_attack_timer_timeout():
+	print("Mob start attack")
 	state = ATTACK

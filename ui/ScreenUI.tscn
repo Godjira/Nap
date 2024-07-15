@@ -1,9 +1,9 @@
 [gd_scene load_steps=13 format=3 uid="uid://bupyyihhpsfrc"]
 
 [ext_resource type="Script" path="res://levels/HUD.gd" id="1_xa10j"]
-[ext_resource type="Shader" path="res://levels/ScreenUI.gdshader" id="2_8y40s"]
+[ext_resource type="Shader" path="res://ui/ScreenUI.gdshader" id="2_8y40s"]
 [ext_resource type="FontFile" uid="uid://jgumakw2jrae" path="res://assets/fonts/Xolonium-Regular.ttf" id="2_p0y7h"]
-[ext_resource type="Shader" path="res://levels/MainScreen.gdshader" id="4_jgi07"]
+[ext_resource type="Shader" path="res://ui/MainScreen.gdshader" id="4_nv1e6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dddmo"]
 shader = ExtResource("2_8y40s")
@@ -35,12 +35,13 @@ action = &"start_game"
 events = [SubResource("InputEventAction_y4fod")]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1ylh2"]
-shader = ExtResource("4_jgi07")
+shader = ExtResource("4_nv1e6")
 shader_parameter/blurAmount = 0.1
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_vrdcx"]
 
 [node name="HUD" type="CanvasLayer"]
+process_mode = 3
 follow_viewport_scale = 0.001
 script = ExtResource("1_xa10j")
 
@@ -68,7 +69,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("2_p0y7h")
 theme_override_font_sizes/font_size = 64
-text = "N.A.P Assottiation Security"
+text = "Getting ready"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
@@ -87,6 +88,7 @@ text = "Start"
 metadata/_edit_use_anchors_ = true
 
 [node name="CustomPass" type="Sprite2D" parent="."]
+process_mode = 3
 z_as_relative = false
 material = SubResource("ShaderMaterial_1ylh2")
 position = Vector2(2714, 1145)

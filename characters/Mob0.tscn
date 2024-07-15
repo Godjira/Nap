@@ -5,6 +5,7 @@
 [ext_resource type="Shader" path="res://levels/PixelSprite.gdshader" id="3_qhe0e"]
 
 [sub_resource type="World3D" id="World3D_n6026"]
+resource_local_to_scene = true
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l5yfe"]
 radius = 5.0
@@ -16,12 +17,10 @@ shader = ExtResource("3_qhe0e")
 [sub_resource type="ViewportTexture" id="ViewportTexture_3ijof"]
 viewport_path = NodePath("SubViewport")
 
-[node name="Mob0" type="RigidBody2D" groups=["Enemy"]]
+[node name="Mob0" type="CharacterBody2D" groups=["Enemy"]]
 z_index = 10
 position = Vector2(601, 575)
-collision_layer = 2
-collision_mask = 6
-gravity_scale = 0.0
+collision_mask = 2
 script = ExtResource("1_j2x42")
 
 [node name="SubViewport" type="SubViewport" parent="."]
@@ -47,8 +46,6 @@ material = SubResource("ShaderMaterial_dlt7s")
 position = Vector2(-0.999985, 1.00002)
 scale = Vector2(0.0479636, 0.0454462)
 texture = SubResource("ViewportTexture_3ijof")
-
-[node name="Mob0" type="Node2D" parent="." groups=["Enemy"]]
 
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 2.0
