@@ -11,8 +11,13 @@ config_version=5
 [application]
 
 config/name="Nap"
+run/main_scene="res://Level.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://3d_in_2d/icon.svg"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gaea/plugin.cfg")
 
 [rendering]
 
