@@ -5,7 +5,6 @@
 [ext_resource type="Shader" path="res://levels/PixelSprite.gdshader" id="3_qhe0e"]
 
 [sub_resource type="World3D" id="World3D_n6026"]
-resource_local_to_scene = true
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l5yfe"]
 radius = 5.0
