@@ -16,7 +16,7 @@ config/features=PackedStringArray("4.2", "GL Compatibility")
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/copilot/plugin.cfg")
+enabled=PackedStringArray("res://addons/gaea/plugin.cfg")
 
 [input]
 
@@ -71,10 +71,6 @@ start_game={
 ]
 }
 config/icon="res://assets/3d_in_2d/icon.svg"
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/gaea/plugin.cfg")
 
 [rendering]
 

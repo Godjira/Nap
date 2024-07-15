@@ -2,27 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-<<<<<<<< HEAD:addons/gaea/modifiers/2D/fill.svg.import
-uid="uid://dhj5tue5b4xee"
-path="res://.godot/imported/fill.svg-c7eda541b033d76ce38a35d18dc0032c.ctex"
-========
-uid="uid://mu2wpsfdq82s"
+uid="uid://djdilsmc280is"
 path="res://.godot/imported/BlueCoin Sheet.png-91243a5f03820afef008a6e681a539f2.ctex"
->>>>>>>> f682efba1d00181a420cdc47c8b13eca339fdc43:assets/Dungeon Gathering Free Version/BlueCoin Sheet.png.import
 metadata={
-"has_editor_variant": true,
 "vram_texture": false
 }
 
 [deps]
 
-<<<<<<<< HEAD:addons/gaea/modifiers/2D/fill.svg.import
-source_file="res://addons/gaea/modifiers/2D/fill.svg"
-dest_files=["res://.godot/imported/fill.svg-c7eda541b033d76ce38a35d18dc0032c.ctex"]
-========
 source_file="res://assets/Dungeon Gathering Free Version/BlueCoin Sheet.png"
 dest_files=["res://.godot/imported/BlueCoin Sheet.png-91243a5f03820afef008a6e681a539f2.ctex"]
->>>>>>>> f682efba1d00181a420cdc47c8b13eca339fdc43:assets/Dungeon Gathering Free Version/BlueCoin Sheet.png.import
 
 [params]
 
@@ -43,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=true
-editor/convert_colors_with_editor_theme=true
