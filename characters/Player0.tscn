@@ -1,9 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://b4dmwb5ebu3qy"]
+[gd_scene load_steps=8 format=3 uid="uid://b4dmwb5ebu3qy"]
 
 [ext_resource type="Script" path="res://levels/Character0.gd" id="1_qjhg0"]
 [ext_resource type="Shader" path="res://levels/PixelSprite.gdshader" id="2_lshbq"]
-[ext_resource type="Script" path="res://levels/ViewportSprite.gd" id="3_b3v00"]
 [ext_resource type="PackedScene" uid="uid://bkt7i6qo3g88a" path="res://characters/skeleton_rogue.tscn" id="4_kdrq0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vbepg"]
+radius = 20.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cork7"]
+radius = 50.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_oc0jx"]
 shader = ExtResource("2_lshbq")
@@ -19,6 +24,18 @@ up_direction = Vector2(2.94434e-12, -1)
 slide_on_ceiling = false
 script = ExtResource("1_qjhg0")
 
+[node name="Attract" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Attract"]
+position = Vector2(0, -10.4624)
+shape = SubResource("CircleShape2D_vbepg")
+
+[node name="Attack" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Attack"]
+position = Vector2(0, -10.4624)
+shape = SubResource("CircleShape2D_cork7")
+
 [node name="ViewportSprite" type="Sprite2D" parent="."]
 process_priority = 1
 process_physics_priority = 1
@@ -29,7 +46,6 @@ scale = Vector2(0.0425369, 0.0444078)
 texture = SubResource("ViewportTexture_ueyy3")
 region_enabled = true
 region_rect = Rect2(232.093, 227.105, 535.012, 542.098)
-script = ExtResource("3_b3v00")
 
 [node name="SubViewport" type="SubViewport" parent="."]
 process_mode = 3
@@ -61,6 +77,8 @@ rotation_smoothing_speed = 6.67
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(0.834906, -9.65756)
 
-[node name="RayCast2D" type="RayCast2D" parent="."]
-
+[connection signal="body_entered" from="Attract" to="." method="_on_attract_body_entered"]
+[connection signal="body_exited" from="Attract" to="." method="_on_attract_body_exited"]
+[connection signal="body_entered" from="Attack" to="." method="_on_attack_body_entered"]
+[connection signal="body_exited" from="Attack" to="." method="_on_attack_body_exited"]
 [connection signal="visibility_changed" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_visibility_changed"]

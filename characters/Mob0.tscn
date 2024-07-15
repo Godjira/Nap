@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://b5euuwsw60c5n"]
 
-[ext_resource type="Script" path="res://characters/RigidBody2D.gd" id="1_hy4sw"]
+[ext_resource type="Script" path="res://characters/Mob0.gd" id="1_j2x42"]
 [ext_resource type="PackedScene" uid="uid://bkt7i6qo3g88a" path="res://characters/skeleton_rogue.tscn" id="1_wvcuk"]
 [ext_resource type="Shader" path="res://levels/PixelSprite.gdshader" id="3_qhe0e"]
 
@@ -16,13 +16,13 @@ shader = ExtResource("3_qhe0e")
 [sub_resource type="ViewportTexture" id="ViewportTexture_3ijof"]
 viewport_path = NodePath("SubViewport")
 
-[node name="Mob0" type="RigidBody2D"]
+[node name="Mob0" type="RigidBody2D" groups=["Enemy"]]
 z_index = 10
 position = Vector2(601, 575)
 collision_layer = 2
 collision_mask = 6
 gravity_scale = 0.0
-script = ExtResource("1_hy4sw")
+script = ExtResource("1_j2x42")
 
 [node name="SubViewport" type="SubViewport" parent="."]
 world_3d = SubResource("World3D_n6026")
@@ -48,4 +48,10 @@ position = Vector2(-0.999985, 1.00002)
 scale = Vector2(0.0479636, 0.0454462)
 texture = SubResource("ViewportTexture_3ijof")
 
-[node name="Mob0" type="Node2D" parent="." groups=["mobs"]]
+[node name="Mob0" type="Node2D" parent="." groups=["Enemy"]]
+
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]

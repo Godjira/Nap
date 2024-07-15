@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Character0
 signal hit
 
 # Controls
@@ -25,41 +26,47 @@ const RAY_LENGTH = 1000
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var jumping = false
 var running = false
+
 # Create rayscast from character to world
 @export var raycasts = []
+@export var lines = []
 
 func _ready():
 	# Because we use SubViewport node needs to get that from inner context
 	get_viewport_context()
 
-func _process(delta):
+func _process(_delta):
 	for ray in raycasts:
-		var r = ray as RayCast2D
+		var active_lines = []
 		if ray.is_colliding():
-			_draw()
+			var r = ray as RayCast2D
+			for line in lines:
+				if line.get_point_position(1) == r.target_position:
+					line.default_color = Color.GREEN
+					active_lines.append(line)
+				else:
+					line.default_color = Color.RED
 
 func _draw():
-	if(raycasts.size() < 5):
-		for i in range(0, 6, 1):
+	if(raycasts.size() < 17):
+		for i in range(0, 16, 1):
+			# create a new RayCast2D node
 			var ray = RayCast2D.new()
-			ray.target_position = Vector2.from_angle(i * 45) * 20
+			ray.target_position = Vector2.from_angle(i * 60) * 20
 			ray.visible = true
 			ray.enabled = true
 			ray.collision_mask = 2
 			ray.exclude_parent = true
 			raycasts.append(ray)
 			# draw line from character to world
-			draw_line(ray.global_position, ray.target_position, Color(0, 0, 1), -1)
 			add_child(ray)
-			print(ray)
-		
-	for ray in raycasts:
-			var r = ray as RayCast2D
-			if r.is_colliding():
-				print(ray.get_collision_point())
-				#draw_line(r.global_position, ray.get_collision_point(), Color.GREEN, -1)
-				draw_circle(ray.get_collision_point(), 2, Color.GREEN)
-				add_child(ray)
+			var line = Line2D.new()
+			add_child(line) # add the Line2D as a child of your CharacterBody2D
+			line.width = 0.15
+			line.add_point(Vector2.ZERO) # add start point
+			line.add_point(ray.target_position) # add end point
+			line.default_color = Color.RED # set the line color
+			lines.append(line)
 
 func get_viewport_context():
 	# Get all the child nodes of the sub_viewport.
@@ -153,7 +160,7 @@ func _unhandled_input(event):
 		if anim_state: anim_state.travel(attacks.pick_random())
 
 
-func start(pos):
+func start():
 	show()
 	#$CollisionPolygon2D.disabled = false
 
@@ -163,3 +170,24 @@ func start(pos):
 	#hit.emit()
 	## Must be deferred as we can't change physics properties on a physics callback.
 	#$CollisionPolygon2D.set_deferred("disabled", true)
+
+
+func _on_attract_body_entered(body):
+	if body.is_in_group("Enemy"):
+		body.attack_timer.start()
+
+
+func _on_attack_body_entered(body):
+	if body.is_in_group("Enemy"):
+		body.state = body.HIT
+
+
+func _on_attract_body_exited(body):
+	if body.is_in_group("Enemy"):
+		body.attack_timer.stop()
+		body.state = body.SURROUND
+
+
+func _on_attack_body_exited(body):
+	if body.is_in_group("Enemy"):
+		body.state = body.SURROUND

@@ -38,7 +38,7 @@ func handle_pause():
 	$Message.text = default_message
 	var tween = change_pass_blur(.8, 0.5)
 	await tween.finished
-	change_pass_blur(0.1, 0.1)
+	change_pass_blur(0.05, 0.1)
 	show_ui()
 	# Make a one-shot timer and wait for it to finish.
 	await get_tree().create_timer(1.0).timeout
@@ -53,7 +53,7 @@ func _on_message_timer_timeout():
 	$Message.hide()
 	
 #handle escape pressed
-func _unhandled_key_input(event):
+func _unhandled_key_input(_event):
 	if Input.is_action_pressed('pause'):
 		handle_pause()
 

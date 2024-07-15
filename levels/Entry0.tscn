@@ -3758,12 +3758,6 @@ layer_1/tile_data = PackedInt32Array(3866640, 65544, 9, 3866641, 131080, 9, 3866
 
 [node name="Character0" parent="TileMap" instance=ExtResource("16_qiqib")]
 position = Vector2(585, 918.99)
-speed = 80
-acceleration = 14.0
-jump_speed = 8.0
-mouse_sensitivity = 0.0015
-rotation_speed = 12.0
-velocity_sub_viewport = Vector3(0, 0, 0)
 
 [node name="MobTimer" type="Timer" parent="."]
 wait_time = 0.5

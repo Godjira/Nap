@@ -7,7 +7,7 @@ void vertex() {
 void fragment() {
 	vec2 uv = UV;
     // calculate the size of one "pixel" in UV coordinates
-    vec2 pixelSize = 1.0/vec2(textureSize(TEXTURE, 0)) * 15.0;
+    vec2 pixelSize = 1.0/vec2(textureSize(TEXTURE, 0)) * 20.0;
     // calculate the position of the lower-left corner of the current pixel
     vec2 pixelPos = floor(uv / pixelSize) * pixelSize;
     // get the color of the lower-left corner pixel
