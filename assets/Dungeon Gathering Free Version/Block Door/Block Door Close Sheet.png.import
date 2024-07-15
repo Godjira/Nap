@@ -2,27 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-<<<<<<<< HEAD:addons/gaea/editor/clear.svg.import
-uid="uid://cemg4segoqhh5"
-path="res://.godot/imported/clear.svg-b716837d5f364b272eed589db0720253.ctex"
-========
-uid="uid://cs8vq81d3rs2"
+uid="uid://dmi82t1x6hc1l"
 path="res://.godot/imported/Block Door Close Sheet.png-86755140822880ce4ebd1d8f9aa0e033.ctex"
->>>>>>>> f682efba1d00181a420cdc47c8b13eca339fdc43:assets/Dungeon Gathering Free Version/Block Door/Block Door Close Sheet.png.import
 metadata={
-"has_editor_variant": true,
 "vram_texture": false
 }
 
 [deps]
 
-<<<<<<<< HEAD:addons/gaea/editor/clear.svg.import
-source_file="res://addons/gaea/editor/clear.svg"
-dest_files=["res://.godot/imported/clear.svg-b716837d5f364b272eed589db0720253.ctex"]
-========
 source_file="res://assets/Dungeon Gathering Free Version/Block Door/Block Door Close Sheet.png"
 dest_files=["res://.godot/imported/Block Door Close Sheet.png-86755140822880ce4ebd1d8f9aa0e033.ctex"]
->>>>>>>> f682efba1d00181a420cdc47c8b13eca339fdc43:assets/Dungeon Gathering Free Version/Block Door/Block Door Close Sheet.png.import
 
 [params]
 
@@ -43,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=true
-editor/convert_colors_with_editor_theme=true

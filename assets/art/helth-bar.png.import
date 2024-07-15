@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bg7hymkrp2f31"
-path="res://.godot/imported/Button.png-2f9f345c6d4cfeb8cf7befc059538d46.ctex"
+uid="uid://dtrkmllhbcu3r"
+path="res://.godot/imported/helth-bar.png-508b107057311305bf1f396810380116.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Dungeon Gathering Free Version/Button.png"
-dest_files=["res://.godot/imported/Button.png-2f9f345c6d4cfeb8cf7befc059538d46.ctex"]
+source_file="res://assets/art/helth-bar.png"
+dest_files=["res://.godot/imported/helth-bar.png-508b107057311305bf1f396810380116.ctex"]
 
 [params]
 

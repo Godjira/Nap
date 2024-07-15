@@ -2,26 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-<<<<<<<< HEAD:artwork/icon.svg.import
-uid="uid://8hsjvlq2r4w4"
-path="res://.godot/imported/icon.svg-9953cbb094a8e5da0f88b7fda5a52a91.ctex"
-========
-uid="uid://g8jb6oe8vqct"
+uid="uid://dkitr2dthba17"
 path="res://.godot/imported/Block Door Sheet.png-9bd5dd5ebc1f5e8f62892ae6eea95f4c.ctex"
->>>>>>>> f682efba1d00181a420cdc47c8b13eca339fdc43:assets/Dungeon Gathering Free Version/Block Door/Block Door Sheet.png.import
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-<<<<<<<< HEAD:artwork/icon.svg.import
-source_file="res://artwork/icon.svg"
-dest_files=["res://.godot/imported/icon.svg-9953cbb094a8e5da0f88b7fda5a52a91.ctex"]
-========
 source_file="res://assets/Dungeon Gathering Free Version/Block Door/Block Door Sheet.png"
 dest_files=["res://.godot/imported/Block Door Sheet.png-9bd5dd5ebc1f5e8f62892ae6eea95f4c.ctex"]
->>>>>>>> f682efba1d00181a420cdc47c8b13eca339fdc43:assets/Dungeon Gathering Free Version/Block Door/Block Door Sheet.png.import
 
 [params]
 
@@ -42,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

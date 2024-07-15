@@ -1,22 +1,21 @@
-[gd_scene load_steps=36 format=3 uid="uid://crhs5hxatv3m1"]
+[gd_scene load_steps=35 format=3 uid="uid://crhs5hxatv3m1"]
 
 [ext_resource type="Script" path="res://levels/Entry0.gd" id="1_o2k86"]
-[ext_resource type="Texture2D" uid="uid://mu2wpsfdq82s" path="res://assets/Dungeon Gathering Free Version/BlueCoin Sheet.png" id="2_tdens"]
+[ext_resource type="Texture2D" uid="uid://cwfhx87ix0u8t" path="res://assets/Dungeon Gathering Free Version/BlueCoin Sheet.png" id="2_tdens"]
 [ext_resource type="Texture2D" uid="uid://d3wyxofksw1i8" path="res://assets/Dungeon Gathering Free Version/Set 1.2.png" id="3_es3wh"]
 [ext_resource type="Texture2D" uid="uid://bcsiqcr7nob5j" path="res://assets/Dungeon Gathering Free Version/Set 3.5.png" id="3_ffmou"]
 [ext_resource type="Texture2D" uid="uid://bmhndk32ottdd" path="res://assets/Dungeon Gathering Free Version/Set 4.5.png" id="4_uuest"]
 [ext_resource type="Texture2D" uid="uid://cmo2g6c5i7uwk" path="res://assets/Dungeon Gathering Free Version/Structure.png" id="5_1ebrx"]
-[ext_resource type="Texture2D" uid="uid://brg7yfdq1ansq" path="res://assets/Dungeon Gathering Free Version/Water.png" id="6_1736h"]
-[ext_resource type="Texture2D" uid="uid://c830drtbkej2s" path="res://assets/Dungeon Gathering Free Version/Button.png" id="7_b34tg"]
-[ext_resource type="Texture2D" uid="uid://wepem142p20e" path="res://assets/Dungeon Gathering Free Version/Coin Sheet.png" id="8_jt28i"]
+[ext_resource type="Texture2D" uid="uid://1y3j1r4cf1n6" path="res://assets/Dungeon Gathering Free Version/Water.png" id="6_1736h"]
+[ext_resource type="Texture2D" uid="uid://bg7hymkrp2f31" path="res://assets/Dungeon Gathering Free Version/Button.png" id="7_b34tg"]
+[ext_resource type="Texture2D" uid="uid://bfa8tfohrrghv" path="res://assets/Dungeon Gathering Free Version/Coin Sheet.png" id="8_jt28i"]
 [ext_resource type="Texture2D" uid="uid://5f4jrc20xqb8" path="res://assets/Dungeon Gathering Free Version/Potions.png" id="9_jr0ym"]
-[ext_resource type="Texture2D" uid="uid://cfitabyk24hdw" path="res://assets/Dungeon Gathering Free Version/Set 1.1 New.png" id="10_jxii1"]
+[ext_resource type="Texture2D" uid="uid://rm1poc7bmhd5" path="res://assets/Dungeon Gathering Free Version/Set 1.1 New.png" id="10_jxii1"]
 [ext_resource type="Texture2D" uid="uid://bmj2batomvuht" path="res://assets/Dungeon Gathering Free Version/Set 1.1.png" id="11_hjq23"]
 [ext_resource type="Texture2D" uid="uid://8mcywhpnif61" path="res://assets/Dungeon Gathering Free Version/Set 1.3.png" id="12_cxd41"]
-[ext_resource type="Texture2D" uid="uid://b5jyh7ck06vhi" path="res://assets/Dungeon Gathering Free Version/Set 1.png" id="13_m3kux"]
+[ext_resource type="Texture2D" uid="uid://babcaoo31y0qj" path="res://assets/Dungeon Gathering Free Version/Set 1.png" id="13_m3kux"]
 [ext_resource type="PackedScene" uid="uid://b4dmwb5ebu3qy" path="res://characters/Player0.tscn" id="16_qiqib"]
 [ext_resource type="PackedScene" uid="uid://b5euuwsw60c5n" path="res://characters/Mob0.tscn" id="17_816q5"]
-[ext_resource type="PackedScene" uid="uid://bupyyihhpsfrc" path="res://ui/ScreenUI.tscn" id="19_yyyej"]
 [ext_resource type="AudioStream" uid="uid://c4kn7c6bug08w" path="res://addons/kenney sci-fi sounds/space_engine_low_001.ogg" id="20_4whss"]
 [ext_resource type="PackedScene" uid="uid://dqnkrq0m4648p" path="res://ui/PlayerUI.tscn" id="20_gobaf"]
 [ext_resource type="AudioStream" uid="uid://b21x5xitvjqqg" path="res://addons/kenney sci-fi sounds/low_frequency_explosion_001.ogg" id="21_e64ik"]
@@ -3747,8 +3746,6 @@ curve = SubResource("Curve2D_wu6o7")
 position = Vector2(351, 624)
 rotation = 1.57498
 
-[node name="ScreenUI" parent="." instance=ExtResource("19_yyyej")]
-
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("20_4whss")
 volume_db = -2.665
@@ -3756,5 +3753,3 @@ pitch_scale = 0.12
 
 [node name="DeathSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("21_e64ik")
-
-[connection signal="start_game" from="ScreenUI" to="." method="_on_screen_ui_start_game"]
