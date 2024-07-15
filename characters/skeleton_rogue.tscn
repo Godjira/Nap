@@ -1,20 +1,39 @@
-[gd_scene load_steps=44 format=3 uid="uid://bkt7i6qo3g88a"]
+[gd_scene load_steps=43 format=3 uid="uid://bkt7i6qo3g88a"]
 
 [ext_resource type="PackedScene" uid="uid://bjl131ph5xug8" path="res://assets/KayKit-Character-Pack-Skeletons-1.0-15b62b9bad122f72926c10fb14d622c73819fa54/addons/kaykit_character_pack_skeletons/Characters/gltf/Skeleton_Rogue.glb" id="1_7qapr"]
-[ext_resource type="Script" path="res://characters/skeleton_rogue.gd" id="2_xxhk3"]
 [ext_resource type="Shader" path="res://levels/Entry0.gdshader" id="3_6jba5"]
-[ext_resource type="Shader" path="res://characters/skeleton_rogue.gdshader" id="3_ktqbx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ctj8g"]
 
+[sub_resource type="Shader" id="Shader_eh823"]
+code = "shader_type spatial;
+
+// Add properties to modify the pixelation level
+uniform float PIXEL_SIZE : hint_range(1.0, 100.0) = 10.0;
+uniform sampler2D screenTexture : hint_screen_texture, filter_linear_mipmap;
+
+void vertex() {
+}
+
+void fragment() {
+    // Adjust the UV coordinates.
+    vec2 adjusted_uv = floor(UV * PIXEL_SIZE) / PIXEL_SIZE;
+
+    // Use the adjusted UV values to generate color.
+    vec3 color = vec3(adjusted_uv.x, adjusted_uv.y, 0.0);
+    
+    ALBEDO = color;
+}
+"
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fik6c"]
 render_priority = 0
-shader = ExtResource("3_ktqbx")
+shader = SubResource("Shader_eh823")
 shader_parameter/PIXEL_SIZE = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k0p7m"]
 render_priority = 0
-shader = ExtResource("3_ktqbx")
+shader = SubResource("Shader_eh823")
 shader_parameter/PIXEL_SIZE = 1.0
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_i4yvt"]
@@ -167,7 +186,6 @@ shader = ExtResource("3_6jba5")
 
 [node name="Skeleton_Rogue" instance=ExtResource("1_7qapr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.298001, 0)
-script = ExtResource("2_xxhk3")
 
 [node name="Camera" type="Camera3D" parent="." index="0"]
 transform = Transform3D(1, -5.16816e-16, 3.05644e-16, 3.05644e-16, 0.876307, 0.481754, -5.16816e-16, -0.481754, 0.876307, 0, 0.415, 0.83)
@@ -262,6 +280,7 @@ light_color = Color(0, 0.279435, 0.344735, 1)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." index="6"]
 transform = Transform3D(2.63797, 0, 0, 0, 3.87066, -1.54237, 0, 14.547, 0.410393, 0, 0.036, 0.323895)
+visible = false
 material_override = SubResource("ShaderMaterial_7d7n4")
 mesh = SubResource("PlaneMesh_qhmce")
 skeleton = NodePath("../Rig/Skeleton3D")

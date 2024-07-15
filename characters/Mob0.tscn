@@ -1,0 +1,51 @@
+[gd_scene load_steps=8 format=3 uid="uid://b5euuwsw60c5n"]
+
+[ext_resource type="Script" path="res://characters/RigidBody2D.gd" id="1_hy4sw"]
+[ext_resource type="PackedScene" uid="uid://bkt7i6qo3g88a" path="res://characters/skeleton_rogue.tscn" id="1_wvcuk"]
+[ext_resource type="Shader" path="res://levels/PixelSprite.gdshader" id="3_qhe0e"]
+
+[sub_resource type="World3D" id="World3D_n6026"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l5yfe"]
+radius = 5.0
+height = 20.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dlt7s"]
+shader = ExtResource("3_qhe0e")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_3ijof"]
+viewport_path = NodePath("SubViewport")
+
+[node name="Mob0" type="RigidBody2D"]
+z_index = 10
+position = Vector2(601, 575)
+collision_layer = 2
+collision_mask = 6
+gravity_scale = 0.0
+script = ExtResource("1_hy4sw")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+world_3d = SubResource("World3D_n6026")
+transparent_bg = true
+sdf_scale = 0
+size = Vector2i(1024, 1024)
+size_2d_override = Vector2i(85, 90)
+size_2d_override_stretch = true
+
+[node name="Skeleton_Rogue" parent="SubViewport" instance=ExtResource("1_wvcuk")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.298001, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_index = 1
+position = Vector2(0, 9.53674e-06)
+shape = SubResource("CapsuleShape2D_l5yfe")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_dlt7s")
+position = Vector2(-0.999985, 1.00002)
+scale = Vector2(0.0479636, 0.0454462)
+texture = SubResource("ViewportTexture_3ijof")
+
+[node name="Mob0" type="Node2D" parent="." groups=["mobs"]]

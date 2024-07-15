@@ -1,0 +1,66 @@
+[gd_scene load_steps=7 format=3 uid="uid://b4dmwb5ebu3qy"]
+
+[ext_resource type="Script" path="res://levels/Character0.gd" id="1_qjhg0"]
+[ext_resource type="Shader" path="res://levels/PixelSprite.gdshader" id="2_lshbq"]
+[ext_resource type="Script" path="res://levels/ViewportSprite.gd" id="3_b3v00"]
+[ext_resource type="PackedScene" uid="uid://bkt7i6qo3g88a" path="res://characters/skeleton_rogue.tscn" id="4_kdrq0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oc0jx"]
+shader = ExtResource("2_lshbq")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ueyy3"]
+viewport_path = NodePath("SubViewport")
+
+[node name="Character0" type="CharacterBody2D"]
+z_index = 1
+scale = Vector2(1.19774, 1.24255)
+collision_mask = 2
+up_direction = Vector2(2.94434e-12, -1)
+slide_on_ceiling = false
+script = ExtResource("1_qjhg0")
+
+[node name="ViewportSprite" type="Sprite2D" parent="."]
+process_priority = 1
+process_physics_priority = 1
+z_index = 5
+material = SubResource("ShaderMaterial_oc0jx")
+position = Vector2(0, -12.0719)
+scale = Vector2(0.0425369, 0.0444078)
+texture = SubResource("ViewportTexture_ueyy3")
+region_enabled = true
+region_rect = Rect2(232.093, 227.105, 535.012, 542.098)
+script = ExtResource("3_b3v00")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+process_mode = 3
+transparent_bg = true
+screen_space_aa = 1
+size = Vector2i(1024, 1025)
+render_target_update_mode = 4
+
+[node name="Skeleton_Rogue" parent="SubViewport" instance=ExtResource("4_kdrq0")]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0.0745938, 0)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(-243.012, -217.845)
+scale = Vector2(0.441582, 0.388835)
+polygon = PackedVector2Array(540.073, 520.447, 560.182, 520.447, 559.06, 557.78, 540.153, 557.78)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-0.315735, -1.76587)
+rotation = 3.14159
+scale = Vector2(153.738, 744206)
+offset = Vector2(2.08165e-12, 2.08165e-12)
+zoom = Vector2(5.32, 5.32)
+limit_left = -9997320
+position_smoothing_enabled = true
+position_smoothing_speed = 8.72
+rotation_smoothing_enabled = true
+rotation_smoothing_speed = 6.67
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(0.834906, -9.65756)
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+
+[connection signal="visibility_changed" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_visibility_changed"]

@@ -4,7 +4,7 @@ uniform sampler2D screenTexture : hint_screen_texture, filter_linear_mipmap;
 void fragment() {
 	vec2 uv = SCREEN_UV;
     // calculate the size of one "pixel" in UV coordinates
-    vec2 pixelSize = 1.0/vec2(textureSize(screenTexture, 0)) * 30.0;
+    vec2 pixelSize = 1.0/vec2(textureSize(screenTexture, 0)) * 15.0;
     // calculate the position of the lower-left corner of the current pixel
     vec2 pixelPos = floor(uv / pixelSize) * pixelSize;
     // get the color of the lower-left corner pixel

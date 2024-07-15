@@ -1,0 +1,97 @@
+[gd_scene load_steps=13 format=3 uid="uid://bupyyihhpsfrc"]
+
+[ext_resource type="Script" path="res://levels/HUD.gd" id="1_xa10j"]
+[ext_resource type="Shader" path="res://levels/ScreenUI.gdshader" id="2_8y40s"]
+[ext_resource type="FontFile" uid="uid://jgumakw2jrae" path="res://assets/fonts/Xolonium-Regular.ttf" id="2_p0y7h"]
+[ext_resource type="Shader" path="res://levels/MainScreen.gdshader" id="4_jgi07"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dddmo"]
+shader = ExtResource("2_8y40s")
+shader_parameter/StripesNum = 9.0
+shader_parameter/StripesAng = 45.0
+shader_parameter/StripesThinkness = 0.5
+shader_parameter/CenterHole = 0.0
+shader_parameter/OuterHole = 1.0
+
+[sub_resource type="Gradient" id="Gradient_g214u"]
+offsets = PackedFloat32Array(0, 0.292208, 0.876623, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.0690763, 0.0690763, 0.0690763, 1, 0.777108, 0.777108, 0.777108, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_8eqb4"]
+seed = 100
+frequency = 0.0015
+fractal_octaves = 10
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_76mlf"]
+invert = true
+seamless_blend_skirt = 0.32
+color_ramp = SubResource("Gradient_g214u")
+noise = SubResource("FastNoiseLite_8eqb4")
+
+[sub_resource type="InputEventAction" id="InputEventAction_y4fod"]
+action = &"start_game"
+
+[sub_resource type="Shortcut" id="Shortcut_ngi2i"]
+events = [SubResource("InputEventAction_y4fod")]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1ylh2"]
+shader = ExtResource("4_jgi07")
+shader_parameter/blurAmount = 0.1
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_vrdcx"]
+
+[node name="HUD" type="CanvasLayer"]
+follow_viewport_scale = 0.001
+script = ExtResource("1_xa10j")
+
+[node name="BG" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_dddmo")
+position = Vector2(836, 538)
+scale = Vector2(14.2361, 14.709)
+texture = SubResource("NoiseTexture2D_76mlf")
+
+[node name="MessageTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="Message" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -459.5
+offset_top = -39.0
+offset_right = 459.5
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_p0y7h")
+theme_override_font_sizes/font_size = 64
+text = "N.A.P Assottiation Security"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="StartButton" type="Button" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -86.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_p0y7h")
+theme_override_font_sizes/font_size = 64
+shortcut = SubResource("Shortcut_ngi2i")
+text = "Start"
+metadata/_edit_use_anchors_ = true
+
+[node name="CustomPass" type="Sprite2D" parent="."]
+z_as_relative = false
+material = SubResource("ShaderMaterial_1ylh2")
+position = Vector2(2714, 1145)
+scale = Vector2(5433.79, 2283.32)
+texture = SubResource("CanvasTexture_vrdcx")
+region_rect = Rect2(484.652, -42.12, 2084.83, 1370.9)
+
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
