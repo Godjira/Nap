@@ -14,9 +14,13 @@ config/name="Nap"
 run/main_scene="res://levels/Entry0.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 
+[autoload]
+
+BetterTerrain="*res://addons/better-terrain/BetterTerrain.gd"
+
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gaea/plugin.cfg")
+enabled=PackedStringArray("res://addons/better-terrain/plugin.cfg", "res://addons/copilot/plugin.cfg", "res://addons/gaea/plugin.cfg")
 
 [input]
 

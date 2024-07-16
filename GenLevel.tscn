@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c7jabs48v5pi1"]
+[gd_scene load_steps=20 format=3 uid="uid://c7jabs48v5pi1"]
 
 [ext_resource type="Script" path="res://GenLevel.gd" id="1_1wl8f"]
 [ext_resource type="Script" path="res://addons/gaea/renderers/2D/threaded_tilemap_gaea_renderer.gd" id="1_kfi6v"]
@@ -9,6 +9,8 @@
 [ext_resource type="Script" path="res://addons/gaea/modifiers/2D/walls.gd" id="5_tl1bb"]
 [ext_resource type="Script" path="res://addons/gaea/generators/2D/walker_generator/walker_generator_settings.gd" id="6_xqe66"]
 [ext_resource type="PackedScene" uid="uid://b4dmwb5ebu3qy" path="res://characters/Player0.tscn" id="9_ruchm"]
+[ext_resource type="Script" path="res://SpriteGenerator.gd" id="10_l66h2"]
+[ext_resource type="Texture2D" uid="uid://s6or11v6tbm8" path="res://artwork/icon.svg" id="11_ku6nn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u1416"]
 texture = ExtResource("3_kjn5t")
@@ -334,3 +336,7 @@ generator = NodePath("../Walker")
 script = ExtResource("2_7mf3t")
 settings = SubResource("Resource_106vp")
 generate_on_ready = false
+
+[node name="SpriteGen" type="Node2D" parent="."]
+script = ExtResource("10_l66h2")
+sprite_texture = ExtResource("11_ku6nn")
