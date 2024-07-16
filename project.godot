@@ -16,11 +16,13 @@ config/features=PackedStringArray("4.2", "GL Compatibility")
 
 [autoload]
 
-BetterTerrain="*res://addons/better-terrain/BetterTerrain.gd"
+PlayerUi="res://ui/PlayerUI.tscn"
+ScreenUi="*res://ui/ScreenUI.tscn"
+Mouse="*res://ui/Mouse.tscn"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/better-terrain/plugin.cfg", "res://addons/copilot/plugin.cfg", "res://addons/gaea/plugin.cfg")
+enabled=PackedStringArray("res://addons/gaea/plugin.cfg")
 
 [input]
 

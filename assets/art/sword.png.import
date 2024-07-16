@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bg7hymkrp2f31"
-path="res://.godot/imported/Button.png-2f9f345c6d4cfeb8cf7befc059538d46.ctex"
+uid="uid://3n5k7a1k47mg"
+path="res://.godot/imported/sword.png-f8ced047dc0dd90e280f6f00ec1ad5c9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Dungeon Gathering Free Version/Button.png"
-dest_files=["res://.godot/imported/Button.png-2f9f345c6d4cfeb8cf7befc059538d46.ctex"]
+source_file="res://assets/art/sword.png"
+dest_files=["res://.godot/imported/sword.png-f8ced047dc0dd90e280f6f00ec1ad5c9.ctex"]
 
 [params]
 

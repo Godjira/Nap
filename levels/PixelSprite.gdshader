@@ -1,5 +1,7 @@
 shader_type canvas_item;
 
+uniform float hit_intesity: hint_range(0.0, 1.0, 0.01) = 0.0;
+
 void vertex() {
 	// Called for every vertex the material is visible on.
 }
@@ -12,6 +14,10 @@ void fragment() {
     vec2 pixelPos = floor(uv / pixelSize) * pixelSize;
     // get the color of the lower-left corner pixel
     vec4 text = texture(TEXTURE, pixelPos);
+	
+	if(hit_intesity > 0.0){ 
+		text.rgb *= vec3(1.0 * (1.0 - hit_intesity), 0., 0.);
+	}
 	
 	// Define the color of the edge border.
     vec3 edgeColor = vec3(0);
