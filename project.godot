@@ -16,8 +16,9 @@ config/features=PackedStringArray("4.2", "GL Compatibility")
 
 [autoload]
 
-PlayerUi="*res://ui/PlayerUI.tscn"
+PlayerUi="res://ui/PlayerUI.tscn"
 ScreenUi="*res://ui/ScreenUI.tscn"
+Mouse="*res://ui/Mouse.tscn"
 
 [editor_plugins]
 

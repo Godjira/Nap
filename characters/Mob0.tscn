@@ -12,15 +12,19 @@ radius = 5.0
 height = 20.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dlt7s"]
+resource_local_to_scene = true
 shader = ExtResource("3_qhe0e")
+shader_parameter/hit_intesity = 0.0
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_3ijof"]
 viewport_path = NodePath("SubViewport")
 
 [node name="Mob0" type="CharacterBody2D" groups=["Enemy"]]
-z_index = 10
+z_index = 6
+y_sort_enabled = true
 position = Vector2(601, 575)
-collision_mask = 2
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("1_j2x42")
 
 [node name="SubViewport" type="SubViewport" parent="."]
@@ -36,7 +40,8 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1
-position = Vector2(0, 9.53674e-06)
+position = Vector2(-1, 8.00001)
+scale = Vector2(0.811105, 0.236474)
 shape = SubResource("CapsuleShape2D_l5yfe")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]

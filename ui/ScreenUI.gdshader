@@ -27,6 +27,10 @@ vec2 cLog(vec2 z){
     	vec3 tex=texture(TEXTURE,UV).rgb;
     	
     	/* YOUR FORMULA MULTIPLY UV */
-    	vec2 uv= UV*color; 
-		COLOR = vec4(mix(texture(TEXTURE, UV).rgb, vec3(color), 0.01), 1.0);
+		vec4 final = vec4(tex, 1.0);
+		float d = distance(final.rgb, vec3(0.1));
+    	if(d < .2){
+			final = vec4(mix(texture(TEXTURE, UV).rgb, vec3(color), 0.02), 1.0);
+		} 
+		COLOR = final;
     }

@@ -3454,7 +3454,7 @@ texture = ExtResource("13_m3kux")
 32:13/0/physics_layer_0/angular_velocity = 0.0
 32:13/0/physics_layer_1/linear_velocity = Vector2(0, 0)
 32:13/0/physics_layer_1/angular_velocity = 0.0
-32:13/0/physics_layer_1/polygon_0/points = PackedVector2Array(-3.875, -8, -3.625, -5.625, -5.125, -4.25, -5.5, 5.875, 5.375, 6, 5.75, -4.125, 4, -4.25, 3.75, -8)
+32:13/0/physics_layer_1/polygon_0/points = PackedVector2Array(-3.875, -8, -3.625, -5.625, -5.5, -4.375, -5.5, 5.875, 5.375, 6, 5.9375, -4.8125, 3.8125, -5.25, 3.75, -8)
 32:12/0 = 0
 32:12/0/z_index = 10
 32:12/0/physics_layer_0/linear_velocity = Vector2(0, 0)
@@ -3715,7 +3715,6 @@ mob_scene = ExtResource("17_816q5")
 mobs = []
 
 [node name="PlayerUI" parent="." instance=ExtResource("20_gobaf")]
-follow_viewport_enabled = false
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_10kvq")
@@ -3753,3 +3752,7 @@ pitch_scale = 0.12
 
 [node name="DeathSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("21_e64ik")
+
+[connection signal="died" from="TileMap/Character0" to="." method="_on_character_0_died"]
+[connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]

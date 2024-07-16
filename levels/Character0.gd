@@ -1,14 +1,18 @@
 extends CharacterBody2D
+
 class_name Character0
+# Signals
 signal hit
+signal died
 
 # Controls
-@export var speed = 80
+@export var speed = 80.0
 @export var acceleration = 14.0
 @export var jump_speed = 8.0
 @export var mouse_sensitivity = 0.0015
 @export var rotation_speed = 12.0
-@export var velocity_sub_viewport = Vector3()
+var velocity_sub_viewport = Vector3()
+var mobs_close = []
 
 # Global variables
 static var anim_state = null
@@ -16,12 +20,16 @@ static var anim_tree = null
 static var model = null
 static var camera_3D = null
 var last_floor = true
-const RAY_LENGTH = 1000
+var default_healths = 10
+var helths = 10.0
+var max_helths = 10.
+var damage = 2.5
 
 # Variables from current context
 @onready var sub_viewport = $SubViewport
 @onready var camera = $Camera2D
 @onready var viewport_sprite = $ViewportSprite
+@onready var attack_collider = $Attack/CollisionShape2D
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var jumping = false
@@ -30,6 +38,13 @@ var running = false
 # Create rayscast from character to world
 @export var raycasts = []
 @export var lines = []
+@onready var helths_material = $"/root/PlayerUi/Control/Control/Sprite2D".material as ShaderMaterial
+
+func _process(delta):
+	#Pass data to helths shader
+	if helths_material != null:
+		helths_material.set_shader_parameter("health", 1.0 - ((max_helths - helths)/max_helths))
+
 
 func _ready():
 	# Because we use SubViewport node needs to get that from inner context
@@ -69,13 +84,13 @@ func get_move_input(delta):
 	# Handle movement
 	# If the sprint key is pressed, set the speed to 120, otherwise set it to 80
 	if Input.is_action_pressed('sprint'):
-		speed = 120
+		speed = lerp(speed, 120., 0.1)
 		running = true
 		# running animation
 		anim_tree.set("parameters/conditions/running", running)
 		anim_tree.set("parameters/conditions/not running", !running)
 	else:
-		speed = 80
+		speed = lerp(speed, 80., 0.1)
 		running = false
 		anim_tree.set("parameters/conditions/running", running)
 		anim_tree.set("parameters/conditions/not running", !running)
@@ -123,21 +138,12 @@ func _unhandled_input(event):
 		model.rotation = rot
 
 	# attack on left mouse button click
-	if event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
+	if Input.is_action_just_pressed("attack"):
 		if anim_state: anim_state.travel(attacks.pick_random())
-
+		attack()
 
 func start():
 	show()
-	#$CollisionPolygon2D.disabled = false
-
-
-#func _on_visible_on_screen_notifier_2d_visibility_changed():
-	#hide() # Player disappears after being hit.
-	#hit.emit()
-	## Must be deferred as we can't change physics properties on a physics callback.
-	#$CollisionPolygon2D.set_deferred("disabled", true)
-
 
 func _on_attract_body_entered(body):
 	if body.is_in_group("Enemy"):
@@ -154,10 +160,40 @@ func _on_attack_body_entered(body):
 		print("Mob in attack area", body)	
 		body.state = body.HIT
 		body.attack_timer.start()
-
+		mobs_close.append(body)
 
 func _on_attack_body_exited(body):
 	if body.is_in_group("Enemy"):
 		print("Mob stop attack", body)
 		body.state = body.SURROUND
 		body.attack_timer.stop()
+		mobs_close.erase(body)
+
+
+func on_hit(damage):
+	print("god damn they hit me!", damage)
+	self.helths -= damage
+	
+	#start hit shader animation
+	var tween = get_tree().create_tween()
+	tween.tween_property(viewport_sprite.material, "shader_parameter/hit_intesity", 0.5, 0.3)
+	await tween.finished
+	var tween2 = get_tree().create_tween()
+	tween2.tween_property(viewport_sprite.material, "shader_parameter/hit_intesity", 0.0, 0.3)
+	await tween2.finished
+	
+	if 	1.0 - ((max_helths - helths)/max_helths) <= 0:
+		anim_state.travel("Death_A")
+		anim_tree.set("parameters/conditions/running", false)
+		anim_tree.set('parameters/conditions/live', false)
+		$DiedTimer.start()
+
+func attack():
+	# check collision in attack area
+	if mobs_close.size() > 0:
+		for mob in mobs_close:
+			if not mob.is_dead: mob.on_hit(self.damage)
+
+func _on_died_timer_timeout():
+	died.emit()
+	$DiedTimer.stop()

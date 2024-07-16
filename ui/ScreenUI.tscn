@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://bupyyihhpsfrc"]
 
-[ext_resource type="Script" path="res://levels/HUD.gd" id="1_xa10j"]
+[ext_resource type="Script" path="res://levels/MainScreen.gd" id="1_xa10j"]
 [ext_resource type="Shader" path="res://ui/ScreenUI.gdshader" id="2_8y40s"]
 [ext_resource type="FontFile" uid="uid://jgumakw2jrae" path="res://assets/fonts/Xolonium-Regular.ttf" id="2_p0y7h"]
 [ext_resource type="Shader" path="res://ui/MainScreen.gdshader" id="4_nv1e6"]
@@ -40,30 +40,36 @@ shader_parameter/blurAmount = 0.1
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_vrdcx"]
 
-[node name="HUD" type="CanvasLayer"]
+[node name="ScreenUI" type="CanvasLayer"]
 process_mode = 3
 follow_viewport_scale = 0.001
 script = ExtResource("1_xa10j")
 
-[node name="BG" type="Sprite2D" parent="."]
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG" type="Sprite2D" parent="Control"]
 material = SubResource("ShaderMaterial_dddmo")
-position = Vector2(836, 538)
-scale = Vector2(14.2361, 14.709)
+position = Vector2(673, 345)
+scale = Vector2(11.3563, 7.93366)
 texture = SubResource("NoiseTexture2D_76mlf")
 
-[node name="MessageTimer" type="Timer" parent="."]
+[node name="MessageTimer" type="Timer" parent="Control"]
 wait_time = 2.0
 one_shot = true
 
-[node name="Message" type="Label" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
+[node name="Message" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 14
 anchor_top = 0.5
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -459.5
 offset_top = -39.0
-offset_right = 459.5
 offset_bottom = 39.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -71,9 +77,9 @@ theme_override_fonts/font = ExtResource("2_p0y7h")
 theme_override_font_sizes/font_size = 64
 text = "Getting ready"
 horizontal_alignment = 1
-metadata/_edit_use_anchors_ = true
 
-[node name="StartButton" type="Button" parent="."]
+[node name="StartButton" type="Button" parent="Control"]
+layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
@@ -85,9 +91,8 @@ theme_override_fonts/font = ExtResource("2_p0y7h")
 theme_override_font_sizes/font_size = 64
 shortcut = SubResource("Shortcut_ngi2i")
 text = "Start"
-metadata/_edit_use_anchors_ = true
 
-[node name="CustomPass" type="Sprite2D" parent="."]
+[node name="CustomPass" type="Sprite2D" parent="Control"]
 process_mode = 3
 z_as_relative = false
 material = SubResource("ShaderMaterial_1ylh2")
@@ -96,4 +101,4 @@ scale = Vector2(5433.79, 2283.32)
 texture = SubResource("CanvasTexture_vrdcx")
 region_rect = Rect2(484.652, -42.12, 2084.83, 1370.9)
 
-[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="Control/StartButton" to="." method="_on_start_button_pressed"]

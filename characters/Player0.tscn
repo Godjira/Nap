@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b4dmwb5ebu3qy"]
+[gd_scene load_steps=9 format=3 uid="uid://b4dmwb5ebu3qy"]
 
 [ext_resource type="Script" path="res://levels/Character0.gd" id="1_qjhg0"]
 [ext_resource type="Shader" path="res://levels/PixelSprite.gdshader" id="2_lshbq"]
@@ -12,9 +12,14 @@ radius = 15.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_oc0jx"]
 shader = ExtResource("2_lshbq")
+shader_parameter/hit_intesity = 0.0
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_ueyy3"]
 viewport_path = NodePath("SubViewport")
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mtren"]
+radius = 14.4883
+height = 28.9767
 
 [node name="Character0" type="CharacterBody2D"]
 z_index = 1
@@ -62,10 +67,11 @@ render_target_update_mode = 4
 [node name="Skeleton_Rogue" parent="SubViewport" instance=ExtResource("4_kdrq0")]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0.0745938, 0)
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-position = Vector2(-243.012, -217.845)
-scale = Vector2(0.441582, 0.388835)
-polygon = PackedVector2Array(540.073, 520.447, 560.182, 520.447, 559.06, 557.78, 540.153, 557.78)
+[node name="CollisionPolygon2D" type="CollisionShape2D" parent="."]
+z_index = 10
+position = Vector2(0, -4.02398)
+scale = Vector2(0.197, 0.244)
+shape = SubResource("CapsuleShape2D_mtren")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(-0.315735, -1.76587)
@@ -81,8 +87,12 @@ rotation_smoothing_enabled = true
 rotation_smoothing_speed = 6.67
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2(0.834906, -9.65756)
+position = Vector2(0.834907, -11.4983)
+scale = Vector2(0.834906, 1.18408)
 
+[node name="DiedTimer" type="Timer" parent="."]
+
+[connection signal="hit" from="." to="." method="_on_hit"]
 [connection signal="body_entered" from="Attract" to="." method="_on_attract_body_entered"]
 [connection signal="body_exited" from="Attract" to="." method="_on_attract_body_exited"]
 [connection signal="body_shape_entered" from="Attract" to="." method="_on_attract_body_shape_entered"]
@@ -90,3 +100,4 @@ position = Vector2(0.834906, -9.65756)
 [connection signal="body_entered" from="Attack" to="." method="_on_attack_body_entered"]
 [connection signal="body_exited" from="Attack" to="." method="_on_attack_body_exited"]
 [connection signal="visibility_changed" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_visibility_changed"]
+[connection signal="timeout" from="DiedTimer" to="." method="_on_died_timer_timeout"]

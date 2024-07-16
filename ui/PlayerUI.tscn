@@ -1,23 +1,19 @@
-[gd_scene load_steps=9 format=3 uid="uid://dqnkrq0m4648p"]
+[gd_scene load_steps=4 format=3 uid="uid://dqnkrq0m4648p"]
 
-[ext_resource type="FontFile" uid="uid://jgumakw2jrae" path="res://assets/fonts/Xolonium-Regular.ttf" id="1_4sori"]
-[ext_resource type="Shader" path="res://ui/Helths.gdshader" id="1_ouc7c"]
-[ext_resource type="Shader" path="res://ui/Mana.gdshader" id="2_b565w"]
 [ext_resource type="Shader" path="res://ui/Helth2.gdshader" id="4_ix6nq"]
 [ext_resource type="Texture2D" uid="uid://dtrkmllhbcu3r" path="res://assets/art/helth-bar.png" id="5_io3og"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qvc52"]
-shader = ExtResource("1_ouc7c")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gixme"]
-shader = ExtResource("2_b565w")
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8dimf"]
+resource_local_to_scene = true
 shader = ExtResource("4_ix6nq")
-shader_parameter/health = 1.0
+shader_parameter/health = 0.0
+shader_parameter/fog_color = Vector3(0.1, 0.1, 0.1)
+shader_parameter/fog_intensity = 0.2
+shader_parameter/glow_color = Color(0.5, 0.1, 0.2, 1)
+shader_parameter/glow_power = 8.0
 
 [node name="PlayerUI" type="CanvasLayer"]
-follow_viewport_enabled = true
+layer = 0
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -27,60 +23,22 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HelthsRect" type="ColorRect" parent="Control"]
-visible = false
-material = SubResource("ShaderMaterial_qvc52")
+[node name="Control" type="Control" parent="Control"]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -201.0
-offset_right = 221.0
-grow_vertical = 0
-
-[node name="HelthsLabel" type="Label" parent="Control/HelthsRect"]
-z_index = 1
-offset_left = 73.0
-offset_top = 90.0
-offset_right = 144.0
-offset_bottom = 113.0
-theme_override_fonts/font = ExtResource("1_4sori")
-theme_override_font_sizes/font_size = 16
-text = "HELTHS"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ManaRect" type="ColorRect" parent="Control"]
-visible = false
-material = SubResource("ShaderMaterial_gixme")
-layout_mode = 1
-anchors_preset = 3
+anchors_preset = 1
 anchor_left = 1.0
-anchor_top = 1.0
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -221.0
-offset_top = -221.0
+offset_left = -40.0
+offset_bottom = 40.0
 grow_horizontal = 0
-grow_vertical = 0
+scale = Vector2(-9.92, 1)
 
-[node name="ManaLabel" type="Label" parent="Control/ManaRect"]
-z_index = 1
-offset_left = 76.0
-offset_top = 99.0
-offset_right = 147.0
-offset_bottom = 122.0
-theme_override_fonts/font = ExtResource("1_4sori")
-theme_override_font_sizes/font_size = 16
-text = "MANA
-"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Sprite2D" type="Sprite2D" parent="Control"]
+[node name="Sprite2D" type="Sprite2D" parent="Control/Control"]
+z_index = -1
 material = SubResource("ShaderMaterial_8dimf")
-position = Vector2(1001, 40)
-scale = Vector2(0.271693, 0.241294)
+position = Vector2(10.8871, 35)
+rotation = 3.14159
+scale = Vector2(0.0273884, -0.241294)
 texture = ExtResource("5_io3og")
 offset = Vector2(0.04, 0)
 region_enabled = true
