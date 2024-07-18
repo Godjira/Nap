@@ -257,6 +257,7 @@ func _on_mob_sensor_area_entered(area):
 							closest_direction_index = j
 				# set danger to 2
 				dangers.insert(closest_direction_index, 2)
+		print(dangers, "------")
 
 var avoidance_distance = 10
 var avoidance_force = 20

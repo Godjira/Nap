@@ -4,58 +4,48 @@ extends Node2D
 func _ready():
 	pass # Replace with function body.
 
-	
 var active = false
-var player
+var player : CharacterBody2D
 @onready var voidNode = $Void
-@onready var explosionNode = $Void/Mesh/Explosion
+@onready var explosionNode = $Explosion
+var acceleration = 0.5
+var velocity = Vector2.ZERO
+var speed = 5
+var target = Vector2.ZERO
+var damage = 1.5
 
-func run_skill(p):
-	if active || !p: return
-	
-	player = p
-	active = true
-	voidNode.show()
-	$SkillEnd.start()
-	# get dirrection to mouse from player
-	var mouse_pos = get_global_mouse_position()
-	var direction = (mouse_pos - global_position).normalized()
-	var tween = get_tree().create_tween()
-	var speed = 5
-	# add acceleration to the void
-	var acceleration = 0.5
-
-	tween.tween_property($Void/Mesh, 'global_position', mouse_pos, 0.5)
-	
-	await tween.finished
-	explosionNode.run_effect()
+func run_skill(p:CharacterBody2D):
+	if !active:
+		player = p
+		active = true
+		$SkillEnd.start()
+		$Mesh.show()
+		var mouse_pos = get_global_mouse_position()
+		target = mouse_pos
 
 
-func _on_skill_end_timeout():
-	voidNode.hide()
-	$Void/Mesh.global_position = player.global_position
-
-	# add screen shake
-	var camera = player.get_node("Camera2D") as Camera2D
-
+func end_skill():
+	if active:
+		explosionNode.global_position = $Mesh.global_position
+		explosionNode.run_effect()
+		$Mesh.global_position = player.global_position
+		$Mesh.hide()
 	active = false
 
-
-	explosionNode.stop_effect()
+func _on_skill_end_timeout():
+	end_skill()
 	
-func _physics_process(delta):
+func _process(delta):
 	if active:
-		var m = $Void/Mesh.material as ShaderMaterial
-		m.set_shader_parameter("progress", $SkillEnd.time_left - 0.5)
-	#check collisions
-
-
-#func _on_rigid_body_2d_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
-	#_on_skill_end_timeout()
-	#pass
-
+		var m = $Mesh.material as ShaderMaterial
+		$Mesh.global_position = lerp($Mesh.global_position, target, 0.33)
+		var distance = $Mesh.global_position.distance_to(target)
+		m.set_shader_parameter("progress", distance * 0.01)
+		if distance < 2.5:
+			end_skill()
 
 func _on_void_body_entered(body):
 	print(body)
-	if active:
-		_on_skill_end_timeout()
+	if body.is_in_group("Enemy"):
+		end_skill()
+		body.on_hit(damage)

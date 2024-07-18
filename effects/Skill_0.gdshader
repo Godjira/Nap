@@ -8,8 +8,8 @@ void vertex() {
 void fragment() {
 	vec4 final = vec4(1.0);
 	// fire shader
-	final = vec4(1.0, 0.0, 0.0, 1.0);
-	final = mix(final, vec4(UV, 0.0, 1.0), progress);
+	final = vec4(0.8, 0.1, 0.1, 1.0);
+	final = mix(final, vec4(0.1, 0.1, 0.0, 1.0), progress);
 	COLOR = final;
 	
 }

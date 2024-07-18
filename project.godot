@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Nap"
-run/main_scene="res://levels/Entry0.tscn"
+run/main_scene="res://GenLevel.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 
 [autoload]
