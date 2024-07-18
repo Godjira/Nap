@@ -6,10 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://cns2t7xs840n2" path="res://characters/MobSensor.tscn" id="4_hk7gu"]
 
 [sub_resource type="World3D" id="World3D_n6026"]
-resource_local_to_scene = true
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dlt7s"]
-resource_local_to_scene = true
 shader = ExtResource("3_qhe0e")
 shader_parameter/hit_intesity = 0.0
 
