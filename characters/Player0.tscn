@@ -1,11 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://b4dmwb5ebu3qy"]
+[gd_scene load_steps=11 format=3 uid="uid://b4dmwb5ebu3qy"]
 
 [ext_resource type="Script" path="res://levels/Character0.gd" id="1_qjhg0"]
 [ext_resource type="Shader" path="res://levels/PixelSprite.gdshader" id="2_lshbq"]
+[ext_resource type="PackedScene" uid="uid://c3rxgi0earrg8" path="res://effects/Skill_0.tscn" id="2_vkea6"]
 [ext_resource type="PackedScene" uid="uid://bkt7i6qo3g88a" path="res://characters/skeleton_rogue.tscn" id="4_kdrq0"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_vbepg"]
-radius = 50.0
+[ext_resource type="Script" path="res://characters/Equipment.gd" id="4_uuubf"]
+[ext_resource type="Script" path="res://characters/Camera2D.gd" id="5_3tudj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cork7"]
 radius = 15.0
@@ -21,24 +21,19 @@ viewport_path = NodePath("SubViewport")
 radius = 14.4883
 height = 28.9767
 
-[node name="Character0" type="CharacterBody2D"]
+[node name="Character0" type="CharacterBody2D" groups=["Player"]]
 z_index = 1
 scale = Vector2(1.19774, 1.24255)
-collision_mask = 2
+collision_layer = 11
+collision_mask = 11
 up_direction = Vector2(2.94434e-12, -1)
 slide_on_ceiling = false
 script = ExtResource("1_qjhg0")
 
-[node name="Attract" type="Area2D" parent="."]
-collision_layer = 2
-priority = 10
+[node name="Skill0" parent="." instance=ExtResource("2_vkea6")]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Attract"]
-position = Vector2(0, -10.4624)
-shape = SubResource("CircleShape2D_vbepg")
-debug_color = Color(0.00372304, 0.640541, 0.346932, 0.42)
-
-[node name="Attack" type="Area2D" parent="."]
+[node name="Attack" type="Area2D" parent="." groups=["Player"]]
+scale = Vector2(0.57, 0.57)
 collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Attack"]
@@ -51,8 +46,8 @@ process_priority = 1
 process_physics_priority = 1
 z_index = 5
 material = SubResource("ShaderMaterial_oc0jx")
-position = Vector2(0, -12.0719)
-scale = Vector2(0.0425369, 0.0444078)
+position = Vector2(0, -8.85276)
+scale = Vector2(0.059547, 0.0482408)
 texture = SubResource("ViewportTexture_ueyy3")
 region_enabled = true
 region_rect = Rect2(232.093, 227.105, 535.012, 542.098)
@@ -67,12 +62,6 @@ render_target_update_mode = 4
 [node name="Skeleton_Rogue" parent="SubViewport" instance=ExtResource("4_kdrq0")]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0.0745938, 0)
 
-[node name="CollisionPolygon2D" type="CollisionShape2D" parent="."]
-z_index = 10
-position = Vector2(0, -4.02398)
-scale = Vector2(0.197, 0.244)
-shape = SubResource("CapsuleShape2D_mtren")
-
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(-0.315735, -1.76587)
 rotation = 3.14159
@@ -85,18 +74,27 @@ position_smoothing_enabled = true
 position_smoothing_speed = 8.72
 rotation_smoothing_enabled = true
 rotation_smoothing_speed = 6.67
+script = ExtResource("5_3tudj")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(0.834907, -11.4983)
 scale = Vector2(0.834906, 1.18408)
 
+[node name="Equipment" type="Node2D" parent="."]
+position = Vector2(0, -4.02398)
+scale = Vector2(0.247, 0.306)
+script = ExtResource("4_uuubf")
+
 [node name="DiedTimer" type="Timer" parent="."]
+wait_time = 0.25
+
+[node name="CollisionPolygon2D" type="CollisionShape2D" parent="."]
+z_index = 10
+position = Vector2(0, -4.02398)
+scale = Vector2(0.187, 0.232)
+shape = SubResource("CapsuleShape2D_mtren")
 
 [connection signal="hit" from="." to="." method="_on_hit"]
-[connection signal="body_entered" from="Attract" to="." method="_on_attract_body_entered"]
-[connection signal="body_exited" from="Attract" to="." method="_on_attract_body_exited"]
-[connection signal="body_shape_entered" from="Attract" to="." method="_on_attract_body_shape_entered"]
-[connection signal="body_shape_exited" from="Attract" to="." method="_on_attract_body_shape_exited"]
 [connection signal="body_entered" from="Attack" to="." method="_on_attack_body_entered"]
 [connection signal="body_exited" from="Attack" to="." method="_on_attack_body_exited"]
 [connection signal="visibility_changed" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_visibility_changed"]

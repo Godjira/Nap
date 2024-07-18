@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=3 uid="uid://c3rxgi0earrg8"]
+
+[ext_resource type="Script" path="res://effects/Skill_0.gd" id="1_545hs"]
+[ext_resource type="Shader" path="res://effects/Skill_0.gdshader" id="2_nr2m4"]
+[ext_resource type="PackedScene" uid="uid://bdghcashv30ww" path="res://effects/Explosion.tscn" id="3_y5m2q"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ppkoq"]
+resource_local_to_scene = true
+shader = ExtResource("2_nr2m4")
+shader_parameter/progress = 0.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_hegxe"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_q5ags"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dldcg"]
+
+[node name="Skill0" type="Node2D"]
+script = ExtResource("1_545hs")
+
+[node name="Void" type="Area2D" parent="."]
+position = Vector2(0, -1.56675e-08)
+scale = Vector2(0.138705, 0.1386)
+collision_layer = 11
+collision_mask = 11
+
+[node name="Mesh" type="MeshInstance2D" parent="Void"]
+material = SubResource("ShaderMaterial_ppkoq")
+position = Vector2(0, 9.73137e-07)
+scale = Vector2(28.5714, 28.5714)
+mesh = SubResource("SphereMesh_hegxe")
+texture = SubResource("CanvasTexture_q5ags")
+
+[node name="Explosion" parent="Void/Mesh" instance=ExtResource("3_y5m2q")]
+position = Vector2(0, -3.40598e-08)
+scale = Vector2(0.285437, 0.285714)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Void"]
+position = Vector2(0, 1.19209e-07)
+scale = Vector2(3.5034, 3.5)
+shape = SubResource("CircleShape2D_dldcg")
+
+[node name="SkillEnd" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="body_entered" from="Void" to="." method="_on_void_body_entered"]
+[connection signal="body_shape_entered" from="Void" to="." method="_on_rigid_body_2d_body_shape_entered"]
+[connection signal="timeout" from="SkillEnd" to="." method="_on_skill_end_timeout"]
