@@ -19,9 +19,17 @@ func _ready():
 	global_positions.sort_custom(func(a: Vector2, b: Vector2) -> bool:
 		return a.distance_squared_to(player.global_position) < b.distance_squared_to(player.global_position)
 )
+	#Create outdoor
+
+	var doorSprite = Sprite2D.new()
+	doorSprite.position = 	global_positions.back()
+	doorSprite.texture = load("res://artwork/outdoor.png")
+	doorSprite.scale = Vector2(0.1, 0.1)
+	add_child(doorSprite)
+	
 	
 	var placed_sprites = []
-	var min_distance = 100  # Adjust this value to control the minimum distance between sprites
+	var min_distance = 200  # Adjust this value to control the minimum distance between sprites
 	
 	for global_pos in global_positions:
 		var too_close = false
