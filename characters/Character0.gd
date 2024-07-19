@@ -11,6 +11,7 @@ signal died
 @export var jump_speed = 8.0
 @export var mouse_sensitivity = 0.0015
 @export var rotation_speed = 12.0
+@export var ghost_node : PackedScene
 
 var velocity_sub_viewport = Vector3()
 var mobs_close = []
@@ -32,6 +33,7 @@ var attacking
 @onready var sub_viewport = $SubViewport
 @onready var camera = $Camera2D
 @onready var viewport_sprite = $ViewportSprite
+@onready var particles = $GPUParticles2D
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var jumping = false
@@ -140,12 +142,7 @@ func _physics_process(delta):
 	
 	# handle dash
 	if Input.is_action_just_pressed('dash'):
-		# move the character in the direction of the character model
-		var direction = Input.get_vector('left', 'right', 'down', 'up')
-		velocity = direction * speed * acceleration
-		velocity.y *= -1
-		move_and_slide()
-
+		dash()
 
 func _unhandled_input(event):
 	# rotate the character model on mouse move
@@ -220,3 +217,27 @@ func attack():
 func _on_died_timer_timeout():
 	died.emit()
 	$DiedTimer.stop()
+
+func add_ghost():
+	var ghost = ghost_node.instantiate()
+	ghost.set_property(global_position, $ViewportSprite.scale)
+	get_tree().current_scene.add_child(ghost)
+	# pass data to shader
+	var dash_direction = Vector2(velocity.x, velocity.y).normalized()
+	ghost.material.set_shader_parameter("dash_direction", dash_direction)
+
+
+func _on_ghost_timer_timeout():
+	add_ghost()
+		
+
+func dash():
+	particles.emitting = true
+	$GhostTimer.start()
+	# dash animation
+	var tween = get_tree().create_tween()
+	tween.tween_property(self, "position", global_position + velocity * 1.5, 0.20)
+	await tween.finished
+	$GhostTimer.stop()
+	particles.emitting = false
+	

@@ -58,15 +58,10 @@ var state = IDLE
 func get_viewport_context():
 	# Get all the child nodes of the sub_viewport.
 	var childrenNodes = sub_viewport.get_children()
-	# First childrent is 3d node with character model.
 	var characterModel = childrenNodes[0]
-	# get child Rig from the characterModel.
 	model = characterModel.get_node("Rig")
-	# get child Camera from the characterModel.
 	camera_3D = characterModel.get_node("Camera")
-	# get child AnimationTree from the characterModel.
 	anim_tree = characterModel.get_node("AnimationTree")
-	# get child AnimationPlayer from the characterModel.
 	anim_state = anim_tree.get('parameters/playback')
 	var anim_player = characterModel.get_node("AnimationPlayer")
 	#Loop through each animation and set their loop property to true
@@ -179,11 +174,13 @@ func _on_attack_timer_timeout():
 
 func handle_hit():
 	if not is_dead: 
+		$Attack0.run_effect()
 		player.on_hit(damage)
 		anim_state.travel(attacks.pick_random())
 
 func on_hit(damage):
 	if not is_dead: 
+		$Attack0.run_effect()
 		self.helths = min(0, self.helths - damage)
 		#start hit shader animation
 		var tween = get_tree().create_tween()
@@ -243,7 +240,6 @@ func _on_mob_sensor_area_entered(area):
 			if have_col and have_layer:
 				dangers.insert(i, 5)
 			else:
-			# if take two closes direction and set them danger to 2
 			# get the closest direction
 				var closest_direction = all_directions[i]
 				var closest_direction_index = i

@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://b5euuwsw60c5n"]
+[gd_scene load_steps=10 format=3 uid="uid://b5euuwsw60c5n"]
 
 [ext_resource type="Script" path="res://characters/Mob0.gd" id="1_j2x42"]
 [ext_resource type="PackedScene" uid="uid://bkt7i6qo3g88a" path="res://characters/skeleton_rogue.tscn" id="1_wvcuk"]
+[ext_resource type="PackedScene" uid="uid://df0o1ljcagn8i" path="res://effects/Attack_0.tscn" id="2_fbvwp"]
 [ext_resource type="Shader" path="res://levels/PixelSprite.gdshader" id="3_qhe0e"]
 [ext_resource type="PackedScene" uid="uid://cns2t7xs840n2" path="res://characters/MobSensor.tscn" id="4_hk7gu"]
 
@@ -27,6 +28,8 @@ position = Vector2(601, 575)
 collision_layer = 11
 collision_mask = 11
 script = ExtResource("1_j2x42")
+
+[node name="Attack0" parent="." instance=ExtResource("2_fbvwp")]
 
 [node name="SubViewport" type="SubViewport" parent="."]
 world_3d = SubResource("World3D_n6026")

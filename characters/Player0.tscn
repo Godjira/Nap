@@ -1,25 +1,45 @@
-[gd_scene load_steps=11 format=3 uid="uid://b4dmwb5ebu3qy"]
+[gd_scene load_steps=15 format=3 uid="uid://b4dmwb5ebu3qy"]
 
 [ext_resource type="Script" path="res://characters/Character0.gd" id="1_18n1n"]
 [ext_resource type="Shader" path="res://levels/PixelSprite.gdshader" id="2_lshbq"]
 [ext_resource type="PackedScene" uid="uid://c3rxgi0earrg8" path="res://effects/Skill_0.tscn" id="2_vkea6"]
 [ext_resource type="PackedScene" uid="uid://bkt7i6qo3g88a" path="res://characters/skeleton_rogue.tscn" id="4_kdrq0"]
 [ext_resource type="Script" path="res://characters/Equipment.gd" id="4_uuubf"]
+[ext_resource type="PackedScene" uid="uid://bddt7o15jsmkl" path="res://characters/PortalSprite.tscn" id="4_v48we"]
 [ext_resource type="Script" path="res://characters/Camera2D.gd" id="5_3tudj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cork7"]
 radius = 15.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_oc0jx"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v58in"]
 shader = ExtResource("2_lshbq")
 shader_parameter/hit_intesity = 0.0
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_ueyy3"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_c78i1"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mtren"]
 radius = 14.4883
 height = 28.9767
+
+[sub_resource type="Gradient" id="Gradient_kbesy"]
+offsets = PackedFloat32Array(0.0244499, 0.997555, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1oatg"]
+gradient = SubResource("Gradient_kbesy")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g0kc7"]
+particle_flag_disable_z = true
+direction = Vector3(2.08165e-12, -1, 2.08165e-12)
+orbit_velocity_max = 0.91
+gravity = Vector3(2.08165e-12, 2.08165e-12, 2.08165e-12)
+scale_min = 2.0
+scale_max = 2.0
+color = Color(0, 0.607843, 0.941176, 1)
+color_ramp = SubResource("GradientTexture1D_1oatg")
+hue_variation_min = 2.08167e-17
+hue_variation_max = 2.08167e-17
 
 [node name="Character0" type="CharacterBody2D" groups=["Player"]]
 z_index = 1
@@ -29,6 +49,7 @@ collision_mask = 11
 up_direction = Vector2(2.94434e-12, -1)
 slide_on_ceiling = false
 script = ExtResource("1_18n1n")
+ghost_node = ExtResource("4_v48we")
 
 [node name="Skill0" parent="." instance=ExtResource("2_vkea6")]
 
@@ -44,11 +65,12 @@ debug_color = Color(0.981281, 0, 0.372427, 0.42)
 [node name="ViewportSprite" type="Sprite2D" parent="."]
 process_priority = 1
 process_physics_priority = 1
+show_behind_parent = true
 z_index = 5
-material = SubResource("ShaderMaterial_oc0jx")
+material = SubResource("ShaderMaterial_v58in")
 position = Vector2(0, -8.85276)
 scale = Vector2(0.059547, 0.0482408)
-texture = SubResource("ViewportTexture_ueyy3")
+texture = SubResource("ViewportTexture_c78i1")
 region_enabled = true
 region_rect = Rect2(232.093, 227.105, 535.012, 542.098)
 
@@ -63,7 +85,7 @@ render_target_update_mode = 4
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0.0745938, 0)
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(-0.315735, -1.76587)
+position = Vector2(-2.98023e-08, -1.60959)
 rotation = 3.14159
 scale = Vector2(153.738, 744206)
 offset = Vector2(2.08165e-12, 2.08165e-12)
@@ -94,8 +116,18 @@ position = Vector2(0, -4.02398)
 scale = Vector2(0.187, 0.232)
 shape = SubResource("CapsuleShape2D_mtren")
 
+[node name="GhostTimer" type="Timer" parent="."]
+wait_time = 0.05
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+show_behind_parent = true
+emitting = false
+amount = 40
+process_material = SubResource("ParticleProcessMaterial_g0kc7")
+
 [connection signal="hit" from="." to="." method="_on_hit"]
 [connection signal="body_entered" from="Attack" to="." method="_on_attack_body_entered"]
 [connection signal="body_exited" from="Attack" to="." method="_on_attack_body_exited"]
 [connection signal="visibility_changed" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_visibility_changed"]
 [connection signal="timeout" from="DiedTimer" to="." method="_on_died_timer_timeout"]
+[connection signal="timeout" from="GhostTimer" to="." method="_on_ghost_timer_timeout"]

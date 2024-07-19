@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://df0o1ljcagn8i"]
+
+[ext_resource type="Script" path="res://effects/Attack_0.gd" id="1_w8wgo"]
+[ext_resource type="Shader" path="res://effects/Skill_0.gdshader" id="2_4l2do"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jfv0c"]
+shader = ExtResource("2_4l2do")
+shader_parameter/progress = 0.0
+
+[sub_resource type="Curve" id="Curve_xc5gv"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0, -352.207), 0.0, 0.0, 0, 0, Vector2(0.592734, -101.195), 1496.94, 1496.94, 0, 0, Vector2(1, 360), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_u7ep7"]
+_data = [Vector2(0.00764818, 0.991599), 0.0, 0.0, 0, 0, Vector2(0.42065, 0.330049), -1.19307, -1.19307, 0, 0, Vector2(0.957935, 0.0402262), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_7wpr6"]
+offsets = PackedFloat32Array(0, 0.163441, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.64086, 0.64086, 0.64086, 1, 1, 1, 1, 1)
+
+[node name="Attack0" type="Node2D"]
+script = ExtResource("1_w8wgo")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+z_index = 4
+material = SubResource("ShaderMaterial_jfv0c")
+emitting = false
+amount = 100
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.36
+randomness = 0.93
+emission_shape = 1
+emission_sphere_radius = 7.1
+spread = 78.24
+gravity = Vector2(-0.05, -1.31)
+initial_velocity_min = 34.3
+initial_velocity_max = 42.6
+angular_velocity_min = 23.3
+angular_velocity_max = 26.6
+angular_velocity_curve = SubResource("Curve_xc5gv")
+scale_amount_min = 0.0
+scale_amount_max = 3.0
+scale_amount_curve = SubResource("Curve_u7ep7")
+color_ramp = SubResource("Gradient_7wpr6")
+hue_variation_max = 1.0
