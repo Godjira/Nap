@@ -1,9 +1,9 @@
 [gd_resource type="TileSet" load_steps=3 format=3 uid="uid://bojyyv2q3n4cr"]
 
-[ext_resource type="Texture2D" uid="uid://bmj2batomvuht" path="res://Dungeon Gathering Free Version/Set 1.1.png" id="1_y7s67"]
+[ext_resource type="Texture2D" uid="uid://bmj2batomvuht" path="res://assets/Dungeon Gathering Free Version/Set 1.1.png" id="1_niix4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4pm8e"]
-texture = ExtResource("1_y7s67")
+texture = ExtResource("1_niix4")
 11:0/0 = 0
 11:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 11:0/0/physics_layer_0/angular_velocity = 0.0

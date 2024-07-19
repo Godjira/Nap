@@ -11,6 +11,8 @@ signal died
 @export var jump_speed = 8.0
 @export var mouse_sensitivity = 0.0015
 @export var rotation_speed = 12.0
+@export var ghost_node : PackedScene
+
 var velocity_sub_viewport = Vector3()
 var mobs_close = []
 
@@ -24,12 +26,14 @@ var default_healths = 10
 var helths = 10.0
 var max_helths = 10.
 var damage = 2.5
+var active_weapon
+var attacking
 
 # Variables from current context
 @onready var sub_viewport = $SubViewport
 @onready var camera = $Camera2D
 @onready var viewport_sprite = $ViewportSprite
-@onready var attack_collider = $Attack/CollisionShape2D
+@onready var particles = $GPUParticles2D
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var jumping = false
@@ -38,7 +42,11 @@ var running = false
 # Create rayscast from character to world
 @export var raycasts = []
 @export var lines = []
-@onready var helths_material = $"/root/PlayerUi/Control/Control/Sprite2D".material as ShaderMaterial
+@onready var helths_material = $"/root/PlayerUi/ParentControl/Helth/HelthTexture".material as ShaderMaterial
+
+func show_equipment():
+	$Equipment.show_items()
+	active_weapon = $Equipment.items[0]
 
 func _process(delta):
 	#Pass data to helths shader
@@ -47,8 +55,12 @@ func _process(delta):
 
 
 func _ready():
+	# Set the player to the Equipment node
+	$Equipment.player = self
 	# Because we use SubViewport node needs to get that from inner context
 	get_viewport_context()
+	# Equip items
+	show_equipment()
 
 func get_viewport_context():
 	# Get all the child nodes of the sub_viewport.
@@ -94,7 +106,7 @@ func get_move_input(delta):
 		running = false
 		anim_tree.set("parameters/conditions/running", running)
 		anim_tree.set("parameters/conditions/not running", !running)
-	# If the character is on the floor, set the speed to 80
+		
 	if direction:
 		velocity = direction * speed * delta * 50
 		var dir = Vector3(direction.x, 0, direction.y).rotated(Vector3.UP, camera_3D.rotation.y)
@@ -102,9 +114,9 @@ func get_move_input(delta):
 		var vl = velocity_sub_viewport * model.transform.basis
 		anim_tree.set("parameters/IWR/blend_position", Vector2(vl.x, -vl.z) / speed)
 	else:
-		velocity = Vector2.ZERO
+		velocity = lerp(velocity, Vector2(0.0, 0.0), 0.1)
 		velocity_sub_viewport = Vector3(0, velocity_sub_viewport.y, 0)
-		anim_tree.set("parameters/IWR/blend_position", Vector2.ZERO)
+		anim_tree.set("parameters/IWR/blend_position", velocity)
 
 func _physics_process(delta):
 	get_move_input(delta)
@@ -127,7 +139,10 @@ func _physics_process(delta):
 		anim_tree.set("parameters/conditions/jumping", false)
 		anim_tree.set("parameters/conditions/grounded", true)
 	last_floor = is_on_floor()
-
+	
+	# handle dash
+	if Input.is_action_just_pressed('dash'):
+		dash()
 
 func _unhandled_input(event):
 	# rotate the character model on mouse move
@@ -137,23 +152,28 @@ func _unhandled_input(event):
 		rot.y += event.relative.x * mouse_sensitivity
 		model.rotation = rot
 
-	# attack on left mouse button click
+	# handle attack
 	if Input.is_action_just_pressed("attack"):
+		if attacking: 
+				#print("Attack ignore, prev is not end yet!")
+				pass
+
+		attacking = true
 		if anim_state: anim_state.travel(attacks.pick_random())
+		# animate weapon mesh in 360 degree rotation
+		#var m = active_weapon.mesh as MeshInstance3D
+		var tween = get_tree().create_tween()
+		tween.tween_property(active_weapon.mesh, 'rotation_degrees:z',active_weapon.mesh.rotation_degrees.z+90,0.1)
+		tween.tween_property(active_weapon.mesh, 'rotation_degrees:z',active_weapon.mesh.rotation_degrees.z-90,0.1)
+		await tween.finished
 		attack()
+		
+	if Input.is_action_just_pressed("skill"):
+		$Skill0.run_skill(self)
+		
 
 func start():
 	show()
-
-func _on_attract_body_entered(body):
-	if body.is_in_group("Enemy"):
-		print("Mob attracted", body)
-		body.state = body.SURROUND
-
-func _on_attract_body_exited(body):
-	if body.is_in_group("Enemy"):
-		print("Mob stop be  attracted", body)
-		body.state = body.IDLE
 
 func _on_attack_body_entered(body):
 	if body.is_in_group("Enemy"):
@@ -197,3 +217,27 @@ func attack():
 func _on_died_timer_timeout():
 	died.emit()
 	$DiedTimer.stop()
+
+func add_ghost():
+	var ghost = ghost_node.instantiate()
+	ghost.set_property(global_position, $ViewportSprite.scale)
+	get_tree().current_scene.add_child(ghost)
+	# pass data to shader
+	var dash_direction = Vector2(velocity.x, velocity.y).normalized()
+	ghost.material.set_shader_parameter("dash_direction", dash_direction)
+
+
+func _on_ghost_timer_timeout():
+	add_ghost()
+		
+
+func dash():
+	particles.emitting = true
+	$GhostTimer.start()
+	# dash animation
+	var tween = get_tree().create_tween()
+	tween.tween_property(self, "position", global_position + velocity * 1.5, 0.20)
+	await tween.finished
+	$GhostTimer.stop()
+	particles.emitting = false
+	

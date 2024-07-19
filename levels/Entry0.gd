@@ -35,7 +35,6 @@ func new_game():
 
 
 func _on_start_timer_timeout():
-	print("start timer begin")
 	$MobTimer.start()
 	$ScoreTimer.start()
 
@@ -49,11 +48,13 @@ func _on_mob_timer_timeout():
 	mob_spawn_location.progress_ratio = randf()
 	# Set the mob's position to a random location.
 	mob.position = mob_spawn_location.position
-	mob.player = player
 	# Spawn the mob by adding it to the Main scene.
+	var randomG = RandomNumberGenerator.new()
+	var r = randomG.randf() * 0.04 
+	var node = mob.get_node("Sprite2D") as Sprite2D
+	if node: node.scale += Vector2(r, r)
 	add_child(mob)
 	mobs.push_back(mob)
-	print(mob)
 
 func _ready():
 	# get signal from ui_node called start_game

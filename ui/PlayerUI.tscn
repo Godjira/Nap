@@ -15,7 +15,7 @@ shader_parameter/glow_power = 8.0
 [node name="PlayerUI" type="CanvasLayer"]
 layer = 0
 
-[node name="Control" type="Control" parent="."]
+[node name="ParentControl" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,7 +23,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Control" type="Control" parent="Control"]
+[node name="Helth" type="Control" parent="ParentControl"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -33,7 +33,7 @@ offset_bottom = 40.0
 grow_horizontal = 0
 scale = Vector2(-9.92, 1)
 
-[node name="Sprite2D" type="Sprite2D" parent="Control/Control"]
+[node name="HelthTexture" type="Sprite2D" parent="ParentControl/Helth"]
 z_index = -1
 material = SubResource("ShaderMaterial_8dimf")
 position = Vector2(10.8871, 35)

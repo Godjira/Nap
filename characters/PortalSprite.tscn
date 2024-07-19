@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://bddt7o15jsmkl"]
+
+[ext_resource type="Texture2D" uid="uid://civ7ce3dixye3" path="res://assets/kenney-particle-pack-7e801dc538996622a91327bb1dd5879cf977aa09/addons/kenney_particle_pack/smoke_01.png" id="1_7gxof"]
+[ext_resource type="Shader" path="res://characters/PortalSprite.gdshader" id="1_ieup7"]
+[ext_resource type="Script" path="res://characters/Dash_0.gd" id="11_j2m4f"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a076j"]
+shader = ExtResource("1_ieup7")
+shader_parameter/dash_intensity = 0.01
+shader_parameter/dash_direction = Vector2(1, 0)
+
+[node name="PortalSprite" type="Sprite2D"]
+z_index = 10
+material = SubResource("ShaderMaterial_a076j")
+position = Vector2(542, 420)
+scale = Vector2(1.63, 1.63)
+texture = ExtResource("1_7gxof")
+script = ExtResource("11_j2m4f")

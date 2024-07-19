@@ -1,50 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://d1objpvwj456q"]
+[gd_scene load_steps=2 format=3 uid="uid://d1objpvwj456q"]
 
 [ext_resource type="Script" path="res://ui/Mouse.gd" id="1_q1k3b"]
-[ext_resource type="Shader" path="res://ui/Mouse.gdshader" id="2_hskhe"]
-[ext_resource type="Texture2D" uid="uid://3n5k7a1k47mg" path="res://assets/art/sword.png" id="2_k8mix"]
-[ext_resource type="Script" path="res://ui/MouseAnimatedSprite.gd" id="2_sajk2"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xcaq0"]
-shader = ExtResource("2_hskhe")
-shader_parameter/mouse_pos = Vector2(0.5, 0.5)
-shader_parameter/blurAmount = 0.1
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_v2yu4"]
-animations = [{
-"frames": [{
-"duration": 0.6,
-"texture": ExtResource("2_k8mix")
-}, {
-"duration": 1.0,
-"texture": ExtResource("2_k8mix")
-}, {
-"duration": 1.0,
-"texture": ExtResource("2_k8mix")
-}, {
-"duration": 1.0,
-"texture": ExtResource("2_k8mix")
-}, {
-"duration": 0.4,
-"texture": ExtResource("2_k8mix")
-}, {
-"duration": 1.0,
-"texture": ExtResource("2_k8mix")
-}],
-"loop": true,
-"name": &"default",
-"speed": 30.0
-}]
 
 [node name="Mouse" type="CanvasLayer"]
 process_mode = 3
 process_priority = -1
 process_physics_priority = -1
 script = ExtResource("1_q1k3b")
-
-[node name="Canvas" type="AnimatedSprite2D" parent="."]
-material = SubResource("ShaderMaterial_xcaq0")
-scale = Vector2(3.63014, 2.90955)
-sprite_frames = SubResource("SpriteFrames_v2yu4")
-speed_scale = 1.04
-script = ExtResource("2_sajk2")
