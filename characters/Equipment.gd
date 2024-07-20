@@ -14,7 +14,7 @@ var item_example = {
 # create equepmets array to store item object
 var items = [item_example]
 
-var player
+var player: Character0
 
 func show_items():
 	for item in items:

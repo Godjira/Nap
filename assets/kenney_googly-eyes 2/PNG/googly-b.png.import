@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bru315n4jyx6k"
-path="res://.godot/imported/outdoor.png-74da2f8e57e7bf69b16d88b699c5d9a4.ctex"
+uid="uid://bjsukhxbhxp2l"
+path="res://.godot/imported/googly-b.png-b9269a48f23213d49411a01495486ecd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://artwork/outdoor.png"
-dest_files=["res://.godot/imported/outdoor.png-74da2f8e57e7bf69b16d88b699c5d9a4.ctex"]
+source_file="res://assets/kenney_googly-eyes 2/PNG/googly-b.png"
+dest_files=["res://.godot/imported/googly-b.png-b9269a48f23213d49411a01495486ecd.ctex"]
 
 [params]
 

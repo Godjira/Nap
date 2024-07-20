@@ -1,19 +1,13 @@
 shader_type canvas_item;
-uniform float progress: hint_range(0.0, 1.0, 0.1) = 0.0;
-uniform sampler2D NOISE_PATTERN;
+uniform float progress;
 
 void vertex() {
 	// Called for every vertex the material is visible on.
 }
 
 void fragment() {
-	vec4 final = vec4(1.0);
-	// fire shader
-	final = vec4(0.8, 0.1, 0.1, 1.0);
-    vec4 noiseValue = texture(NOISE_PATTERN, UV);
-	final = mix(final, noiseValue, sin(TIME));
-	COLOR.rgb = final.rgb;
-	
+	// Called for every pixel the material is visible on.
+	COLOR = vec4(vec3(0.8, 0.0, 0.0), COLOR.a + progress);
 }
 
 //void light() {

@@ -2,7 +2,7 @@ extends Node2D
 
 @onready var tileMap = $TileMap
 @onready var spriteGen = $SpriteGen
-@onready var player = $TileMap/Character0
+@onready var player = $Character0
 @export var Mob = preload("res://characters/Mob0.tscn")
 
 # Called when the node enters the scene tree for the first time.
@@ -19,14 +19,14 @@ func _ready():
 	print(tilePositions)
 	# Sort global positions by distance from the player
 	tilePositions.sort_custom(func(a: TilePosition, b: TilePosition) -> bool:
-		return a.global_position.distance_squared_to(player.global_position) < b.global_pos.distance_squared_to(player.global_position)
+		return a.global_position.distance_squared_to(player.global_position) < b.global_position.distance_squared_to(player.global_position)
 )
 	#Create outdoor
 
 	var doorSprite = Sprite2D.new()
-	doorSprite.position = 	tilePositions.back().globalPos
-	tileMap.get_surrounding_cells()
-	doorSprite.texture = load("res://artwork/outdoor.png")
+	doorSprite.position = 	tilePositions.back().global_position
+	#tileMap.get_surrounding_cells()
+	doorSprite.texture = load("res://assets/artwork/outdoor.png")
 	doorSprite.scale = Vector2(0.1, 0.1)
 	add_child(doorSprite)
 	

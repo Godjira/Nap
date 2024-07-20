@@ -1,35 +1,29 @@
-[gd_scene load_steps=10 format=3 uid="uid://b5euuwsw60c5n"]
+[gd_scene load_steps=8 format=3 uid="uid://b5euuwsw60c5n"]
 
 [ext_resource type="Script" path="res://characters/Mob0.gd" id="1_j2x42"]
 [ext_resource type="PackedScene" uid="uid://bkt7i6qo3g88a" path="res://characters/skeleton_rogue.tscn" id="1_wvcuk"]
-[ext_resource type="PackedScene" uid="uid://df0o1ljcagn8i" path="res://effects/Attack_0.tscn" id="2_fbvwp"]
 [ext_resource type="Shader" path="res://levels/PixelSprite.gdshader" id="3_qhe0e"]
-[ext_resource type="PackedScene" uid="uid://cns2t7xs840n2" path="res://characters/MobSensor.tscn" id="4_hk7gu"]
 
 [sub_resource type="World3D" id="World3D_n6026"]
-resource_local_to_scene = true
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l5yfe"]
+radius = 5.0
+height = 20.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dlt7s"]
-resource_local_to_scene = true
 shader = ExtResource("3_qhe0e")
 shader_parameter/hit_intesity = 0.0
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_3ijof"]
 viewport_path = NodePath("SubViewport")
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_df58b"]
-radius = 4.0
-height = 8.0
-
 [node name="Mob0" type="CharacterBody2D" groups=["Enemy"]]
 z_index = 6
 y_sort_enabled = true
 position = Vector2(601, 575)
-collision_layer = 11
-collision_mask = 11
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("1_j2x42")
-
-[node name="Attack0" parent="." instance=ExtResource("2_fbvwp")]
 
 [node name="SubViewport" type="SubViewport" parent="."]
 world_3d = SubResource("World3D_n6026")
@@ -42,6 +36,15 @@ size_2d_override_stretch = true
 [node name="Skeleton_Rogue" parent="SubViewport" instance=ExtResource("1_wvcuk")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.298001, 0)
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_index = 1
+position = Vector2(-1, 8.00001)
+scale = Vector2(0.811105, 0.236474)
+shape = SubResource("CapsuleShape2D_l5yfe")
+debug_color = Color(0, 0.6, 0.7, 0.42)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_dlt7s")
 position = Vector2(-0.999985, 1.00002)
@@ -49,20 +52,7 @@ scale = Vector2(0.0479636, 0.0454462)
 texture = SubResource("ViewportTexture_3ijof")
 
 [node name="AttackTimer" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 2.0
 
-[node name="MobSensor" parent="." instance=ExtResource("4_hk7gu")]
-position = Vector2(-1, 4)
-scale = Vector2(1.36, 1.36)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, 5)
-shape = SubResource("CapsuleShape2D_df58b")
-
-[node name="IdleTimer" type="Timer" parent="."]
-
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
-[connection signal="area_entered" from="MobSensor" to="." method="_on_mob_sensor_area_entered"]
-[connection signal="body_entered" from="MobSensor" to="." method="_on_mob_sensor_body_entered"]
-[connection signal="body_exited" from="MobSensor" to="." method="_on_mob_sensor_body_exited"]
-[connection signal="timeout" from="IdleTimer" to="." method="_on_idle_timer_timeout"]

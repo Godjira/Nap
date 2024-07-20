@@ -1,29 +1,38 @@
-[gd_scene load_steps=8 format=3 uid="uid://c3rxgi0earrg8"]
+[gd_scene load_steps=10 format=3 uid="uid://c3rxgi0earrg8"]
 
 [ext_resource type="Script" path="res://effects/Skill_0.gd" id="1_545hs"]
 [ext_resource type="Shader" path="res://effects/Skill_0.gdshader" id="2_nr2m4"]
 [ext_resource type="PackedScene" uid="uid://bdghcashv30ww" path="res://effects/Explosion.tscn" id="3_y5m2q"]
+[ext_resource type="Texture2D" uid="uid://bp6adnrd1gi4v" path="res://assets/kenney-particle-pack-7e801dc538996622a91327bb1dd5879cf977aa09/addons/kenney_particle_pack/circle_05.png" id="3_ytho7"]
+
+[sub_resource type="Gradient" id="Gradient_5loh6"]
+offsets = PackedFloat32Array(0, 0.814181, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.677262, 0.677262, 0.677262, 1, 1, 1, 1, 1)
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_35atj"]
+color_ramp = SubResource("Gradient_5loh6")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ppkoq"]
 resource_local_to_scene = true
 shader = ExtResource("2_nr2m4")
 shader_parameter/progress = 0.0
+shader_parameter/NOISE_PATTERN = SubResource("NoiseTexture2D_35atj")
 
 [sub_resource type="SphereMesh" id="SphereMesh_hegxe"]
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_q5ags"]
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_dldcg"]
+radius = 15.5536
 
 [node name="Skill0" type="Node2D"]
+z_index = 10
+scale = Vector2(2, 2)
 script = ExtResource("1_545hs")
 
 [node name="Mesh" type="MeshInstance2D" parent="."]
 material = SubResource("ShaderMaterial_ppkoq")
-position = Vector2(0, 1.19209e-07)
-scale = Vector2(3.963, 3.96)
+scale = Vector2(2.83627, 5)
 mesh = SubResource("SphereMesh_hegxe")
-texture = SubResource("CanvasTexture_q5ags")
+texture = ExtResource("3_ytho7")
 
 [node name="Void" type="Area2D" parent="Mesh"]
 position = Vector2(0, -3.40598e-08)
@@ -31,8 +40,8 @@ scale = Vector2(0.035, 0.035)
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Mesh/Void"]
-position = Vector2(0, 1.19209e-07)
-scale = Vector2(3.5034, 3.5)
+position = Vector2(0, 9.73137e-07)
+scale = Vector2(1.29534, 0.8)
 shape = SubResource("CircleShape2D_dldcg")
 
 [node name="SkillEnd" type="Timer" parent="."]
@@ -40,7 +49,6 @@ wait_time = 2.0
 one_shot = true
 
 [node name="Explosion" parent="." instance=ExtResource("3_y5m2q")]
-position = Vector2(0, -1.56674e-08)
 scale = Vector2(1.13119, 1.13143)
 
 [connection signal="body_entered" from="Mesh/Void" to="." method="_on_void_body_entered"]

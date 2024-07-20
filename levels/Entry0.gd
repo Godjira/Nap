@@ -3,7 +3,7 @@ extends Node
 @export var mob_scene: PackedScene
 @export var mobs = Array()
 
-@onready var player = $TileMap/Character0
+@onready var player = $Character0
 
 @onready var ui_node = $"/root/ScreenUi"
 
