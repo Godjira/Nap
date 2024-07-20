@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" path="res://characters/Character0.gd" id="1_18n1n"]
 [ext_resource type="Shader" path="res://levels/PixelSprite.gdshader" id="2_lshbq"]
-[ext_resource type="PackedScene" uid="uid://c3rxgi0earrg8" path="res://effects/Skill_0.tscn" id="2_vkea6"]
 [ext_resource type="PackedScene" uid="uid://bkt7i6qo3g88a" path="res://characters/skeleton_rogue.tscn" id="4_kdrq0"]
 [ext_resource type="Script" path="res://characters/Equipment.gd" id="4_uuubf"]
 [ext_resource type="PackedScene" uid="uid://bddt7o15jsmkl" path="res://characters/PortalSprite.tscn" id="4_v48we"]
 [ext_resource type="Script" path="res://characters/Camera2D.gd" id="5_3tudj"]
+[ext_resource type="PackedScene" uid="uid://i3nv1x3pi74s" path="res://effects/Attack_1.tscn" id="8_u066b"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cork7"]
 radius = 15.0
@@ -51,10 +51,9 @@ slide_on_ceiling = false
 script = ExtResource("1_18n1n")
 ghost_node = ExtResource("4_v48we")
 
-[node name="Skill0" parent="." instance=ExtResource("2_vkea6")]
-
 [node name="Attack" type="Area2D" parent="." groups=["Player"]]
-scale = Vector2(0.57, 0.57)
+position = Vector2(0, 0.804796)
+scale = Vector2(0.87, 0.87)
 collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Attack"]
@@ -124,6 +123,8 @@ show_behind_parent = true
 emitting = false
 amount = 40
 process_material = SubResource("ParticleProcessMaterial_g0kc7")
+
+[node name="Attack1" parent="." instance=ExtResource("8_u066b")]
 
 [connection signal="hit" from="." to="." method="_on_hit"]
 [connection signal="body_entered" from="Attack" to="." method="_on_attack_body_entered"]

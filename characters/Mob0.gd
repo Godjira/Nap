@@ -1,22 +1,14 @@
 extends CharacterBody2D
 class_name Mob0
-
-# Variables from current context
+#
+## Variables from current context
 @onready var sub_viewport := $SubViewport
 @onready var sprite_texture := $Sprite2D
 @onready var attack_timer := $AttackTimer
 
-var all_directions : Array[Vector2] = [
-	# 8 directions
-	Vector2(1, 0),
-	Vector2(1, 1),
-	Vector2(0, 1),
-	Vector2(-1, 1),
-	Vector2(-1, 0),
-	Vector2(-1, -1),
-	Vector2(0, -1),
-	Vector2(1, -1)
-]
+var all_directions : Array[Vector2] =[Vector2.RIGHT, Vector2.LEFT, Vector2.UP, Vector2.DOWN, 
+					  Vector2(1, 1).normalized(), Vector2(1, -1).normalized(), 
+					  Vector2(-1, 1).normalized(), Vector2(-1, -1).normalized()]
 # for avoiding collision tails
 var dangers : Array[int] = [0,0,0,0,0,0,0,0]
 
@@ -31,13 +23,13 @@ var target: Vector2
 var velocity_sub_viewport := Vector3.ZERO
 var attack_happens := false
 var damage := 1.0
-var helths  := 3.0
+var helths  := 10.0
 var max_helths := 3.0
 var is_dead := false
 var base_position: Vector2
 var idle_timer: Timer
-var speed := 20
-var attack_area_radius := 20
+var speed := 35
+var attack_area_radius := 10
 
 var attacks : Array[String] = [
 	"1h_slice_diagonal",
@@ -72,11 +64,12 @@ func get_viewport_context() -> void:
 
 func move(target: Vector2, delta: float) -> void:
 	if is_dead: return
-	var direction  = (target - global_position).normalized()
+	var direction = (target - global_position).normalized()
 	var desired_velocity = direction * speed
 	var steering = (desired_velocity - velocity) * delta
 	velocity += steering
 	move_and_slide()
+
 	
 func move_to_idle(delta:float) -> void:
 	if is_dead: return
@@ -86,21 +79,10 @@ func move_to_idle(delta:float) -> void:
 	var steering = (direction - velocity) * delta * 2.5
 	# add steering to velocity
 	velocity += steering
-
 	# move and slide
 	move_and_slide()
 	
-	
-func _physics_process(delta:float) -> void:
-	if state == DEAD:
-		return
-	else: if state == IDLE:
-			move_to_idle(delta)
-	else: if state == HIT:
-		return
-	else:
-		pick_direction_move(delta)
-		#update 3d inside sprite texture
+func pick_rotation():
 	if player:
 		var direction = velocity.angle_to(player.global_position)
 		var vl = velocity_sub_viewport * model.transform.basis
@@ -113,57 +95,58 @@ func _physics_process(delta:float) -> void:
 		# rotate Y axis of 3d model
 		model.rotation.y = atan2(-velocity.x, -velocity.y)	
 		anim_tree.set("parameters/IWR/blend_position", vl)
+	
+func apply_avoidance() -> void:
+	var space_state = get_world_2d().direct_space_state
+	for i in range(all_directions.size()):
+		var direction := all_directions[i]
+		var query := PhysicsRayQueryParameters2D.create(global_position, global_position + direction * avoidance_distance)
+		query.collision_mask = 0b01  # Adjust this mask to match your collision layers
+		var result := space_state.intersect_ray(query)
+		if result:
+			velocity += direction * avoidance_force * (1.0 - result.position.distance_to(global_position) / avoidance_distance)
+
+	
+func _physics_process(delta:float) -> void:
+	#update 3d inside sprite texture
+	pick_rotation()
+	apply_avoidance()
+	if state == DEAD:
+		return
+	else: if state == IDLE:
+			move_to_idle(delta)
+	else: if state == HIT:
+		return
+	else:
+		pick_direction_move(delta)
+	
+	
+	
 
 func pick_direction_move(delta:float) -> void:
 	if is_dead : return
 
 	# get current position
-	var current_position = global_position
+	var current_position := global_position
 	# get vector towards player
-	var direction 
+	var direction : Vector2
 	if player:
 		direction = (player.global_position - current_position).normalized()
-		
 	else:
 		direction = (base_position - current_position).normalized()
 	# get local towards player
 	var local_direction = transform.affine_inverse().basis_xform(direction)
 	# normalize local direction
 	local_direction = local_direction.normalized()
-
-	# get dot product
-	var max_dot := -1
-	var max_dot_index := 0
-	var dot_products : Array[float] = []
-	for i in range(all_directions.size()):
-		var dot = all_directions[i].dot(local_direction)
-		if dot > max_dot:
-			dot_products.append(dot)
-			max_dot = dot
-			max_dot_index = i
-	# get new direction
-	var new_direction = all_directions[max_dot_index]
-	# get new position
-	var new_position = current_position + new_direction
-	# check the distance between new position and player if player exists
-	if player:
-		var distance := new_position.distance_to(player.global_position)
-		#print("distance", distance)
-		if distance < attack_area_radius:
-			# if distance is less than 50, move to the close position usin sin and cos
-			var angle := atan2(player.global_position.y - current_position.y, player.global_position.x - current_position.x)
-			var dir := Vector2(cos(angle), sin(angle))
-			move(dir, delta)
-		else:
-			move(new_position, delta)
-	else:
-		# move to new position
-		move(new_position, delta)
+	print(direction)
+	move(player.global_position, delta)
 
 func _ready() -> void:
 	# Because we use SubViewport node needs to get that from inner context
 	get_viewport_context()
 	base_position = global_position
+	$HelthsBar.max_value = max_helths
+	$HelthsBar.value = helths
 	
 func _on_attack_timer_timeout():
 	if not is_dead: 
@@ -179,7 +162,7 @@ func handle_hit() -> void:
 func on_hit(damage: float) -> void:
 	if not is_dead: 
 		$Attack0.run_effect()
-		self.helths = min(0, self.helths - damage)
+		self.helths =  self.helths - damage
 		#start hit shader animation
 		var tween := get_tree().create_tween()
 		tween.tween_property(sprite_texture.material, "shader_parameter/hit_intesity", 0.5, 0.3)
@@ -187,6 +170,9 @@ func on_hit(damage: float) -> void:
 		var tween2 := get_tree().create_tween()
 		tween2.tween_property(sprite_texture.material, "shader_parameter/hit_intesity", 0.0, 0.3)
 		await tween2.finished
+		
+		$HelthsBar.value = self.helths
+		
 		# death mob
 		if self.helths <= 0:
 			# play death animation
@@ -214,8 +200,6 @@ func _on_mob_sensor_body_exited(body: CharacterBody2D) -> void:
 	# after a while return to idle pose
 	if body.is_in_group("Player"):
 		$IdleTimer.start()
-		
-		
 
 func _on_mob_sensor_area_entered(area:Area2D):
 	var mob_collision = get_collision_mask()
@@ -251,8 +235,8 @@ func _on_mob_sensor_area_entered(area:Area2D):
 				# set danger to 2
 				dangers.insert(closest_direction_index, 2)
 
-var avoidance_distance := 10
-var avoidance_force := 20
+var avoidance_distance := 1
+var avoidance_force := 10
 
 func _process(delta:float) -> void:
 	# Move mob away from high collision area

@@ -24,7 +24,7 @@ static var camera_3D :Camera3D = null
 var default_healths := 10
 var helths := 10.0
 var max_helths := 10.
-var damage := 2.5
+var damage := 6
 var active_weapon
 var attacking: bool
 
@@ -87,7 +87,7 @@ func get_move_input(delta: float) -> void:
 	# Handle movement
 	# If the sprint key is pressed, set the speed to 120, otherwise set it to 80
 	if Input.is_action_pressed('sprint'):
-		speed = lerp(speed, 120., 0.1)
+		speed = 150
 		running = true
 		# running animation
 		anim_tree.set("parameters/conditions/running", running)
@@ -112,6 +112,21 @@ func get_move_input(delta: float) -> void:
 func _physics_process(delta:float) -> void:
 	get_move_input(delta)
 	move_and_slide()
+	
+	# handle attack
+	if Input.is_action_just_pressed("attack"):
+		attacking = true
+		var mouse_dir := get_global_mouse_position()  - get_global_position()
+		$Attack1.set_attack_direction(mouse_dir)
+		print(mouse_dir)
+		if anim_state: anim_state.travel(attacks.pick_random())
+		# animate weapon mesh in 360 degree rotation
+		#var m = active_weapon.mesh as MeshInstance3D
+		var tween = get_tree().create_tween()
+		tween.tween_property(active_weapon.mesh, 'rotation_degrees:z',active_weapon.mesh.rotation_degrees.z+90,0.1)
+		tween.tween_property(active_weapon.mesh, 'rotation_degrees:z',active_weapon.mesh.rotation_degrees.z-90,0.1)
+		await tween.finished
+		attack()
 
 	if velocity.length() > 0.1:
 		# Rotate the character model to the direction of movement
@@ -141,26 +156,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		var rot = model.rotation
 		rot.y += event.relative.x * mouse_sensitivity
 		model.rotation = rot
-
-	# handle attack
-	if Input.is_action_just_pressed("attack"):
-		if attacking: 
-				#print("Attack ignore, prev is not end yet!")
-				pass
-
-		attacking = true
-		if anim_state: anim_state.travel(attacks.pick_random())
-		# animate weapon mesh in 360 degree rotation
-		#var m = active_weapon.mesh as MeshInstance3D
-		var tween = get_tree().create_tween()
-		tween.tween_property(active_weapon.mesh, 'rotation_degrees:z',active_weapon.mesh.rotation_degrees.z+90,0.1)
-		tween.tween_property(active_weapon.mesh, 'rotation_degrees:z',active_weapon.mesh.rotation_degrees.z-90,0.1)
-		await tween.finished
-		attack()
-		
-	if Input.is_action_just_pressed("skill"):
-		$Skill0.run_skill(self)
-		
 
 func start() -> void:
 	show()
@@ -202,7 +197,7 @@ func attack() -> void:
 	# check collision in attack area
 	if mobs_close.size() > 0:
 		for mob in mobs_close:
-			if not mob.is_dead: mob.on_hit(self.damage)
+			mob.on_hit(self.damage)
 
 func _on_died_timer_timeout() -> void:
 	died.emit()
@@ -226,7 +221,7 @@ func dash() -> void:
 	$GhostTimer.start()
 	
 	var dash_duration := 0.20  # Duration of the dash in seconds
-	var dash_distance := velocity * 1.5  # Total distance to dash
+	var dash_distance := velocity * .5  # Total distance to dash
 	var dash_start_pos := global_position
 	var elapsed_time := 0.0
 	

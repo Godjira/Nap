@@ -2,7 +2,7 @@ extends Node2D
 
 @onready var tileMap = $TileMap
 @onready var spriteGen = $SpriteGen
-@onready var player = $TileMap/Character0
+@onready var player = $Character0
 @export var Mob = preload("res://characters/Mob0.tscn")
 
 # Called when the node enters the scene tree for the first time.
