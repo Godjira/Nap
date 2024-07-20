@@ -1,0 +1,184 @@
+[gd_scene load_steps=16 format=3 uid="uid://cgyifff5j0ni8"]
+
+[ext_resource type="Script" path="res://characters/Mob1.gd" id="1_vq1ej"]
+[ext_resource type="PackedScene" uid="uid://df0o1ljcagn8i" path="res://effects/Attack_0.tscn" id="2_lvwpk"]
+[ext_resource type="Shader" path="res://characters/Mob1.gdshader" id="4_6bw22"]
+[ext_resource type="Texture2D" uid="uid://vqtx4csripij" path="res://assets/kenney_googly-eyes 2/PNG/googly-d.png" id="4_yxguh"]
+[ext_resource type="PackedScene" uid="uid://cns2t7xs840n2" path="res://characters/MobSensor.tscn" id="5_t8k74"]
+[ext_resource type="PackedScene" uid="uid://c5i2ndwp50lva" path="res://characters/HealthBar.tscn" id="6_e2kcv"]
+[ext_resource type="PackedScene" uid="uid://c3rxgi0earrg8" path="res://effects/Skill_0.tscn" id="7_6355l"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4i8bp"]
+resource_local_to_scene = true
+shader = ExtResource("4_6bw22")
+shader_parameter/color1 = Color(0.794437, 0, 0.128413, 1)
+shader_parameter/color2 = Color(0.0950947, 0.525334, 1.24149e-07, 1)
+shader_parameter/threshold = 0.4
+shader_parameter/intensity = 1.0
+shader_parameter/opacity = 1.0
+shader_parameter/glow_color = Color(0.25014, 0.482723, 0.98682, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7ycs5"]
+radius = 3.0
+
+[sub_resource type="GDScript" id="GDScript_faxhs"]
+script/source = "extends Node2D
+signal raycasted
+
+
+func _ready():
+	pass
+
+func _process(delta):
+	pass
+
+
+func _on_area_entered(area):
+	pass # Replace with function body.
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wp6e1"]
+radius = 31.257
+
+[sub_resource type="Theme" id="Theme_wswyn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wcqx1"]
+bg_color = Color(0.207837, 0.476417, 2.25265e-07, 1)
+
+[sub_resource type="GDScript" id="GDScript_e8wls"]
+script/source = "extends Control
+@onready var bg_theme = self.theme
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	bg_theme.set_color(\"fill\", \"Colors\", Color.BLUE)
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	
+	pass
+"
+
+[sub_resource type="GDScript" id="GDScript_h6ei6"]
+script/source = "extends Node2D
+
+func _ready():
+	$Mesh.hide()
+
+var active := false
+var player : CharacterBody2D
+@onready var voidNode = $Void
+@onready var explosionNode = $Explosion
+var acceleration := 0.5
+var velocity := Vector2.ZERO
+var speed := 5
+var target := Vector2.ZERO
+var damage := 1.5
+var idle := false
+
+func run_skill(p:CharacterBody2D, _target:Vector2):
+	if !active and !idle:
+		print(\"run skill\")
+		player = p
+		active = true
+		$SkillEnd.start()
+		$Mesh.show()
+		target = _target
+
+func end_skill():
+	if active:
+		explosionNode.global_position = $Mesh.global_position
+		explosionNode.run_effect()
+		$Mesh.global_position = player.global_position
+		$Mesh.hide()
+	idle = true
+
+func _on_skill_end_timeout():
+	if not idle:
+		end_skill()
+	active = false
+	idle = false
+	
+func _process(delta):
+	if active:
+		var m = $Mesh.material as ShaderMaterial
+		$Mesh.global_position = lerp($Mesh.global_position, target, 0.33)
+		var distance = $Mesh.global_position.distance_to(target)
+		m.set_shader_parameter(\"progress\", distance * 0.01)
+		if distance < 2.5:
+			end_skill()
+
+func _on_void_body_entered(body):
+	if active and not idle:
+		if body.is_in_group(\"Player\"):
+			end_skill()
+			body.on_hit(damage)
+		if body.is_in_group(\"Enemy\"):
+			body.on_hit(damage * 0.33)
+"
+
+[node name="Mob1" type="CharacterBody2D" groups=["Enemy"]]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_vq1ej")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 5
+material = SubResource("ShaderMaterial_4i8bp")
+position = Vector2(1.82054e-12, 1.01887)
+rotation = 3.14159
+scale = Vector2(0.580711, -0.536159)
+texture = ExtResource("4_yxguh")
+
+[node name="Area2D" type="Area2D" parent="."]
+scale = Vector2(17.57, 17.57)
+collision_layer = 0
+collision_mask = 0
+
+[node name="Attack" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0.049776, -1.77636e-15)
+shape = SubResource("CircleShape2D_7ycs5")
+debug_color = Color(1.64784e-06, 0.621342, 0.555447, 0.42)
+
+[node name="Attack0" parent="." instance=ExtResource("2_lvwpk")]
+
+[node name="AttackTimer" type="Timer" parent="."]
+
+[node name="MobSensor" parent="." instance=ExtResource("5_t8k74")]
+position = Vector2(-1, 4)
+scale = Vector2(4.86, 4.86)
+script = SubResource("GDScript_faxhs")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 0)
+shape = SubResource("CircleShape2D_wp6e1")
+debug_color = Color(0, 0, 0, 0.42)
+
+[node name="IdleTimer" type="Timer" parent="."]
+
+[node name="HelthsBar" parent="." instance=ExtResource("6_e2kcv")]
+z_index = 10
+offset_left = -16.0
+offset_top = 20.0
+offset_right = 18.0
+offset_bottom = 25.0
+size_flags_horizontal = 4
+tooltip_text = "Helths"
+theme = SubResource("Theme_wswyn")
+theme_override_styles/fill = SubResource("StyleBoxFlat_wcqx1")
+value = 0.0
+rounded = true
+script = SubResource("GDScript_e8wls")
+
+[node name="Skill0" parent="." instance=ExtResource("7_6355l")]
+scale = Vector2(3.86, 3.86)
+script = SubResource("GDScript_h6ei6")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
+[connection signal="area_entered" from="MobSensor" to="." method="_on_mob_sensor_area_entered"]
+[connection signal="body_entered" from="MobSensor" to="." method="_on_mob_sensor_body_entered"]
+[connection signal="body_exited" from="MobSensor" to="." method="_on_mob_sensor_body_exited"]
+[connection signal="timeout" from="IdleTimer" to="." method="_on_idle_timer_timeout"]

@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://i3nv1x3pi74s"]
+
+[ext_resource type="Shader" path="res://effects/Attack_1.gdshader" id="1_3x80w"]
+[ext_resource type="Texture2D" uid="uid://lbd1eabkci1n" path="res://assets/kenney-particle-pack-7e801dc538996622a91327bb1dd5879cf977aa09/addons/kenney_particle_pack/slash_04.png" id="1_h1ali"]
+[ext_resource type="Script" path="res://effects/Attack_1.gd" id="2_opyk1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yeipg"]
+shader = ExtResource("1_3x80w")
+shader_parameter/progress = null
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k3iq3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_h1ali")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Attack1" type="AnimatedSprite2D"]
+visible = false
+show_behind_parent = true
+z_index = 1
+material = SubResource("ShaderMaterial_yeipg")
+position = Vector2(0, 1.90735e-06)
+scale = Vector2(0.05, 0.05)
+sprite_frames = SubResource("SpriteFrames_k3iq3")
+script = ExtResource("2_opyk1")
+
+[node name="EffectTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="EffectTimer" to="." method="_on_effect_timer_timeout"]

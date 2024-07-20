@@ -1,24 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://cns2t7xs840n2"]
+[gd_scene load_steps=3 format=3 uid="uid://cns2t7xs840n2"]
 
 [ext_resource type="Script" path="res://characters/MobSensor.gd" id="1_qxxv4"]
-
-[sub_resource type="SeparationRayShape2D" id="SeparationRayShape2D_tb12v"]
-length = 50.0
-
-[sub_resource type="SeparationRayShape2D" id="SeparationRayShape2D_gdsxt"]
-length = 35.0
-
-[sub_resource type="SeparationRayShape2D" id="SeparationRayShape2D_4l3cj"]
-length = 50.0
-
-[sub_resource type="SeparationRayShape2D" id="SeparationRayShape2D_fmdha"]
-length = 35.0
-
-[sub_resource type="SeparationRayShape2D" id="SeparationRayShape2D_jsecg"]
-length = 35.0
-
-[sub_resource type="SeparationRayShape2D" id="SeparationRayShape2D_bssag"]
-length = 35.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jg844"]
 resource_local_to_scene = true
@@ -29,92 +11,6 @@ scale = Vector2(0.52, 0.52)
 collision_layer = 15
 collision_mask = 15
 script = ExtResource("1_qxxv4")
-
-[node name="Node2D" type="Node2D" parent="."]
-visible = false
-rotation = 0.0471239
-
-[node name="1" type="CollisionShape2D" parent="Node2D"]
-shape = SubResource("SeparationRayShape2D_tb12v")
-debug_color = Color(0.388875, 0.598527, 0.362032, 0.42)
-
-[node name="2" type="CollisionShape2D" parent="Node2D"]
-rotation = 0.785398
-shape = SubResource("SeparationRayShape2D_gdsxt")
-debug_color = Color(0.388875, 0.598527, 0.362032, 0.42)
-
-[node name="3" type="CollisionShape2D" parent="Node2D"]
-rotation = 1.5708
-shape = SubResource("SeparationRayShape2D_4l3cj")
-debug_color = Color(0.388875, 0.598527, 0.362032, 0.42)
-
-[node name="4" type="CollisionShape2D" parent="Node2D"]
-rotation = 2.35619
-shape = SubResource("SeparationRayShape2D_fmdha")
-debug_color = Color(0.388875, 0.598527, 0.362032, 0.42)
-
-[node name="5" type="CollisionShape2D" parent="Node2D"]
-rotation = -3.14159
-shape = SubResource("SeparationRayShape2D_tb12v")
-debug_color = Color(0.388875, 0.598527, 0.362032, 0.42)
-
-[node name="6" type="CollisionShape2D" parent="Node2D"]
-rotation = -2.35619
-shape = SubResource("SeparationRayShape2D_jsecg")
-debug_color = Color(0.388875, 0.598527, 0.362032, 0.42)
-
-[node name="7" type="CollisionShape2D" parent="Node2D"]
-rotation = -1.5708
-shape = SubResource("SeparationRayShape2D_tb12v")
-debug_color = Color(0.388875, 0.598527, 0.362032, 0.42)
-
-[node name="8" type="CollisionShape2D" parent="Node2D"]
-rotation = -0.785398
-shape = SubResource("SeparationRayShape2D_bssag")
-debug_color = Color(0.388875, 0.598527, 0.362032, 0.42)
-
-[node name="Node2D2" type="Node2D" parent="."]
-visible = false
-rotation = 0.382227
-
-[node name="1" type="CollisionShape2D" parent="Node2D2"]
-shape = SubResource("SeparationRayShape2D_tb12v")
-debug_color = Color(0.388875, 0.598527, 0.362032, 0.42)
-
-[node name="2" type="CollisionShape2D" parent="Node2D2"]
-rotation = 0.785398
-shape = SubResource("SeparationRayShape2D_gdsxt")
-debug_color = Color(0.388875, 0.598527, 0.362032, 0.42)
-
-[node name="3" type="CollisionShape2D" parent="Node2D2"]
-rotation = 1.5708
-shape = SubResource("SeparationRayShape2D_4l3cj")
-debug_color = Color(0.388875, 0.598527, 0.362032, 0.42)
-
-[node name="4" type="CollisionShape2D" parent="Node2D2"]
-rotation = 2.35619
-shape = SubResource("SeparationRayShape2D_fmdha")
-debug_color = Color(0.388875, 0.598527, 0.362032, 0.42)
-
-[node name="5" type="CollisionShape2D" parent="Node2D2"]
-rotation = -3.14159
-shape = SubResource("SeparationRayShape2D_tb12v")
-debug_color = Color(0.388875, 0.598527, 0.362032, 0.42)
-
-[node name="6" type="CollisionShape2D" parent="Node2D2"]
-rotation = -2.35619
-shape = SubResource("SeparationRayShape2D_jsecg")
-debug_color = Color(0.388875, 0.598527, 0.362032, 0.42)
-
-[node name="7" type="CollisionShape2D" parent="Node2D2"]
-rotation = -1.5708
-shape = SubResource("SeparationRayShape2D_tb12v")
-debug_color = Color(0.388875, 0.598527, 0.362032, 0.42)
-
-[node name="8" type="CollisionShape2D" parent="Node2D2"]
-rotation = -0.785398
-shape = SubResource("SeparationRayShape2D_bssag")
-debug_color = Color(0.388875, 0.598527, 0.362032, 0.42)
 
 [node name="Area" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_jg844")
