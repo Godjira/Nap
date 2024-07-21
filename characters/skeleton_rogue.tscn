@@ -91,36 +91,36 @@ animation = &"Death_A"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_y272c"]
 animation = &"Dodge_Forward"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ke1i4"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_k48al"]
 animation = &"Idle_B"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_oa53q"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_j7hjf"]
 animation = &"Running_C"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_cch2e"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gy5ho"]
 animation = &"Walking_Backwards"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_58jm0"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_40uw5"]
 animation = &"Running_Strafe_Right"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_whr4q"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gqoqm"]
 animation = &"Running_Strafe_Left"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_lby28"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qcwts"]
 animation = &"Idle"
 
 [sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_u3ito"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_ke1i4")
+blend_point_0/node = SubResource("AnimationNodeAnimation_k48al")
 blend_point_0/pos = Vector2(0, 0)
-blend_point_1/node = SubResource("AnimationNodeAnimation_oa53q")
+blend_point_1/node = SubResource("AnimationNodeAnimation_j7hjf")
 blend_point_1/pos = Vector2(0, 1)
-blend_point_2/node = SubResource("AnimationNodeAnimation_cch2e")
+blend_point_2/node = SubResource("AnimationNodeAnimation_gy5ho")
 blend_point_2/pos = Vector2(0, -1)
-blend_point_3/node = SubResource("AnimationNodeAnimation_58jm0")
+blend_point_3/node = SubResource("AnimationNodeAnimation_40uw5")
 blend_point_3/pos = Vector2(1, 0)
-blend_point_4/node = SubResource("AnimationNodeAnimation_whr4q")
+blend_point_4/node = SubResource("AnimationNodeAnimation_gqoqm")
 blend_point_4/pos = Vector2(-1, 0)
-blend_point_5/node = SubResource("AnimationNodeAnimation_lby28")
+blend_point_5/node = SubResource("AnimationNodeAnimation_qcwts")
 blend_point_5/pos = Vector2(0, 0)
 sync = true
 
@@ -229,7 +229,7 @@ states/Running_A/node = SubResource("AnimationNodeAnimation_o4txl")
 states/Running_A/position = Vector2(640.237, 178.163)
 states/Start/position = Vector2(187.5, 100.291)
 transitions = ["Start", "IWR", SubResource("AnimationNodeStateMachineTransition_q704d"), "IWR", "Interact", SubResource("AnimationNodeStateMachineTransition_6fcmc"), "Interact", "IWR", SubResource("AnimationNodeStateMachineTransition_rsqwi"), "1h_attack_chop", "IWR", SubResource("AnimationNodeStateMachineTransition_2rpqi"), "IWR", "1h_attack_chop", SubResource("AnimationNodeStateMachineTransition_aloid"), "1h_slice_diagonal", "IWR", SubResource("AnimationNodeStateMachineTransition_e486g"), "IWR", "1h_slice_diagonal", SubResource("AnimationNodeStateMachineTransition_tdiio"), "1h_slice_horizontal", "IWR", SubResource("AnimationNodeStateMachineTransition_r55wc"), "IWR", "1h_slice_horizontal", SubResource("AnimationNodeStateMachineTransition_6f8lk"), "IWR", "Death_A", SubResource("AnimationNodeStateMachineTransition_miego"), "IWR", "Jump_Start", SubResource("AnimationNodeStateMachineTransition_0qhfu"), "Jump_Start", "Jump_Idle", SubResource("AnimationNodeStateMachineTransition_j1xhg"), "Jump_Idle", "Jump_Land", SubResource("AnimationNodeStateMachineTransition_gb4cl"), "Jump_Land", "IWR", SubResource("AnimationNodeStateMachineTransition_t6mql"), "IWR", "Jump_Idle", SubResource("AnimationNodeStateMachineTransition_ov7rq"), "IWR", "Running_A", SubResource("AnimationNodeStateMachineTransition_021mo"), "Running_A", "IWR", SubResource("AnimationNodeStateMachineTransition_i3ouw"), "Death_A", "IWR", SubResource("AnimationNodeStateMachineTransition_ffib7"), "Dodge_Forward", "IWR", SubResource("AnimationNodeStateMachineTransition_1nedw")]
-graph_offset = Vector2(21.1999, 249.812)
+graph_offset = Vector2(68.5099, 90.8345)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7d7n4"]
 render_priority = 0
@@ -298,11 +298,11 @@ bones/42/position = Vector3(-0.510889, 0.721658, 0.0431323)
 bones/42/rotation = Quaternion(-0.740689, 0.135076, 0.655499, 0.0587823)
 
 [node name="Skeleton_Rogue_Hood" parent="Rig/Skeleton3D" index="0"]
-transform = Transform3D(0.996144, -0.0866231, 0.0138927, 0.0875096, 0.969884, -0.227305, 0.00621561, 0.227645, 0.973724, 0.00180184, 1.20146, 0.0192382)
+transform = Transform3D(0.996144, -0.0866231, 0.0138926, 0.0875096, 0.969884, -0.227305, 0.00621573, 0.227645, 0.973724, 0.00180184, 1.20146, 0.0192383)
 visible = false
 
 [node name="Skeleton_Rogue_Cape" parent="Rig/Skeleton3D" index="1"]
-transform = Transform3D(0.995512, -0.00120504, 0.0946264, 0.00992588, 0.995733, -0.0917444, -0.0941121, 0.0922719, 0.991276, -0.000384588, 1.2008, 0.0226975)
+transform = Transform3D(0.995512, -0.00120503, 0.0946264, 0.00992588, 0.995733, -0.0917445, -0.0941121, 0.092272, 0.991276, -0.000384586, 1.2008, 0.0226975)
 visible = false
 
 [node name="Skeleton_Rogue_Cape" parent="Rig/Skeleton3D/Skeleton_Rogue_Cape" index="0"]
@@ -340,7 +340,6 @@ light_color = Color(0, 0.279435, 0.344735, 1)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." index="6"]
 transform = Transform3D(2.63797, 0, 0, 0, 3.87066, -1.54237, 0, 14.547, 0.410393, 0, 0.036, 0.323895)
-visible = false
 material_override = SubResource("ShaderMaterial_7d7n4")
 mesh = SubResource("PlaneMesh_qhmce")
 skeleton = NodePath("../Rig/Skeleton3D")

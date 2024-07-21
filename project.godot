@@ -26,9 +26,18 @@ PlayerUi="res://ui/PlayerUI.tscn"
 shapes/collision/shape_color=Color(0.174851, 0.636221, 0.282059, 0.42)
 shapes/collision/contact_color=Color(0.934612, 0.611358, 0.972873, 0.8)
 
+[display]
+
+window/size/viewport_width=1200
+window/size/viewport_height=800
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/gaea/plugin.cfg")
+
+[filesystem]
+
+import/fbx/enabled=false
 
 [input]
 

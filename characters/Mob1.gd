@@ -2,9 +2,11 @@ extends CharacterBody2D
 class_name Mob1
 #
 ## Variables from current context
-@onready var sub_viewport := $SubViewport
 @onready var sprite_texture := $Sprite2D
 @onready var attack_timer := $AttackTimer
+
+@onready var skill_0 : Skill0 = $Skill0
+
 
 var all_directions : Array[Vector2] =[Vector2.RIGHT, Vector2.LEFT, Vector2.UP, Vector2.DOWN, 
 					  Vector2(1, 1).normalized(), Vector2(1, -1).normalized(), 
@@ -14,13 +16,12 @@ var dangers : Array[int] = [0,0,0,0,0,0,0,0]
 
 # Controls
 var model : Node3D 
-var jump_speed := 8.0
 var player: Character0
 var target: Vector2
 var attack_happens := false
 @export var damage := 1.0
-var helths  := 1.0
-@export var max_helths := 3.0
+var helths  := 45.0
+@export var max_helths := 45.0
 var is_dead := false
 var base_position: Vector2
 var idle_timer: Timer
@@ -36,7 +37,7 @@ enum {
 	FIRE
 }
 
-var state := IDLE
+var current_state := IDLE
 
 func move(target: Vector2, delta: float) -> void:
 	if is_dead: return
@@ -82,11 +83,11 @@ func apply_avoidance() -> void:
 
 	
 func _physics_process(delta:float) -> void:
-	if state == DEAD or is_dead:
+	if current_state == DEAD or is_dead:
 		return
-	else: if state == IDLE:
+	else: if current_state == IDLE:
 			move_to_idle(delta)
-	else: if state == HIT:
+	else: if current_state == HIT:
 		return
 	else:
 		pick_direction_move(delta)
@@ -135,14 +136,30 @@ func on_hit(damage: float) -> void:
 		# death mob
 		if self.helths == 0 and not is_dead:
 			# play death animation
-			state = DEAD
+			current_state = DEAD
 			# remove collision mask
 			for index in [1, 2, 4]:
 				set_collision_mask_value(index, false)
 				set_collision_layer_value(index, false)
+			var material := $Sprite2D.material as ShaderMaterial
+			# change shader colors
+			material.set_shader_parameter("is_dead", true)
+			# partiles on top of the sprite
+			$Attack0.z_index = 10
+			var part := $Attack0.get_node("CPUParticles2D") as CPUParticles2D
+			$Attack0.apply_scale(Vector2(5, 5))
+			part.amount = 400
+			part.one_shot = false
+			part.speed_scale = 0.2
+			part.emitting = true
+			# run particle effect one more time
 			
 			self.z_index = 0
 			is_dead = true# Replace with function body.
+			var tween := get_tree().create_tween()
+			tween.tween_property(self, "global_position", self.global_position * 0.9, 1.5)
+			await tween.finished
+			queue_free()
 
 
 func _on_mob_sensor_body_entered(body: CharacterBody2D) -> void:
@@ -150,33 +167,31 @@ func _on_mob_sensor_body_entered(body: CharacterBody2D) -> void:
 	if body.is_in_group("Player"):
 		$IdleTimer.stop()
 		player = body
-		state = SURROUND
+		current_state = SURROUND
 
 func _on_mob_sensor_body_exited(body: CharacterBody2D) -> void:
 	# after a while return to idle pose
 	if body.is_in_group("Player"):
 		$IdleTimer.start()
-		
-		
 
 func _on_mob_sensor_area_entered(area:Area2D):
 	var mob_collision = get_collision_mask()
 	var mob_layer = get_collision_layer()
 
 func _process(delta:float) -> void:
-	if state == FIRE and player:
+	if current_state == FIRE and player:
 		fireball()
 
 func fireball() -> void:
-	$Skill0.run_skill(self, player.global_position)
+	skill_0.run_skill(self, player.global_position)
 	
 
 func _on_idle_timer_timeout() -> void:
 	if not is_dead:
-		state = IDLE
-
+		current_state = IDLE
 
 func _on_area_2d_body_entered(body):
+	print("Player enter the attack area")
 	if body.is_in_group("Player") and not is_dead:
-		state = FIRE
+		current_state = FIRE
 		player = body

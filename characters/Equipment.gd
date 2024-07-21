@@ -24,7 +24,9 @@ func show_items():
 func item_show(mesh_name):
 	if(mesh_name):
 		var m = player.model as Node3D
-		var skeleton = m.get_node("Skeleton3D")
-		var item_mesh = skeleton.get_node(mesh_name) as MeshInstance3D
-		item_mesh.show()
-		return item_mesh
+		if m: 
+			var skeleton = m.get_node("Armature")
+			if skeleton:
+				var item_mesh = skeleton.get_node(mesh_name) as MeshInstance3D
+				item_mesh.show()
+				return item_mesh

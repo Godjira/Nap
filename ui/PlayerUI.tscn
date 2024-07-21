@@ -1,7 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://dqnkrq0m4648p"]
+[gd_scene load_steps=10 format=3 uid="uid://dqnkrq0m4648p"]
 
+[ext_resource type="Script" path="res://ui/PlayerUI.gd" id="1_i8v6a"]
+[ext_resource type="FontFile" uid="uid://jgumakw2jrae" path="res://assets/fonts/Xolonium-Regular.ttf" id="3_x44x0"]
 [ext_resource type="Shader" path="res://ui/Helth2.gdshader" id="4_ix6nq"]
 [ext_resource type="Texture2D" uid="uid://dtrkmllhbcu3r" path="res://assets/art/helth-bar.png" id="5_io3og"]
+[ext_resource type="Shader" path="res://levels/GetDamaged.gdshader" id="5_ondx6"]
+[ext_resource type="Script" path="res://ui/GetDamaged.gd" id="6_6uern"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8dimf"]
 resource_local_to_scene = true
@@ -12,8 +16,57 @@ shader_parameter/fog_intensity = 0.2
 shader_parameter/glow_color = Color(0.5, 0.1, 0.2, 1)
 shader_parameter/glow_power = 8.0
 
+[sub_resource type="ImageTexture" id="ImageTexture_giemy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sohqy"]
+resource_local_to_scene = true
+shader = ExtResource("5_ondx6")
+shader_parameter/damage_intensity = 0.0
+shader_parameter/damage_color = Color(0.7, 0, 0, 1)
+shader_parameter/edge_softness = 0.3
+shader_parameter/SCREEN_TEXTURE = SubResource("ImageTexture_giemy")
+
 [node name="PlayerUI" type="CanvasLayer"]
 layer = 0
+script = ExtResource("1_i8v6a")
+
+[node name="Tooltips" type="BoxContainer" parent="."]
+layout_direction = 2
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -85.0
+offset_right = 664.0
+grow_vertical = 0
+auto_translate = false
+theme_override_constants/separation = 30
+
+[node name="Sprint" type="Label" parent="Tooltips"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_x44x0")
+theme_override_font_sizes/font_size = 55
+text = "Shift"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Dash" type="Label" parent="Tooltips"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_x44x0")
+theme_override_font_sizes/font_size = 55
+text = "F"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Attack" type="Label" parent="Tooltips"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_x44x0")
+theme_override_font_sizes/font_size = 55
+text = "Mouse click"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ParentControl" type="Control" parent="."]
 layout_mode = 3
@@ -43,3 +96,53 @@ texture = ExtResource("5_io3og")
 offset = Vector2(0.04, 0)
 region_enabled = true
 region_rect = Rect2(42.2842, 23.303, 1016.09, 201.579)
+
+[node name="ColorRect" type="ColorRect" parent="ParentControl"]
+material = SubResource("ShaderMaterial_sohqy")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_6uern")
+
+[node name="wasd" type="BoxContainer" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -146.0
+offset_top = -55.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Up" type="Label" parent="wasd"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_x44x0")
+theme_override_font_sizes/font_size = 55
+text = "W"
+
+[node name="Right" type="Label" parent="wasd"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 55
+text = "A"
+
+[node name="Left" type="Label" parent="wasd"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_x44x0")
+theme_override_font_sizes/font_size = 55
+text = "S"
+
+[node name="Down" type="Label" parent="wasd"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_x44x0")
+theme_override_font_sizes/font_size = 55
+text = "D"
