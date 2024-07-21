@@ -15,10 +15,8 @@ func game_over():
 	$ScoreTimer.stop()
 	$MobTimer.stop()
 	ui_node.show_game_over()
-	$Music.stop()
-	$DeathSound.play()
 	for mob in mobs:
-		mob.queue_free()
+		if mob: mob.queue_freae()
 	mobs.clear()
 	player.helths = player.default_healths
 
@@ -27,7 +25,6 @@ func new_game():
 	
 	$StartTimer.start()
 	$MobTimer.start()
-	#$Music.play()
 	var screenUI = $ScreenUI
 	if screenUI:
 		screenUI.hide_ui()
@@ -39,20 +36,22 @@ func _on_start_timer_timeout():
 	$ScoreTimer.start()
 
 func _on_mob_timer_timeout():
-	if(mobs.size() > 10):
+	if(mobs.size() > 100):
 		return
 	# Create a new instance of the Mob scene.
 	var mob = mob_scene.instantiate()
 	# Choose a random location on Path2D.
-	var mob_spawn_location = $MobPath/MobSpawnLocation
+	var mob_spawn_location := $MobPath/MobSpawnLocation
+	var randomG := RandomNumberGenerator.new()
+	var r := randomG.randf() * 0.2
 	mob_spawn_location.progress_ratio = randf()
 	# Set the mob's position to a random location.
 	mob.position = mob_spawn_location.position
 	# Spawn the mob by adding it to the Main scene.
-	var randomG = RandomNumberGenerator.new()
-	var r = randomG.randf() * 0.04 
 	var node = mob.get_node("Sprite2D") as Sprite2D
+	var col_shape = mob.get_node("CollisionShape2D")
 	if node: node.scale += Vector2(r, r)
+	if col_shape: col_shape.scale += Vector2(r, r)
 	add_child(mob)
 	mobs.push_back(mob)
 

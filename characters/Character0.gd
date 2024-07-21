@@ -13,6 +13,9 @@ signal died
 @export var rotation_speed := 12.0
 @export var ghost_node : PackedScene
 
+@onready var weapon : Node2D = $Weapon_1
+@onready var dash_timer := $DashTimer
+
 var velocity_sub_viewport := Vector3()
 var mobs_close : Array[CharacterBody2D] = []
 
@@ -24,9 +27,12 @@ static var camera_3D :Camera3D = null
 var default_healths := 10
 var helths := 10.0
 var max_helths := 10.
-var damage := 6
+var damage := 2.5
 var active_weapon
 var attacking: bool
+var is_dash_posible := true
+
+enum State { SURROUND, HIT, IDLE, DEAD }
 
 # Variables from current context
 @onready var sub_viewport = $SubViewport
@@ -43,6 +49,7 @@ var running := false
 func show_equipment() -> void:
 	$Equipment.show_items()
 	active_weapon = $Equipment.items[0]
+	weapon.show()
 
 func _process(delta:float) -> void:
 	#Pass data to helths shader
@@ -68,12 +75,14 @@ func get_viewport_context() -> void:
 	anim_state = anim_tree.get('parameters/playback')
 	var anim_player = characterModel.get_node("AnimationPlayer")
 	#Loop through each animation and set their loop property to true
+	var list_loop := ["Idle", "Walking", "Running", "idle", 'run', 'walk', "walk_backwords", "walk_01"]
 	for animation in anim_player.get_animation_list():
 		# anim_player.get_animation(animation).loop = true
-		if animation.contains("Idle") or animation.contains("Walking") or animation.contains("Running"):
-			anim_player.get_animation(animation).loop = true
-		#print(animation)
-	
+		var an = anim_player.get_animation(animation) as Animation
+		an.loop_mode = false
+		for anim_name in list_loop:
+				if anim_name == animation:
+					an.loop_mode = true
 
 var attacks : Array[String] = [
 	"1h_slice_diagonal",
@@ -118,14 +127,11 @@ func _physics_process(delta:float) -> void:
 		attacking = true
 		var mouse_dir := get_global_mouse_position()  - get_global_position()
 		$Attack1.set_attack_direction(mouse_dir)
-		print(mouse_dir)
+		# charater 3d animation
 		if anim_state: anim_state.travel(attacks.pick_random())
-		# animate weapon mesh in 360 degree rotation
-		#var m = active_weapon.mesh as MeshInstance3D
-		var tween = get_tree().create_tween()
-		tween.tween_property(active_weapon.mesh, 'rotation_degrees:z',active_weapon.mesh.rotation_degrees.z+90,0.1)
-		tween.tween_property(active_weapon.mesh, 'rotation_degrees:z',active_weapon.mesh.rotation_degrees.z-90,0.1)
-		await tween.finished
+		# sprite animation
+		weapon.trigger_attack()
+		# actual attack logic
 		attack()
 
 	if velocity.length() > 0.1:
@@ -163,14 +169,16 @@ func start() -> void:
 func _on_attack_body_entered(body:CharacterBody2D) -> void:
 	if body.is_in_group("Enemy"):
 		print("Mob in attack area", body)	
-		body.state = body.HIT
-		body.attack_timer.start()
+		body.current_state = State.HIT
+		var timer = body.attack_timer as Timer
+		if !timer.is_processing(): 
+			timer.start()
 		mobs_close.append(body)
 
 func _on_attack_body_exited(body:CharacterBody2D) -> void:
 	if body.is_in_group("Enemy"):
 		print("Mob stop attack", body)
-		body.state = body.SURROUND
+		body.current_state = State.SURROUND
 		body.attack_timer.stop()
 		mobs_close.erase(body)
 
@@ -178,6 +186,9 @@ func _on_attack_body_exited(body:CharacterBody2D) -> void:
 func on_hit(damage:float) -> void:
 	print("god damn they hit me!", damage)
 	self.helths -= damage
+	
+	var effect = $"/root/PlayerUi/ParentControl/ColorRect" as damaged_effect
+	effect.on_player_hit(damage, self.helths)
 	
 	#start hit shader animation
 	var tween := get_tree().create_tween()
@@ -217,36 +228,45 @@ func _on_ghost_timer_timeout() -> void:
 		
 
 func dash() -> void:
-	particles.emitting = true
-	$GhostTimer.start()
-	
-	var dash_duration := 0.20  # Duration of the dash in seconds
-	var dash_distance := velocity * .5  # Total distance to dash
-	var dash_start_pos := global_position
-	var elapsed_time := 0.0
-	
-	while elapsed_time < dash_duration:
-		var delta := get_process_delta_time()
-		elapsed_time += delta
+	if is_dash_posible:
+		particles.emitting = true
+		is_dash_posible = false
+		$GhostTimer.start()
+		dash_timer.start()
 		
-		# Calculate the new position
-		var t := elapsed_time / dash_duration
-		var new_position := dash_start_pos.lerp(dash_start_pos + dash_distance, t)
+		var dash_duration := 0.20  # Duration of the dash in seconds
+		var dash_distance := velocity * .5  # Total distance to dash
+		var dash_start_pos := global_position
+		var elapsed_time := 0.0
+		anim_tree.set("parameters/conditions/dash", true)
 		
-		# Move and check for collision
-		var collision := move_and_collide(new_position - global_position)
-		if collision:
-			# Handle collision (e.g., stop the dash, slide, or bounce)
-			handle_dash_collision(collision)
-			break
+		while elapsed_time < dash_duration:
+			var delta := get_process_delta_time()
+			elapsed_time += delta
+			
+			# Calculate the new position
+			var t := elapsed_time / dash_duration
+			var new_position := dash_start_pos.lerp(dash_start_pos + dash_distance, t)
+			
+			# Move and check for collision
+			var collision := move_and_collide(new_position - global_position)
+			if collision:
+				# Handle collision (e.g., stop the dash, slide, or bounce)
+				handle_dash_collision(collision)
+				break
+			
+			await get_tree().process_frame
+			anim_tree.set("parameters/conditions/dash", false)
 		
-		await get_tree().process_frame
-	
-	$GhostTimer.stop()
-	particles.emitting = false
+		$GhostTimer.stop()
+		particles.emitting = false
 
 func handle_dash_collision(collision: KinematicCollision2D) -> void:
 	# Implement your collision response here
 	# For example, you might want to stop the dash, slide along the surface, or bounce
 	print("Collided with: ", collision.get_collider().name)
 	# You can access collision normal, collision point, etc. from the collision object
+
+
+func _on_dash_timer_timeout() -> void:
+	is_dash_posible = true

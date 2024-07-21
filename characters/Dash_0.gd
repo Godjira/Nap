@@ -1,10 +1,11 @@
 extends Sprite2D
 
+
+
 func _ready():
 	ghosting()
 
 func set_property(tx_pos, tx_scale):
-	print(tx_pos, tx_scale)
 	position = tx_pos
 	scale = tx_scale
 

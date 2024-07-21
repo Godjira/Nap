@@ -7,12 +7,10 @@ void vertex() {
 }
 
 void fragment() {
-	vec4 final = vec4(1.0);
-	// fire shader
-	final = vec4(0.8, 0.1, 0.1, 1.0);
-    vec4 noiseValue = texture(NOISE_PATTERN, UV);
-	final = mix(final, noiseValue, sin(TIME));
+	vec4 noise = texture(NOISE_PATTERN, UV);
+	vec4 final = vec4(1.0, 0.1, 0.1, 1.0);
 	COLOR.rgb = final.rgb;
+	COLOR.a = noise.r;
 	
 }
 

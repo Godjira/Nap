@@ -1,11 +1,21 @@
-[gd_scene load_steps=7 format=3 uid="uid://df0o1ljcagn8i"]
+[gd_scene load_steps=9 format=3 uid="uid://df0o1ljcagn8i"]
 
 [ext_resource type="Script" path="res://effects/Attack_0.gd" id="1_w8wgo"]
 [ext_resource type="Shader" path="res://effects/Skill_0.gdshader" id="2_4l2do"]
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_37ap0"]
+noise_type = 0
+frequency = 0.0024
+offset = Vector3(-337.66, -258.62, 2.08167e-14)
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_q4wbk"]
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_37ap0")
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jfv0c"]
 shader = ExtResource("2_4l2do")
 shader_parameter/progress = 0.0
+shader_parameter/NOISE_PATTERN = SubResource("NoiseTexture2D_q4wbk")
 
 [sub_resource type="Curve" id="Curve_xc5gv"]
 min_value = -360.0
