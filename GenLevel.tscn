@@ -4,13 +4,13 @@
 [ext_resource type="Script" path="res://addons/gaea/renderers/2D/threaded_tilemap_gaea_renderer.gd" id="1_kfi6v"]
 [ext_resource type="Script" path="res://addons/gaea/generators/2D/walker_generator/walker_generator.gd" id="2_7mf3t"]
 [ext_resource type="Script" path="res://addons/gaea/modifiers/2D/fill.gd" id="3_i7sgr"]
-[ext_resource type="Texture2D" uid="uid://bx1xhxbh2eqfw" path="res://artwork/main_tile_set.png" id="3_kjn5t"]
+[ext_resource type="Texture2D" uid="uid://bt6wlytdr6ep1" path="res://assets/artwork/main_tile_set.png" id="3_kjn5t"]
 [ext_resource type="Script" path="res://addons/gaea/tile_info/tilemap_tile_info.gd" id="4_871in"]
 [ext_resource type="Script" path="res://addons/gaea/modifiers/2D/walls.gd" id="5_tl1bb"]
 [ext_resource type="Script" path="res://addons/gaea/generators/2D/walker_generator/walker_generator_settings.gd" id="6_xqe66"]
 [ext_resource type="PackedScene" uid="uid://b4dmwb5ebu3qy" path="res://characters/Player0.tscn" id="9_ruchm"]
 [ext_resource type="Script" path="res://SpriteGenerator.gd" id="10_l66h2"]
-[ext_resource type="Texture2D" uid="uid://s6or11v6tbm8" path="res://artwork/icon.svg" id="11_ku6nn"]
+[ext_resource type="Texture2D" uid="uid://1r2hgef8kwf3" path="res://assets/artwork/icon.svg" id="11_ku6nn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u1416"]
 texture = ExtResource("3_kjn5t")

@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bkt7i6qo3g88a" path="res://characters/skeleton_rogue.tscn" id="4_kdrq0"]
 [ext_resource type="Texture2D" uid="uid://c1d6f033d7bbu" path="res://assets/RavenmoreIconPack.02.2014/64/sword.png" id="4_lkv6v"]
 [ext_resource type="Script" path="res://characters/Equipment.gd" id="4_uuubf"]
-[ext_resource type="PackedScene" uid="uid://bddt7o15jsmkl" path="res://characters/PortalSprite.tscn" id="4_v48we"]
+[ext_resource type="PackedScene" path="res://characters/PortalSprite.tscn" id="4_v48we"]
 [ext_resource type="Script" path="res://characters/Camera2D.gd" id="5_3tudj"]
 [ext_resource type="Shader" path="res://characters/Weapon_0.gdshader" id="8_0qcba"]
 [ext_resource type="Script" path="res://characters/Weapon_0.gd" id="8_ruhhb"]
