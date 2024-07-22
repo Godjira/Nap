@@ -28,7 +28,7 @@ var default_healths := 10
 var helths := 10.0
 var max_helths := 10.
 var damage := 2.5
-var active_weapon
+@export var active_weapon: WeaponItem = WeaponItem.new()
 var attacking: bool
 var is_dash_posible := true
 
@@ -39,17 +39,22 @@ enum State { SURROUND, HIT, IDLE, DEAD }
 @onready var camera = $Camera2D
 @onready var viewport_sprite = $ViewportSprite
 @onready var particles = $GPUParticles2D
+@export var inventory: Inventory
 
 var jumping := false
 var running := false
 
-# Create rayscast from character to world
+@onready var inventory_ui  := $"/root/PlayerUi/Inventory"
 @onready var helths_material : ShaderMaterial = $"/root/PlayerUi/ParentControl/Helth/HelthTexture".material
 
 func show_equipment() -> void:
-	$Equipment.show_items()
-	active_weapon = $Equipment.items[0]
-	weapon.show()
+	if active_weapon:
+		if active_weapon.name.contains("Axe"):
+			weapon = $Weapon_0
+			weapon.show()
+		if active_weapon.name.contains("Sword"):
+			weapon = $Weapon_1
+			weapon.show()
 
 func _process(delta:float) -> void:
 	#Pass data to helths shader
@@ -121,6 +126,9 @@ func get_move_input(delta: float) -> void:
 func _physics_process(delta:float) -> void:
 	get_move_input(delta)
 	move_and_slide()
+	# stop actions except moving
+	if inventory_ui and inventory_ui.is_open: 
+			return
 	
 	# handle attack
 	if Input.is_action_just_pressed("attack"):
@@ -270,3 +278,6 @@ func handle_dash_collision(collision: KinematicCollision2D) -> void:
 
 func _on_dash_timer_timeout() -> void:
 	is_dash_posible = true
+
+func collect(item: InventoryItem, amount: int) -> void:
+	inventory.insert(item, amount or int(randf() * PI))

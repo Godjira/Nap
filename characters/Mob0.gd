@@ -26,6 +26,9 @@ enum State { SURROUND, HIT, IDLE, DEAD }
 @export var avoidance_distance := 1.0
 @export var avoidance_force := 10.0
 
+@export var item: InventoryItem
+@onready var item_collectable: PackedScene = load("res://items/heal_potion_collectable.tscn")
+
 # Onready variables
 @onready var sub_viewport := $SubViewport
 @onready var sprite_texture := $Sprite2D
@@ -33,6 +36,7 @@ enum State { SURROUND, HIT, IDLE, DEAD }
 @onready var health_bar := $HelthsBar
 @onready var idle_timer := $IdleTimer
 @onready var deth_timer := $DethTimer
+
 
 # Member variables
 var dangers := [0, 0, 0, 0, 0, 0, 0, 0]
@@ -44,7 +48,7 @@ var player: Character0
 var velocity_sub_viewport := Vector3.ZERO
 var is_dead := false
 var base_position: Vector2
-var current_state = State.IDLE
+var current_state
 var health = 10
 
 func _ready() -> void:
@@ -196,6 +200,10 @@ func _on_idle_timer_timeout() -> void:
 
 
 func _on_deth_timer_timeout():
+	if item:
+		var node = item_collectable.instantiate()
+		node.global_position = global_position
+		get_tree().current_scene.add_child(node)
 	queue_free()
 
 

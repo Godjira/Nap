@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://crhs5hxatv3m1"]
+[gd_scene load_steps=12 format=3 uid="uid://crhs5hxatv3m1"]
 
 [ext_resource type="Script" path="res://levels/Entry0.gd" id="1_o2k86"]
+[ext_resource type="PackedScene" uid="uid://mmagv6dkobl3" path="res://items/CoinCollectable.tscn" id="7_y1nwb"]
 [ext_resource type="Texture2D" uid="uid://babcaoo31y0qj" path="res://assets/Dungeon Gathering Free Version/Set 1.png" id="13_m3kux"]
 [ext_resource type="PackedScene" uid="uid://b4dmwb5ebu3qy" path="res://characters/Player0.tscn" id="16_qiqib"]
 [ext_resource type="PackedScene" uid="uid://b5euuwsw60c5n" path="res://characters/Mob0.tscn" id="17_816q5"]
@@ -956,7 +957,6 @@ adjustment_enabled = true
 position = Vector2(0, 2.01)
 script = ExtResource("1_o2k86")
 mob_scene = ExtResource("17_816q5")
-mobs = []
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(0, -1.01)
@@ -988,13 +988,31 @@ scale = Vector2(0.241277, 0.225759)
 curve = SubResource("Curve2D_5yi71")
 
 [node name="MobSpawnLocation" type="PathFollow2D" parent="MobPath"]
-rotation = -2.42781
+rotation = -2.4278
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_3dibk")
 
 [node name="Mob1" parent="." instance=ExtResource("20_pruwc")]
 position = Vector2(630, -377.01)
+
+[node name="Mob0" parent="." instance=ExtResource("17_816q5")]
+position = Vector2(-78, -211.01)
+
+[node name="CoinCollectable" parent="." instance=ExtResource("7_y1nwb")]
+position = Vector2(16, 14.99)
+
+[node name="CoinCollectable2" parent="." instance=ExtResource("7_y1nwb")]
+position = Vector2(-28, -30.01)
+
+[node name="CoinCollectable3" parent="." instance=ExtResource("7_y1nwb")]
+position = Vector2(-31, 15.99)
+
+[node name="CoinCollectable4" parent="." instance=ExtResource("7_y1nwb")]
+position = Vector2(-8, 54.99)
+
+[node name="CoinCollectable5" parent="." instance=ExtResource("7_y1nwb")]
+position = Vector2(-7, 88.99)
 
 [connection signal="died" from="Character0" to="." method="_on_character_0_died"]
 [connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]

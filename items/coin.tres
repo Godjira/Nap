@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3 uid="uid://hqn1nrpu73x8"]
+
+[ext_resource type="Script" path="res://items/invertory_item.gd" id="1_iuy1a"]
+[ext_resource type="Texture2D" uid="uid://ceocy1gs2cv4v" path="res://assets/RavenmoreIconPack.02.2014/64/coin.png" id="2_gok02"]
+
+[resource]
+script = ExtResource("1_iuy1a")
+name = "Coin"
+texture = ExtResource("2_gok02")

@@ -54,3 +54,4 @@ func update_ui_color(action: String, label: Label):
 
 func set_ui_color(l: Label, c: Color) -> void:
 	l.add_theme_color_override("font_color", c)
+

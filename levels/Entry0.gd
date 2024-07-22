@@ -1,11 +1,9 @@
 extends Node
 
 @export var mob_scene: PackedScene
-@export var mobs = Array()
-
-@onready var player = $Character0
-
-@onready var ui_node = $"/root/ScreenUi"
+@export var mobs : Array[CharacterBody2D] = []
+@onready var player := $Character0
+@onready var ui_node := $"/root/ScreenUi"
 
 # handle on click to ui_node/Control/StartButton
 func _on_start_game():
@@ -16,7 +14,7 @@ func game_over():
 	$MobTimer.stop()
 	ui_node.show_game_over()
 	for mob in mobs:
-		if mob: mob.queue_freae()
+		if mob: mob.queue_free()
 	mobs.clear()
 	player.helths = player.default_healths
 

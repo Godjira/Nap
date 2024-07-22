@@ -1,8 +1,11 @@
-[gd_scene load_steps=24 format=3 uid="uid://b4dmwb5ebu3qy"]
+[gd_scene load_steps=28 format=3 uid="uid://b4dmwb5ebu3qy"]
 
 [ext_resource type="Script" path="res://characters/Character0.gd" id="1_18n1n"]
 [ext_resource type="Shader" path="res://levels/PixelSprite.gdshader" id="2_lshbq"]
+[ext_resource type="Resource" uid="uid://b03kal3sf11pt" path="res://items/player.tres" id="3_lahvq"]
+[ext_resource type="Script" path="res://weapon_0_inventory_item.gd" id="3_vp6ye"]
 [ext_resource type="PackedScene" uid="uid://bkt7i6qo3g88a" path="res://characters/skeleton_rogue.tscn" id="4_kdrq0"]
+[ext_resource type="Texture2D" uid="uid://c1d6f033d7bbu" path="res://assets/RavenmoreIconPack.02.2014/64/sword.png" id="4_lkv6v"]
 [ext_resource type="Script" path="res://characters/Equipment.gd" id="4_uuubf"]
 [ext_resource type="PackedScene" uid="uid://bddt7o15jsmkl" path="res://characters/PortalSprite.tscn" id="4_v48we"]
 [ext_resource type="Script" path="res://characters/Camera2D.gd" id="5_3tudj"]
@@ -12,6 +15,15 @@
 [ext_resource type="Texture2D" uid="uid://bm8kmynjc1v06" path="res://assets/RavenmoreIconPack.02.2014/64/upg_sword.png" id="9_bcosj"]
 [ext_resource type="Texture2D" uid="uid://dked2ffj4n03v" path="res://assets/RavenmoreIconPack.02.2014/64/axeDouble.png" id="9_otr1q"]
 [ext_resource type="Script" path="res://characters/Weapon_1.gd" id="10_tvgkm"]
+
+[sub_resource type="Resource" id="Resource_03jnb"]
+script = ExtResource("3_vp6ye")
+damage = 3.0
+speed = 1.0
+weapon_type = 1
+name = "Sword"
+texture = ExtResource("4_lkv6v")
+type = 1
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cork7"]
 radius = 15.0
@@ -69,6 +81,8 @@ up_direction = Vector2(2.94434e-12, -1)
 slide_on_ceiling = false
 script = ExtResource("1_18n1n")
 ghost_node = ExtResource("4_v48we")
+active_weapon = SubResource("Resource_03jnb")
+inventory = ExtResource("3_lahvq")
 
 [node name="DashTimer" type="Timer" parent="."]
 one_shot = true

@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Inventory" load_steps=7 format=3 uid="uid://b03kal3sf11pt"]
+
+[ext_resource type="Resource" uid="uid://hqn1nrpu73x8" path="res://items/coin.tres" id="1_mucyr"]
+[ext_resource type="Script" path="res://items/invertory.gd" id="1_wdjmh"]
+[ext_resource type="Script" path="res://invertory_slot.gd" id="2_tjsro"]
+
+[sub_resource type="Resource" id="Resource_wxhba"]
+script = ExtResource("2_tjsro")
+item = ExtResource("1_mucyr")
+amount = 3
+
+[sub_resource type="Resource" id="Resource_k147t"]
+script = ExtResource("2_tjsro")
+amount = 0
+
+[sub_resource type="Resource" id="Resource_xh51s"]
+script = ExtResource("2_tjsro")
+amount = 0
+
+[resource]
+script = ExtResource("1_wdjmh")
+slots = Array[ExtResource("2_tjsro")]([SubResource("Resource_wxhba"), SubResource("Resource_k147t"), SubResource("Resource_xh51s")])

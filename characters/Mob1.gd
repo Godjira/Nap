@@ -194,4 +194,3 @@ func _on_area_2d_body_entered(body):
 	print("Player enter the attack area")
 	if body.is_in_group("Player") and not is_dead:
 		current_state = FIRE
-		player = body

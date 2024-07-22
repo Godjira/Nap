@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://mmagv6dkobl3"]
+
+[ext_resource type="Texture2D" uid="uid://ceocy1gs2cv4v" path="res://assets/RavenmoreIconPack.02.2014/64/coin.png" id="1_pxdw2"]
+[ext_resource type="Script" path="res://items/CoinCollectable.gd" id="1_t4gid"]
+[ext_resource type="Resource" uid="uid://hqn1nrpu73x8" path="res://items/coin.tres" id="2_vnkrt"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bkuwa"]
+
+[node name="CoinCollectable" type="StaticBody2D"]
+scale = Vector2(0.2, 0.2)
+script = ExtResource("1_t4gid")
+item = ExtResource("2_vnkrt")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-4, 0)
+texture = ExtResource("1_pxdw2")
+
+[node name="InteractableArea" type="Area2D" parent="."]
+scale = Vector2(2.53678, 2.1053)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableArea"]
+shape = SubResource("CircleShape2D_bkuwa")
+
+[connection signal="body_entered" from="InteractableArea" to="." method="_on_interactable_area_body_entered"]
