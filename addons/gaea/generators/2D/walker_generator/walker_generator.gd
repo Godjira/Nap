@@ -1,5 +1,5 @@
 @tool
-#@icon("walker_generator.svg")
+@icon("walker_generator.svg")
 class_name WalkerGenerator
 extends GaeaGenerator2D
 ## Generates a world using Walkers, which move in random direction and place tiles where they walk.
