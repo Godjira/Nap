@@ -5,6 +5,7 @@ signal start_game
 
 @onready var start_button = $Control/StartButton
 @onready var custom_pass = $Control/CustomPass
+@export var hidden = false
 
 func _ready():
 	var material: ShaderMaterial = custom_pass.material as ShaderMaterial
@@ -44,15 +45,14 @@ func handle_pause():
 
 func _on_start_button_pressed():
 	hide_ui()
+	start_game.emit()
 	var tween = change_pass_blur(0.0, 1.0)
 	await tween.finished
-	start_game.emit()
 	
 
 func _on_message_timer_timeout():
 	$Control/Message.hide()
 	
-@export var hidden = false
 #handle escape pressed
 func _unhandled_key_input(_event):
 	if Input.is_action_pressed('pause'):

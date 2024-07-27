@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://lp8pgrm0ga26"]
+
+[ext_resource type="Texture2D" uid="uid://bgng7mtj3rfkr" path="res://assets/RavenmoreIconPack.02.2014/64/axe.png" id="2_xafyo"]
+
+[sub_resource type="GDScript" id="GDScript_6qq66"]
+script/source = "extends StaticBody2D
+@export var item : WeaponItem
+var original_pos := Vector2.ZERO
+var offset := Vector2.ZERO
+@onready var sprite := $Sprite2D
+var is_equiped := false
+
+func _ready():
+	original_pos = sprite.global_position
+
+func _process(delta):
+	sprite.global_position = lerp(sprite.global_position, original_pos + Vector2.UP * randf(), 0.1)
+
+func _on_interactable_area_body_entered(body):
+	if body.is_in_group(\"Player\") and not is_equiped:
+		body.collect(item, 1)
+		await get_tree().create_timer(0.1).timeout
+		queue_free()
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ibiti"]
+radius = 32.84
+
+[node name="Weapon0Collected" type="StaticBody2D"]
+scale = Vector2(0.5, 0.5)
+script = SubResource("GDScript_6qq66")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_xafyo")
+
+[node name="InteractableArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableArea"]
+shape = SubResource("CircleShape2D_ibiti")
+
+[connection signal="body_entered" from="InteractableArea" to="." method="_on_interactable_area_body_entered"]

@@ -19,15 +19,16 @@ var model : Node3D
 var player: Character0
 var target: Vector2
 var attack_happens := false
-@export var damage := 1.0
-var helths  := 45.0
-@export var max_helths := 45.0
+@export var damage := 1.5
+var helths  := 10.0
+@export var max_helths := 10.0
 var is_dead := false
 var base_position: Vector2
 var idle_timer: Timer
-@export var speed := 35
+@export var speed := 25
 @export var avoidance_distance := 1
 @export var avoidance_force := 10
+@export var item:InventoryItem
 
 enum {
 	SURROUND,
@@ -191,7 +192,5 @@ func _on_idle_timer_timeout() -> void:
 		current_state = IDLE
 
 func _on_area_2d_body_entered(body):
-	print("Player enter the attack area")
 	if body.is_in_group("Player") and not is_dead:
 		current_state = FIRE
-		player = body

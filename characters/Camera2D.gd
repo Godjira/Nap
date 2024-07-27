@@ -1,33 +1,41 @@
 extends Camera2D
 
-@export var decay := 0.8 #How quickly shaking will stop [0,1].
-@export var max_offset := Vector2(100,75) #Maximum displacement in pixels.
-@export var max_roll = 0.0 #Maximum rotation in radians (use sparingly).
-@export var noise : FastNoiseLite  = FastNoiseLite.new()#The source of random values. 
+@export var min_zoom := 1.0
+@export var max_zoom := 4.0
+@export var zoom_speed := 0.9
+@export var shake_strength := 5.0
+@export var shake_decay := 0.8
 
-var noise_y = 0 #Value used to move through the noise
-
-var trauma := 0.5 #Current shake strength
-var trauma_pwr := 3 #Trauma exponent. Use [2,3]
+var _current_zoom := 1.5
+var _shake_strength := 0.2
+var _initial_offset := Vector2.ZERO
 
 func _ready():
-	randomize()
-	var r = int(randi())
-	if r > 0: 
-		noise.seed = r
-
-func add_trauma(amount : float):
-	trauma = min(trauma + amount, 1.0)
-
+	_initial_offset = offset
 
 func _process(delta):
-	if trauma:
-		trauma = max(trauma - decay * delta, 0)
-		shake()
+	# Handle zooming
+	if Input.is_action_pressed("zoom_in"):
+		_current_zoom += zoom_speed * delta
+	elif Input.is_action_pressed("zoom_out"):
+		_current_zoom -= zoom_speed * delta
+	_current_zoom = clamp(_current_zoom, min_zoom, max_zoom)
+	zoom = Vector2(_current_zoom, _current_zoom)
+	print(zoom)
+	
+	# Handle camera shake
+	if _shake_strength > 0:
+		_shake_strength *= shake_decay
+		offset = _initial_offset + Vector2(
+			randf_range(-1, 1) * _shake_strength,
+			randf_range(-1, 1) * _shake_strength
+		)
+	else:
+		offset = _initial_offset
 
-func shake(): 
-	var amt = pow(trauma, trauma_pwr)
-	noise_y += 1
-	rotation = max_roll * amt * noise.get_noise_2d(noise.seed,noise_y)
-	offset.x = max_offset.x * amt * noise.get_noise_2d(noise.seed*2,noise_y)
-	offset.y = max_offset.y * amt * noise.get_noise_2d(noise.seed*3,noise_y)
+func shake():
+	_shake_strength = shake_strength
+
+# Call this method when the character moves
+func on_character_moved():
+	shake()

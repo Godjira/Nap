@@ -21,7 +21,7 @@ shader_parameter/NOISE_PATTERN = SubResource("NoiseTexture2D_35atj")
 [sub_resource type="SphereMesh" id="SphereMesh_hegxe"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dldcg"]
-radius = 15.5536
+radius = 8.82
 
 [node name="Skill0" type="Node2D"]
 z_index = 10
@@ -30,7 +30,8 @@ script = ExtResource("1_545hs")
 
 [node name="Mesh" type="MeshInstance2D" parent="."]
 material = SubResource("ShaderMaterial_ppkoq")
-scale = Vector2(2.83627, 5)
+position = Vector2(0.791736, 0)
+scale = Vector2(4.42154, 5)
 mesh = SubResource("SphereMesh_hegxe")
 texture = ExtResource("3_ytho7")
 
@@ -41,7 +42,7 @@ collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Mesh/Void"]
 position = Vector2(0, 9.73137e-07)
-scale = Vector2(1.29534, 0.8)
+scale = Vector2(1.655, 1.61)
 shape = SubResource("CircleShape2D_dldcg")
 
 [node name="SkillEnd" type="Timer" parent="."]

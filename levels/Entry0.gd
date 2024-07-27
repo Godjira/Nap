@@ -1,11 +1,12 @@
 extends Node
 
-@export var mob_scene: PackedScene
-@export var mobs = Array()
-
-@onready var player = $Character0
-
-@onready var ui_node = $"/root/ScreenUi"
+@export var mobs : Array[CharacterBody2D] = []
+@onready var player := $Character0
+@onready var ui_node := $"/root/ScreenUi"
+@onready var mob_0_template:PackedScene = preload("res://characters/Mob0.tscn")
+@onready var mob_1_template:PackedScene = preload("res://characters/Mob1.tscn")
+@onready var mob_2_template:PackedScene = preload("res://characters/mob_2.tscn")
+var mouse_position:Vector2
 
 # handle on click to ui_node/Control/StartButton
 func _on_start_game():
@@ -15,16 +16,19 @@ func game_over():
 	$ScoreTimer.stop()
 	$MobTimer.stop()
 	ui_node.show_game_over()
-	for mob in mobs:
-		if mob: mob.queue_freae()
+	for i in range(mobs.size() - 1, -1, -1):
+		var mob = mobs[i]
+		if is_instance_valid(mob):
+			if not mob.is_dead:
+				mob.queue_free()
+			mobs.remove_at(i)
 	mobs.clear()
 	player.helths = player.default_healths
 
 func new_game():
-	player.anim_tree.set('parameters/conditions/live', true)	
-	
 	$StartTimer.start()
 	$MobTimer.start()
+	player.show()
 	var screenUI = $ScreenUI
 	if screenUI:
 		screenUI.hide_ui()
@@ -35,30 +39,50 @@ func _on_start_timer_timeout():
 	$MobTimer.start()
 	$ScoreTimer.start()
 
+
+
 func _on_mob_timer_timeout():
-	if(mobs.size() > 100):
-		return
-	# Create a new instance of the Mob scene.
-	var mob = mob_scene.instantiate()
-	# Choose a random location on Path2D.
-	var mob_spawn_location := $MobPath/MobSpawnLocation
-	var randomG := RandomNumberGenerator.new()
-	var r := randomG.randf() * 0.2
-	mob_spawn_location.progress_ratio = randf()
-	# Set the mob's position to a random location.
-	mob.position = mob_spawn_location.position
-	# Spawn the mob by adding it to the Main scene.
-	var node = mob.get_node("Sprite2D") as Sprite2D
-	var col_shape = mob.get_node("CollisionShape2D")
-	if node: node.scale += Vector2(r, r)
-	if col_shape: col_shape.scale += Vector2(r, r)
-	add_child(mob)
-	mobs.push_back(mob)
+	var coin = load("res://items/coin.tres")
+	var heal = load("res://items/heal_potion_1.tres")
+	
+	for mob_scene in [mob_0_template,mob_1_template,mob_2_template]:
+		randomize()
+		
+		if mobs.size() > 20:
+			return
+		# Create a new instance of the Mob scene.
+		var mob = mob_scene.instantiate()
+		# Choose a random location on Path2D.
+		var mob_spawn_location := $MobPath/MobSpawnLocation
+		var randomG := RandomNumberGenerator.new()
+		var r := randomG.randf() * 0.2
+		mob_spawn_location.progress_ratio = randf()
+		# Set the mob's position to a random location.
+		mob.position = mob_spawn_location.position * r
+		
+		var empty = null
+		#if r > 0.1:
+		#else: if r > 0.12:
+		var random_entity = [coin, heal, empty].pick_random()
+		mob.item = random_entity
+		
+		#if col_shape: col_shape.scale += Vector2(r, r)
+		add_child(mob)
+		mobs.push_back(mob)
 
 func _ready():
 	# get signal from ui_node called start_game
 	if ui_node: 
 		ui_node.connect("start_game", self._on_start_game)
+	AIPerformanceMonitor.initialize_performance_counters()
+	NodeQuerySystem.initialize_performance_counters()
+	
+
+func _physics_process(delta):
+	AIPerformanceMonitor.update_performance_counters()
+	NodeQuerySystem.initialize_performance_counters()
+	# Set the mouse cursor position as the to-vector.
+	mouse_position = get_viewport().get_mouse_position()
 
 
 func _on_character_0_died():

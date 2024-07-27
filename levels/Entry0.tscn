@@ -1,11 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://crhs5hxatv3m1"]
+[gd_scene load_steps=15 format=3 uid="uid://crhs5hxatv3m1"]
 
 [ext_resource type="Script" path="res://levels/Entry0.gd" id="1_o2k86"]
-[ext_resource type="Texture2D" uid="uid://bco4o6hij0tld" path="res://assets/Dungeon Gathering Free Version/Set 1.png" id="13_m3kux"]
+[ext_resource type="PackedScene" uid="uid://bgryt6d3vrb8w" path="res://effects/fog.tscn" id="8_8fthr"]
+[ext_resource type="Script" path="res://levels/MouseLight.gd" id="11_n61o1"]
+[ext_resource type="Shader" path="res://levels/MouseLight.gdshader" id="11_votgy"]
+[ext_resource type="Texture2D" uid="uid://babcaoo31y0qj" path="res://assets/Dungeon Gathering Free Version/Set 1.png" id="13_m3kux"]
 [ext_resource type="PackedScene" uid="uid://b4dmwb5ebu3qy" path="res://characters/Player0.tscn" id="16_qiqib"]
-[ext_resource type="PackedScene" uid="uid://b5euuwsw60c5n" path="res://characters/Mob0.tscn" id="17_816q5"]
 [ext_resource type="PackedScene" uid="uid://dqnkrq0m4648p" path="res://ui/PlayerUI.tscn" id="20_gobaf"]
-[ext_resource type="PackedScene" uid="uid://cgyifff5j0ni8" path="res://characters/Mob1.tscn" id="20_pruwc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ohfc5"]
 texture = ExtResource("13_m3kux")
@@ -944,19 +945,34 @@ point_count = 8
 background_mode = 3
 background_energy_multiplier = 0.5
 glow_enabled = true
-glow_levels/2 = 1.0
-glow_levels/3 = 0.0
-glow_levels/5 = 0.0
+glow_levels/1 = 1.55
 glow_intensity = 2.9
 glow_blend_mode = 1
 glow_hdr_threshold = 0.34
+fog_light_color = Color(0.15869, 0.176067, 0.203384, 1)
+fog_light_energy = 0.76
+fog_sun_scatter = 0.26
+fog_density = 0.2012
+fog_height = 4.7
+fog_height_density = 0.194
+volumetric_fog_density = 0.2044
 adjustment_enabled = true
+adjustment_brightness = 0.6
+adjustment_contrast = 2.0
+adjustment_saturation = 0.82
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qss2y"]
+width = 50
+height = 50
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yj4j2"]
+shader = ExtResource("11_votgy")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_jrvv7"]
 
 [node name="Entry0" type="Node2D"]
 position = Vector2(0, 2.01)
 script = ExtResource("1_o2k86")
-mob_scene = ExtResource("17_816q5")
-mobs = []
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(0, -1.01)
@@ -968,6 +984,7 @@ layer_1/name = "Walls"
 layer_1/tile_data = PackedInt32Array()
 
 [node name="Character0" parent="." instance=ExtResource("16_qiqib")]
+visible = false
 z_index = 2
 position = Vector2(1, -2.02002)
 
@@ -993,8 +1010,23 @@ rotation = -2.4278
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_3dibk")
 
-[node name="Mob1" parent="." instance=ExtResource("20_pruwc")]
-position = Vector2(630, -377.01)
+[node name="MouseLight" type="Node2D" parent="."]
+position = Vector2(0, -1.01)
+script = ExtResource("11_n61o1")
+
+[node name="PointLight2D2" type="PointLight2D" parent="MouseLight"]
+position = Vector2(0, -1)
+texture = SubResource("NoiseTexture2D_qss2y")
+
+[node name="Sprite2D" type="Sprite2D" parent="MouseLight"]
+material = SubResource("ShaderMaterial_yj4j2")
+position = Vector2(0, -1)
+scale = Vector2(-3.95334, -3.82329)
+skew = 0.925025
+texture = SubResource("CanvasTexture_jrvv7")
+
+[node name="Fog" parent="." instance=ExtResource("8_8fthr")]
+visible = false
 
 [connection signal="died" from="Character0" to="." method="_on_character_0_died"]
 [connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
