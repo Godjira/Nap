@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="PotionItem" load_steps=3 format=3 uid="uid://hnchwopedgf6"]
+
+[ext_resource type="Script" path="res://PotionItem.gd" id="1_tl5kb"]
+[ext_resource type="Texture2D" uid="uid://ci3h1ekn1xdyk" path="res://assets/RavenmoreIconPack.02.2014/64/potionRed.png" id="2_b2jun"]
+
+[resource]
+script = ExtResource("1_tl5kb")
+potion_power = 3.0
+potion_type = 0
+name = "heal"
+texture = ExtResource("2_b2jun")
+type = 2

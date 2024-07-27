@@ -12,7 +12,9 @@ signal died
 @export var mouse_sensitivity := 0.0015
 @export var rotation_speed := 12.0
 @export var ghost_node : PackedScene
-
+var swing := false
+var direction = Vector2.ZERO
+@onready var animation_tree := $AnimationTree
 @onready var weapon : Node2D = $Weapon_1
 @onready var dash_timer := $DashTimer
 
@@ -20,13 +22,13 @@ var velocity_sub_viewport := Vector3()
 var mobs_close : Array[CharacterBody2D] = []
 
 # Global variables
-static var anim_state  = null
-static var anim_tree : AnimationTree = null
-static var model : Node3D = null
-static var camera_3D :Camera3D = null
+#static var anim_state  = null
+#static var anim_tree : AnimationTree = null
+#static var model : Node3D = null
+#static var camera_3D :Camera3D = null
 var default_healths := 10
-var helths := 10.0
-var max_helths := 10.
+var helths := 13.0
+var max_helths := 13.0
 var damage := 2.5
 @export var active_weapon: WeaponItem = WeaponItem.new()
 var attacking: bool
@@ -34,16 +36,18 @@ var is_dash_posible := true
 
 enum State { SURROUND, HIT, IDLE, DEAD }
 
-# Variables from current context
-@onready var sub_viewport = $SubViewport
+# Variables from current conte
+#@onready var sub_viewport = $SubViewport
 @onready var camera = $Camera2D
-@onready var viewport_sprite = $ViewportSprite
+#@onready var viewport_sprite = $ViewportSprite
+@onready var animated_sprite = $AnimatedSprite2D
 @onready var particles = $GPUParticles2D
 @export var inventory: Inventory
 
 var jumping := false
 var running := false
 
+@onready var player_ui := $"/root/PlayerUi"
 @onready var inventory_ui  := $"/root/PlayerUi/Inventory"
 @onready var helths_material : ShaderMaterial = $"/root/PlayerUi/ParentControl/Helth/HelthTexture".material
 
@@ -51,77 +55,87 @@ func show_equipment() -> void:
 	if active_weapon:
 		if active_weapon.name.contains("Axe"):
 			weapon = $Weapon_0
-			weapon.show()
+			#weapon.show()
 		if active_weapon.name.contains("Sword"):
 			weapon = $Weapon_1
-			weapon.show()
+			#weapon.show()
 
 func _process(delta:float) -> void:
+	direction = Input.get_vector("left", "right", "up", "down")
+	
+	if Input.is_action_just_pressed("attack"):
+		handle_attack_2()
+	if Input.is_action_pressed('sprint'):
+		speed = 150
+		running = true
+	else:
+		speed = lerp(speed, 80., 0.1)
+		running = false
+
+	if direction != Vector2.ZERO and not swing and not is_dash_posible:
+		animation_tree["parameters/conditions/running"] = true
+		var timer = get_tree().create_timer(1)
+		await timer.timeout
+		animation_tree["parameters/conditions/running"] = false
+
+	update_blend_position()
+	
 	#Pass data to helths shader
 	if helths_material != null:
 		helths_material.set_shader_parameter("health", 1.0 - ((max_helths - helths)/max_helths))
 
+func handle_attack_2() -> void:
+	swing = true
+	animation_tree["parameters/conditions/swing"] = true
+	attacking = true
+	
+	for mob in mobs_close:
+		if not mob.is_dead:
+			mob.on_hit(self.damage)
+	
+	var timer = get_tree().create_timer(1)
+	await timer.timeout
+	
+	print(mobs_close.size())
+	
+	animation_tree["parameters/conditions/swing"] = false
+	swing = false
+	attacking = false
+	
+
+func set_walking(arg:bool) -> void:
+	animation_tree["parameters/conditions/running"] = arg
+	
+	var timer = get_tree().create_timer(1)
+	await timer.timeout
+	animation_tree["parameters/conditions/running"] = not arg
+	
+func update_blend_position():
+	var normalized_velocity = velocity.normalized() * 0.5 * speed * 0.01
+	animation_tree["parameters/Attack/blend_position"] = normalized_velocity
+	animation_tree["parameters/Idle/blend_position"] = normalized_velocity
+	
 
 func _ready() -> void:
 	# Set the player to the Equipment node
-	$Equipment.player = self
-	# Because we use SubViewport node needs to get that from inner context
-	get_viewport_context()
+	player_ui.attach_player(self)
 	# Equip items
 	show_equipment()
 
-func get_viewport_context() -> void:
-	# Get all the child nodes of the sub_viewport.
-	var childrenNodes = sub_viewport.get_children()
-	var characterModel = childrenNodes[0]
-	model = characterModel.get_node("Rig")
-	camera_3D = characterModel.get_node("Camera")
-	anim_tree = characterModel.get_node("AnimationTree")
-	anim_state = anim_tree.get('parameters/playback')
-	var anim_player = characterModel.get_node("AnimationPlayer")
-	#Loop through each animation and set their loop property to true
-	var list_loop := ["Idle", "Walking", "Running", "idle", 'run', 'walk', "walk_backwords", "walk_01"]
-	for animation in anim_player.get_animation_list():
-		# anim_player.get_animation(animation).loop = true
-		var an = anim_player.get_animation(animation) as Animation
-		an.loop_mode = false
-		for anim_name in list_loop:
-				if anim_name == animation:
-					an.loop_mode = true
-
-var attacks : Array[String] = [
-	"1h_slice_diagonal",
-	"1h_slice_horizontal",
-	"1h_attack_chop"
-]
 
 func get_move_input(delta: float) -> void:
-	if !camera_3D: return
-	var direction = Input.get_vector("left", "right", "up", "down")
+	#if !camera_3D: return
+	var input_direction = Input.get_vector("left", "right", "up", "down")
 	# Handle movement
-	# If the sprint key is pressed, set the speed to 120, otherwise set it to 80
-	if Input.is_action_pressed('sprint'):
-		speed = 150
-		running = true
-		# running animation
-		anim_tree.set("parameters/conditions/running", running)
-		anim_tree.set("parameters/conditions/not running", !running)
-	else:
-		speed = lerp(speed, 80., 0.1)
-		running = false
-		anim_tree.set("parameters/conditions/running", running)
-		anim_tree.set("parameters/conditions/not running", !running)
-		
-	if direction:
-		velocity = direction * speed * delta * 50
-		var dir = Vector3(direction.x, 0, direction.y).rotated(Vector3.UP, camera_3D.rotation.y)
-		velocity_sub_viewport = lerp(velocity_sub_viewport, dir * speed, acceleration * delta)
-		var vl = velocity_sub_viewport * model.transform.basis
-		anim_tree.set("parameters/IWR/blend_position", Vector2(vl.x, -vl.z) / speed)
+	if input_direction.x <= -.5:
+		if animated_sprite.scale.x > 0.0: animated_sprite.scale.x *= -1
+	if input_direction.x >= .5:
+		if animated_sprite.scale.x < 0.0: animated_sprite.scale.x *= -1
+				
+	if input_direction:
+		velocity = input_direction * speed * delta * 50
 	else:
 		velocity = lerp(velocity, Vector2(0.0, 0.0), 0.1)
-		velocity_sub_viewport = Vector3(0, velocity_sub_viewport.y, 0)
-		anim_tree.set("parameters/IWR/blend_position", velocity)
 
 func _physics_process(delta:float) -> void:
 	get_move_input(delta)
@@ -135,96 +149,60 @@ func _physics_process(delta:float) -> void:
 		attacking = true
 		var mouse_dir := get_global_mouse_position()  - get_global_position()
 		$Attack1.set_attack_direction(mouse_dir)
-		# charater 3d animation
-		if anim_state: anim_state.travel(attacks.pick_random())
-		# sprite animation
-		weapon.trigger_attack()
-		# actual attack logic
+		weapon.set_attack_direction(mouse_dir)
+		weapon.perform_attack()
 		attack()
 
-	if velocity.length() > 0.1:
-		# Rotate the character model to the direction of movement
-		var rot := model.rotation
-		rot.y = lerp_angle(rot.y, atan2(-velocity.x, -velocity.y), rotation_speed * delta)
-		model.rotation = rot
-	# Handle jumping
-	if Input.is_action_just_pressed("jump"):
-		velocity_sub_viewport.y = jump_speed
-		jumping = true
-		anim_tree.set("parameters/conditions/jumping", true)
-		anim_tree.set("parameters/conditions/grounded", false)
-	# when Jump_Idle animation ends, set jumping to false
-	if anim_state.get_current_node() == "Jump_Idle":
-		jumping = false
-		anim_tree.set("parameters/conditions/jumping", false)
-		anim_tree.set("parameters/conditions/grounded", true)
-	
 	# handle dash
 	if Input.is_action_just_pressed('dash'):
 		dash()
-
-func _unhandled_input(event: InputEvent) -> void:
-	# rotate the character model on mouse move
-	if event is InputEventMouseMotion:
-		if !model: return
-		var rot = model.rotation
-		rot.y += event.relative.x * mouse_sensitivity
-		model.rotation = rot
+		
 
 func start() -> void:
 	show()
 
-func _on_attack_body_entered(body:CharacterBody2D) -> void:
-	if body.is_in_group("Enemy"):
-		print("Mob in attack area", body)	
-		body.current_state = State.HIT
-		var timer = body.attack_timer as Timer
-		if !timer.is_processing(): 
-			timer.start()
-		mobs_close.append(body)
-
-func _on_attack_body_exited(body:CharacterBody2D) -> void:
-	if body.is_in_group("Enemy"):
-		print("Mob stop attack", body)
-		body.current_state = State.SURROUND
-		body.attack_timer.stop()
-		mobs_close.erase(body)
-
-
-func on_hit(damage:float) -> void:
-	print("god damn they hit me!", damage)
-	self.helths -= damage
+func on_hit(d:float) -> void:
+	self.helths -= d
 	
 	var effect = $"/root/PlayerUi/ParentControl/ColorRect" as damaged_effect
-	effect.on_player_hit(damage, self.helths)
+	effect.on_player_hit(d, self.helths)
 	
 	#start hit shader animation
 	var tween := get_tree().create_tween()
-	tween.tween_property(viewport_sprite.material, "shader_parameter/hit_intesity", 0.5, 0.3)
+	tween.tween_property(animated_sprite.material, "shader_parameter/hit_intesity", 0.5, 0.3)
 	await tween.finished
 	var tween2 := get_tree().create_tween()
-	tween2.tween_property(viewport_sprite.material, "shader_parameter/hit_intesity", 0.0, 0.3)
+	tween2.tween_property(animated_sprite.material, "shader_parameter/hit_intesity", 0.0, 0.3)
 	await tween2.finished
 	
 	if 	1.0 - ((max_helths - helths)/max_helths) <= 0:
-		anim_state.travel("Death_A")
-		anim_tree.set("parameters/conditions/running", false)
-		anim_tree.set('parameters/conditions/live', false)
+		animation_tree["parameters/conditions/is_dead"] = true
 		$DiedTimer.start()
 
 func attack() -> void:
+	#animated_sprite.play("punch")
 	# check collision in attack area
 	if mobs_close.size() > 0:
 		for mob in mobs_close:
-			mob.on_hit(self.damage)
+			if mob and not mob.is_dead: mob.on_hit(self.damage)
+	await get_tree().create_timer(1.5).timeout
+	#animated_sprite.play("default")
 
 func _on_died_timer_timeout() -> void:
 	died.emit()
 	$DiedTimer.stop()
+	animation_tree["parameters/conditions/is_dead"] = false
 
 func add_ghost() -> void:
 	var ghost := ghost_node.instantiate()
-	ghost.set_property(global_position, $ViewportSprite.scale)
+	ghost.global_position = global_position
+	ghost.global_position.y -= 5.0
+	 
+	var frames = animated_sprite.sprite_frames as SpriteFrames
+	var texture : Texture2D = frames.get_frame_texture(animated_sprite.animation,animated_sprite.frame)
+	ghost.scale = animated_sprite.scale
+	ghost.scale *= 1.2
+	ghost.texture = texture
 	get_tree().current_scene.add_child(ghost)
 	# pass data to shader
 	var dash_direction := Vector2(velocity.x, velocity.y).normalized()
@@ -237,16 +215,20 @@ func _on_ghost_timer_timeout() -> void:
 
 func dash() -> void:
 	if is_dash_posible:
-		particles.emitting = true
+		#animated_sprite.play("slide")
 		is_dash_posible = false
+		particles.emitting = true
 		$GhostTimer.start()
 		dash_timer.start()
+		
+		animation_tree["parameters/conditions/running"] = false
+		animation_tree["parameters/conditions/dash"] = true
 		
 		var dash_duration := 0.20  # Duration of the dash in seconds
 		var dash_distance := velocity * .5  # Total distance to dash
 		var dash_start_pos := global_position
 		var elapsed_time := 0.0
-		anim_tree.set("parameters/conditions/dash", true)
+		#anim_tree.set("parameters/conditions/dash", true)
 		
 		while elapsed_time < dash_duration:
 			var delta := get_process_delta_time()
@@ -263,8 +245,9 @@ func dash() -> void:
 				handle_dash_collision(collision)
 				break
 			
+			#animated_sprite.play("default")
 			await get_tree().process_frame
-			anim_tree.set("parameters/conditions/dash", false)
+			#anim_tree.set("parameters/conditions/dash", false)
 		
 		$GhostTimer.stop()
 		particles.emitting = false
@@ -277,7 +260,39 @@ func handle_dash_collision(collision: KinematicCollision2D) -> void:
 
 
 func _on_dash_timer_timeout() -> void:
+	particles.emitting = false
+	animation_tree["parameters/conditions/dash"] = false
 	is_dash_posible = true
 
 func collect(item: InventoryItem, amount: int) -> void:
 	inventory.insert(item, amount or int(randf() * PI))
+
+func use_potion(item: PotionItem):
+	if item.potion_type == item.PotionType.H:
+		helths = max(max_helths, helths + item.potion_power)
+
+func _on_attack_body_body_entered(body:CharacterBody2D) -> void:
+	if body.is_in_group("Enemy"):
+		print("Mob in attack area", body)	
+		body.current_state = State.HIT
+		var timer = body.attack_timer as Timer
+		timer.start()
+		mobs_close.append(body)
+
+
+func _on_attack_body_body_exited(body:CharacterBody2D) -> void:
+	if body.is_in_group("Enemy"):
+		print("Mob stop attack", body)
+		body.current_state = State.SURROUND
+		body.attack_timer.stop()
+		mobs_close.erase(body)
+
+
+func _on_attack_body_entered(body):
+	if not body in mobs_close and body.is_in_group("Enemy"):
+		mobs_close.append(body)
+
+
+func _on_attack_body_exited(body):
+	if body.is_in_group("Enemy"):
+		mobs_close.erase(body)

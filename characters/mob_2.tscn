@@ -1,0 +1,319 @@
+[gd_scene load_steps=44 format=3 uid="uid://dnchg1kxea1y8"]
+
+[ext_resource type="Script" path="res://characters/mob_2.gd" id="1_paqbk"]
+[ext_resource type="PackedScene" uid="uid://cns2t7xs840n2" path="res://characters/MobSensor.tscn" id="1_svens"]
+[ext_resource type="PackedScene" uid="uid://c5i2ndwp50lva" path="res://characters/HealthBar.tscn" id="2_wepfy"]
+[ext_resource type="PackedScene" uid="uid://df0o1ljcagn8i" path="res://effects/Attack_0.tscn" id="3_anssq"]
+[ext_resource type="Shader" path="res://levels/GetDamaged.gdshader" id="4_utntl"]
+[ext_resource type="Texture2D" uid="uid://er3gsr1tbuyl" path="res://assets/Monster_Creatures_Fantasy(Version 1.3)/Flying eye/Attack.png" id="5_ws0ii"]
+[ext_resource type="Texture2D" uid="uid://ohdrjybyxs1k" path="res://assets/Monster_Creatures_Fantasy(Version 1.3)/Flying eye/Flight.png" id="6_w20ms"]
+[ext_resource type="Texture2D" uid="uid://wyjgd55xc1ti" path="res://assets/Monster_Creatures_Fantasy(Version 1.3)/Flying eye/Death.png" id="7_1uaiw"]
+[ext_resource type="Texture2D" uid="uid://ck5wnqsqp6crg" path="res://assets/Monster_Creatures_Fantasy(Version 1.3)/Flying eye/Take Hit.png" id="8_4ohci"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ycrox"]
+size = Vector2(11.5, 12)
+
+[sub_resource type="Theme" id="Theme_46pqx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_axnx0"]
+bg_color = Color(0.207837, 0.476417, 2.25265e-07, 1)
+
+[sub_resource type="GDScript" id="GDScript_xo5dp"]
+script/source = "extends Control
+@onready var bg_theme = self.theme
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	bg_theme.set_color(\"fill\", \"Colors\", Color.BLUE)
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	
+	pass
+"
+
+[sub_resource type="ImageTexture" id="ImageTexture_8b5ig"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_estpa"]
+resource_local_to_scene = true
+shader = ExtResource("4_utntl")
+shader_parameter/damage_intensity = 0.0
+shader_parameter/damage_color = Color(0.7, 0, 0, 1)
+shader_parameter/edge_softness = 0.3
+shader_parameter/SCREEN_TEXTURE = SubResource("ImageTexture_8b5ig")
+
+[sub_resource type="Curve" id="Curve_3yvgm"]
+_data = [Vector2(0.497, 0.3), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="Curve" id="Curve_o6v2s"]
+_data = [Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.2, 2.08165e-12), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_gjwpp"]
+_data = [Vector2(0.487, 0.3), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="Curve" id="Curve_1cqou"]
+_data = [Vector2(0.791925, 1), 0.0, 0.0, 0, 0, Vector2(0.89441, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.955771), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tax8d"]
+atlas = ExtResource("5_ws0ii")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q77fp"]
+atlas = ExtResource("5_ws0ii")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1hadf"]
+atlas = ExtResource("5_ws0ii")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_poaws"]
+atlas = ExtResource("5_ws0ii")
+region = Rect2(450, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vryi3"]
+atlas = ExtResource("5_ws0ii")
+region = Rect2(600, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2gw7d"]
+atlas = ExtResource("5_ws0ii")
+region = Rect2(750, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_brox4"]
+atlas = ExtResource("5_ws0ii")
+region = Rect2(900, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_quiyr"]
+atlas = ExtResource("5_ws0ii")
+region = Rect2(1050, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e1yfv"]
+atlas = ExtResource("6_w20ms")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g011h"]
+atlas = ExtResource("6_w20ms")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5hxvm"]
+atlas = ExtResource("6_w20ms")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2fgm7"]
+atlas = ExtResource("6_w20ms")
+region = Rect2(450, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_38tg5"]
+atlas = ExtResource("6_w20ms")
+region = Rect2(600, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b4ea2"]
+atlas = ExtResource("6_w20ms")
+region = Rect2(750, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i0ft4"]
+atlas = ExtResource("6_w20ms")
+region = Rect2(900, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oi1u7"]
+atlas = ExtResource("6_w20ms")
+region = Rect2(1050, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h1jsk"]
+atlas = ExtResource("7_1uaiw")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mq3c6"]
+atlas = ExtResource("7_1uaiw")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n824u"]
+atlas = ExtResource("7_1uaiw")
+region = Rect2(450, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rbpc7"]
+atlas = ExtResource("8_4ohci")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dmcmt"]
+atlas = ExtResource("8_4ohci")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_li1hp"]
+atlas = ExtResource("8_4ohci")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kva6j"]
+atlas = ExtResource("8_4ohci")
+region = Rect2(450, 0, 150, 150)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_diykc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tax8d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q77fp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1hadf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_poaws")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vryi3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2gw7d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_brox4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_quiyr")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e1yfv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g011h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5hxvm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2fgm7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_38tg5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b4ea2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i0ft4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oi1u7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h1jsk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mq3c6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n824u")
+}],
+"loop": false,
+"name": &"deth",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rbpc7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dmcmt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_li1hp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kva6j")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 4.0
+}]
+
+[node name="Mob2" type="CharacterBody2D" groups=["Enemy"]]
+script = ExtResource("1_paqbk")
+
+[node name="MobSensor" parent="." instance=ExtResource("1_svens")]
+
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 0.4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 1)
+shape = SubResource("RectangleShape2D_ycrox")
+
+[node name="IdleTimer" type="Timer" parent="."]
+
+[node name="HelthsBar" parent="." instance=ExtResource("2_wepfy")]
+offset_left = -10.0
+offset_top = -17.0
+offset_right = 7.0
+offset_bottom = -13.0
+theme = SubResource("Theme_46pqx")
+theme_override_styles/fill = SubResource("StyleBoxFlat_axnx0")
+script = SubResource("GDScript_xo5dp")
+
+[node name="Attack0" parent="." instance=ExtResource("3_anssq")]
+
+[node name="DethTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_estpa")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UtilityAIAgent" type="UtilityAIAgent" parent="."]
+
+[node name="UtilityAIDistanceVector2Sensor" type="UtilityAIDistanceVector2Sensor" parent="UtilityAIAgent"]
+max_distance = 200.0
+is_distance_calculated = true
+is_direction_vector_calculated = true
+
+[node name="Wait" type="UtilityAIBehaviour" parent="UtilityAIAgent"]
+
+[node name="Do I just idle?" type="UtilityAIConsideration" parent="UtilityAIAgent/Wait"]
+activation_curve = SubResource("Curve_3yvgm")
+
+[node name="Flee" type="UtilityAIBehaviour" parent="UtilityAIAgent"]
+
+[node name="Do i need go out?" type="UtilityAIConsideration" parent="UtilityAIAgent/Flee"]
+activation_curve = SubResource("Curve_o6v2s")
+
+[node name="Approach" type="UtilityAIBehaviour" parent="UtilityAIAgent"]
+
+[node name="Do i need go closer?" type="UtilityAIConsideration" parent="UtilityAIAgent/Approach"]
+activation_curve = SubResource("Curve_gjwpp")
+
+[node name="Attack" type="UtilityAIBehaviour" parent="UtilityAIAgent"]
+
+[node name="Do i need attack?" type="UtilityAIConsideration" parent="UtilityAIAgent/Attack" node_paths=PackedStringArray("input_sensor")]
+input_sensor = NodePath("../../UtilityAIDistanceVector2Sensor")
+activation_curve = SubResource("Curve_1cqou")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-4, -3)
+scale = Vector2(0.7, 0.7)
+sprite_frames = SubResource("SpriteFrames_diykc")
+autoplay = "default"
+
+[connection signal="body_entered" from="MobSensor" to="." method="_on_mob_sensor_body_entered"]
+[connection signal="behaviour_changed" from="UtilityAIAgent" to="." method="_on_utility_ai_agent_behaviour_changed"]

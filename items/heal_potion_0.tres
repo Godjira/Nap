@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="InvertoryItem" load_steps=3 format=3 uid="uid://c0vwtgjm68mrm"]
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3 uid="uid://c0vwtgjm68mrm"]
 
 [ext_resource type="Script" path="res://items/invertory_item.gd" id="1_qsmgf"]
 [ext_resource type="Texture2D" uid="uid://ci3h1ekn1xdyk" path="res://assets/RavenmoreIconPack.02.2014/64/potionRed.png" id="2_r8fxn"]
@@ -7,3 +7,4 @@
 script = ExtResource("1_qsmgf")
 name = "heal_poition_0"
 texture = ExtResource("2_r8fxn")
+type = 2

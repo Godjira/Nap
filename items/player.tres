@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Inventory" load_steps=7 format=3 uid="uid://b03kal3sf11pt"]
+[gd_resource type="Resource" script_class="Inventory" load_steps=14 format=3 uid="uid://b03kal3sf11pt"]
 
 [ext_resource type="Resource" uid="uid://hqn1nrpu73x8" path="res://items/coin.tres" id="1_mucyr"]
 [ext_resource type="Script" path="res://items/invertory.gd" id="1_wdjmh"]
@@ -17,6 +17,34 @@ amount = 0
 script = ExtResource("2_tjsro")
 amount = 0
 
+[sub_resource type="Resource" id="Resource_iyb8y"]
+script = ExtResource("2_tjsro")
+amount = 0
+
+[sub_resource type="Resource" id="Resource_84lgh"]
+script = ExtResource("2_tjsro")
+amount = 0
+
+[sub_resource type="Resource" id="Resource_w3wos"]
+script = ExtResource("2_tjsro")
+amount = 0
+
+[sub_resource type="Resource" id="Resource_hvge2"]
+script = ExtResource("2_tjsro")
+amount = 0
+
+[sub_resource type="Resource" id="Resource_eba5k"]
+script = ExtResource("2_tjsro")
+amount = 0
+
+[sub_resource type="Resource" id="Resource_c7jrp"]
+script = ExtResource("2_tjsro")
+amount = 0
+
+[sub_resource type="Resource" id="Resource_yx36k"]
+script = ExtResource("2_tjsro")
+amount = 0
+
 [resource]
 script = ExtResource("1_wdjmh")
-slots = Array[ExtResource("2_tjsro")]([SubResource("Resource_wxhba"), SubResource("Resource_k147t"), SubResource("Resource_xh51s")])
+slots = Array[ExtResource("2_tjsro")]([SubResource("Resource_wxhba"), SubResource("Resource_k147t"), SubResource("Resource_xh51s"), SubResource("Resource_iyb8y"), SubResource("Resource_84lgh"), SubResource("Resource_w3wos"), SubResource("Resource_hvge2"), SubResource("Resource_eba5k"), SubResource("Resource_c7jrp"), SubResource("Resource_yx36k")])

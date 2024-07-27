@@ -1,66 +1,54 @@
 extends Node2D
 
 @export var player: CharacterBody2D
-@export var shake_amount: float = 1.0
-@export var shake_speed: float = 10.0
-@export var rotation_speed: float = 5.0
-@export var attack_shake_amount: float = 5.0
-@export var attack_shake_duration: float = 0.2
-
 @onready var weapon_sprite := $Sprite2D
 
 var initial_position: Vector2
 var initial_rotation: float
-var shake_time: float = 0.0
-var is_attacking: bool = false
-var attack_shake_timer: float = 0.0
+var shake_time := 0.0
+var is_attacking := false
+var attack_shake_timer := 0.0
+var attack_shake_duration := .5
+var attack_direction := Vector2.ZERO
+
+# Weapon properties
+@export var weapon_offset := Vector2(10, 0)
+@export var attack_duration := 0.3
+@export var slide_distance := 10
+# Current state
+var current_position := "right"
 
 func _ready():
-	initial_position = weapon_sprite.position
-	initial_rotation = weapon_sprite.rotation
+	initial_position = position
+	initial_rotation = rotation
 
 func _process(delta):
-	if player:
-		# Weapon rotation based on player movement
-		var movement = player.velocity.normalized()
+   # Trigger attack animation
+	#  get the global mouse position but max distance is 10
+	global_position.x = clamp(get_global_mouse_position().x, player.global_position.x - 20, player.global_position.x + 20)
+	global_position.y = clamp(get_global_mouse_position().y, player.global_position.y - 20, player.global_position.y + 20)
+	if Input.is_action_just_pressed("attack") and !is_attacking:
+		perform_attack()
 
-		if movement.x == -1 and movement.y == 0:
-			global_position.x = player.global_position.x - 18
-		if movement.x == 1 and movement.y == 0:
-			global_position.x = player.global_position.x
+func update_weapon_position(new_position):
+	current_position = new_position
+	initial_position = position
 
-		# Weapon shaking based on player movement
-		shake_time += delta * shake_speed
-		var shake_offset = Vector2(sin(shake_time), cos(shake_time * 0.8)) * shake_amount * min(player.velocity.length() / 100, 1)
-		weapon_sprite.position = initial_position + shake_offset
-#
-		## Weapon shaking during attack
-		if is_attacking:
-			attack_shake_timer -= delta
-			#weapon_sprite.rotation *= Vector2(PI, PI)
-			if attack_shake_timer > 0:
-				var attack_shake_offset = Vector2(randf_range(-1, 1), randf_range(-1, 1)) * attack_shake_amount
-				weapon_sprite.position += attack_shake_offset
-			else:
-				is_attacking = false
+func perform_attack():
+	is_attacking = true
+	
+	# Calculate the end position for the slide attack
+	var start_pos = position
+	var tween2 = get_tree().create_tween()
+	tween2.tween_property(self, "rotation", initial_rotation + rotation + PI * 2 , 0.25)
+	
+	# Reset the attacking state after the animation is complete
+	await  tween2.finished
+	is_attacking = false
 
-func trigger_attack():
-	if initial_rotation >= 0: 
-		is_attacking = true
-		attack_shake_timer = attack_shake_duration
-		var target := Vector2(2.0,5.0)
-		var tween = get_tree().create_tween()
-		var movement = player.velocity.normalized()
-		var dir := 1
+func set_attack_direction(dir:Vector2) -> void:
+	attack_direction = dir
 
-		if movement.x == -1 and movement.y == 0:
-			dir = -1
-		if movement.x == 1 and movement.y == 0:
-			dir = 1
-			
-		tween.tween_property(weapon_sprite, "rotation", PI * 0.5 * dir, 0.1)
-		tween.tween_property(weapon_sprite, "position", initial_position + target, 0.1)
-		tween.tween_property(weapon_sprite, "position", initial_position, 0.1)
-		await tween.finished
-		var tween2 = get_tree().create_tween()
-		tween2.tween_property(weapon_sprite, "rotation", 0, 0.1)
+
+func _on_attack_body_entered(body):
+	pass # Replace with function body.

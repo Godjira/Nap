@@ -1,7 +1,7 @@
 extends Resource
 class_name InventoryItem
 
-enum {
+enum Type {
 	DEFAULT,
 	WEAPON,
 	POTION
@@ -9,4 +9,4 @@ enum {
 
 @export var name:String = ""
 @export var texture:Texture2D
-@export var type:int = DEFAULT
+@export var type:Type = Type.DEFAULT

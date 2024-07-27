@@ -45,7 +45,7 @@ theme_override_constants/separation = 30
 
 [node name="Sprint" type="Label" parent="Tooltips"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_x44x0")
 theme_override_font_sizes/font_size = 55
 text = "Shift"
@@ -54,7 +54,7 @@ vertical_alignment = 1
 
 [node name="Dash" type="Label" parent="Tooltips"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_x44x0")
 theme_override_font_sizes/font_size = 55
 text = "F"
@@ -63,7 +63,7 @@ vertical_alignment = 1
 
 [node name="Attack" type="Label" parent="Tooltips"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_x44x0")
 theme_override_font_sizes/font_size = 55
 text = "Mouse click"
@@ -124,27 +124,27 @@ size_flags_vertical = 4
 
 [node name="Up" type="Label" parent="wasd"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_x44x0")
 theme_override_font_sizes/font_size = 55
 text = "W"
 
 [node name="Right" type="Label" parent="wasd"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 55
 text = "A"
 
 [node name="Left" type="Label" parent="wasd"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_x44x0")
 theme_override_font_sizes/font_size = 55
 text = "S"
 
 [node name="Down" type="Label" parent="wasd"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_x44x0")
 theme_override_font_sizes/font_size = 55
 text = "D"
@@ -185,13 +185,13 @@ offset_right = 193.5
 offset_bottom = 79.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_default_cursor_shape = 2
 theme_override_constants/h_separation = 80
 theme_override_constants/v_separation = 80
 columns = 5
 
 [node name="Invertory_UI_slot1" parent="Inventory/NinePatchRect/GridContainer" instance=ExtResource("9_ofu8d")]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 
 [node name="Invertory_UI_slot2" parent="Inventory/NinePatchRect/GridContainer" instance=ExtResource("9_ofu8d")]
 layout_mode = 2
@@ -219,3 +219,15 @@ layout_mode = 2
 
 [node name="Invertory_UI_slot10" parent="Inventory/NinePatchRect/GridContainer" instance=ExtResource("9_ofu8d")]
 layout_mode = 2
+
+[node name="TimeInGame" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -51.0
+offset_right = 51.0
+offset_bottom = 39.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("3_x44x0")
+theme_override_font_sizes/font_size = 32
+text = "00:00"

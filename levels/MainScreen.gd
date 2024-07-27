@@ -45,9 +45,9 @@ func handle_pause():
 
 func _on_start_button_pressed():
 	hide_ui()
+	start_game.emit()
 	var tween = change_pass_blur(0.0, 1.0)
 	await tween.finished
-	start_game.emit()
 	
 
 func _on_message_timer_timeout():
