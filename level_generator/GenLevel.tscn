@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://c7jabs48v5pi1"]
+[gd_scene load_steps=52 format=3 uid="uid://c7jabs48v5pi1"]
 
 [ext_resource type="Script" path="res://level_generator/GenLevel.gd" id="1_1wl8f"]
 [ext_resource type="Script" path="res://addons/gaea/renderers/2D/threaded_tilemap_gaea_renderer.gd" id="1_kfi6v"]
@@ -11,8 +11,36 @@
 [ext_resource type="PackedScene" uid="uid://b4dmwb5ebu3qy" path="res://characters/Player0.tscn" id="9_ruchm"]
 [ext_resource type="Script" path="res://level_generator/SpriteGenerator.gd" id="10_l66h2"]
 [ext_resource type="Texture2D" uid="uid://1r2hgef8kwf3" path="res://assets/artwork/icon.svg" id="11_ku6nn"]
-[ext_resource type="Texture2D" uid="uid://bru315n4jyx6k" path="res://assets/artwork/outdoor.png" id="12_dknw0"]
 [ext_resource type="Script" path="res://level_generator/Portal.gd" id="13_5u4k0"]
+[ext_resource type="Texture2D" uid="uid://kuer6mgsnlku" path="res://assets/artwork/Portal01/Sliced/Portal_003 Render_0.png" id="13_6wgso"]
+[ext_resource type="Texture2D" uid="uid://i5ibaat3r8d6" path="res://assets/artwork/Portal01/Sliced/Portal_003 Render_1.png" id="14_04cdk"]
+[ext_resource type="Texture2D" uid="uid://drancvguub2lv" path="res://assets/artwork/Portal01/Sliced/Portal_003 Render_2.png" id="15_djxx2"]
+[ext_resource type="Texture2D" uid="uid://cetdttleccop7" path="res://assets/artwork/Portal01/Sliced/Portal_003 Render_3.png" id="16_vjlhi"]
+[ext_resource type="Texture2D" uid="uid://dysgede3gfkrv" path="res://assets/artwork/Portal01/Sliced/Portal_003 Render_4.png" id="17_3a21h"]
+[ext_resource type="Texture2D" uid="uid://cgcrnagbu30le" path="res://assets/artwork/Portal01/Sliced/Portal_003 Render_5.png" id="18_f60ul"]
+[ext_resource type="Texture2D" uid="uid://bqdj1h6urgp2p" path="res://assets/artwork/Portal01/Sliced/Portal_003 Render_6.png" id="19_coqk3"]
+[ext_resource type="Texture2D" uid="uid://bnsemhhh16e4t" path="res://assets/artwork/Portal01/Sliced/Portal_003 Render_7.png" id="20_ty4gi"]
+[ext_resource type="Texture2D" uid="uid://b0dtn2hrqi7y3" path="res://assets/artwork/Portal01/Sliced/Portal_003 Render_8.png" id="21_cmjf7"]
+[ext_resource type="Texture2D" uid="uid://bqu8pwl5n7ow8" path="res://assets/artwork/Portal01/Sliced/Portal_003 Render_9.png" id="22_7xael"]
+[ext_resource type="Texture2D" uid="uid://20fnwt0e1kxl" path="res://assets/artwork/Portal01/Sliced/Portal_003 Render_10.png" id="23_eq5r2"]
+[ext_resource type="Texture2D" uid="uid://cj41c3xhb01fs" path="res://assets/artwork/Portal01/Sliced/Portal_003 Render_11.png" id="24_dgudi"]
+[ext_resource type="Texture2D" uid="uid://clyx5k0pfm8ak" path="res://assets/artwork/Portal01/Sliced/Portal_003 Render_12.png" id="25_a7l2c"]
+[ext_resource type="Texture2D" uid="uid://du4doppssos67" path="res://assets/artwork/Portal01/Sliced/Portal_003 Render_13.png" id="26_n1wqk"]
+[ext_resource type="Texture2D" uid="uid://b5ul5gh7iay2c" path="res://assets/artwork/Portal01/Sliced/Portal_003 Render_14.png" id="27_0u76u"]
+[ext_resource type="Texture2D" uid="uid://boqgabwtvgyg8" path="res://assets/artwork/Portal01/Sliced/Portal_003 Render_15.png" id="28_vmjee"]
+[ext_resource type="Texture2D" uid="uid://b03m4l7thlyo4" path="res://assets/artwork/Portal01/Sliced/Portal_003 Render_16.png" id="29_r53jw"]
+[ext_resource type="Texture2D" uid="uid://fcpfq2p8nnpo" path="res://assets/artwork/Portal01/Sliced/Portal_003 Render_17.png" id="30_q75pw"]
+[ext_resource type="Texture2D" uid="uid://by5xvmom78ako" path="res://assets/artwork/Portal01/Sliced/Portal_003 Render_18.png" id="31_hsec0"]
+[ext_resource type="Texture2D" uid="uid://b5t3bbmthjikv" path="res://assets/artwork/Portal01/Sliced/Portal_003 Render_19.png" id="32_i75ot"]
+[ext_resource type="Texture2D" uid="uid://bqqwuxojlntgj" path="res://assets/artwork/Portal01/Sliced/Portal_003 Render_20.png" id="33_i4v52"]
+[ext_resource type="Texture2D" uid="uid://16qdo3ttbox4" path="res://assets/artwork/Portal01/Sliced/Portal_003 Render_21.png" id="34_gqfr7"]
+[ext_resource type="Texture2D" uid="uid://b66s2ql2vir0o" path="res://assets/artwork/Portal01/Sliced/Portal_003 Render_22.png" id="35_nn7j3"]
+[ext_resource type="Texture2D" uid="uid://dqki1fu8hqf14" path="res://assets/artwork/Portal01/Sliced/Portal_003 Render_23.png" id="36_1qqi2"]
+[ext_resource type="Texture2D" uid="uid://cqppe6c6fwtcc" path="res://assets/artwork/Portal01/Sliced/Portal_003 Render_24.png" id="37_r4q2n"]
+[ext_resource type="Texture2D" uid="uid://cbas48787pkce" path="res://assets/artwork/Portal01/Sliced/Portal_003 Render_25.png" id="38_vy6uo"]
+[ext_resource type="Texture2D" uid="uid://b11lsm5cwyq0s" path="res://assets/artwork/Portal01/Sliced/Portal_003 Render_26.png" id="39_qsg6i"]
+[ext_resource type="Texture2D" uid="uid://l5k4upmgdgsd" path="res://assets/artwork/Portal01/Sliced/Portal_003 Render_27.png" id="40_qm7lo"]
+[ext_resource type="Texture2D" uid="uid://plqvxb2k3rb6" path="res://assets/artwork/Portal01/Sliced/Portal_003 Render_28.png" id="41_jivdm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u1416"]
 texture = ExtResource("3_kjn5t")
@@ -322,6 +350,101 @@ modifiers = Array[Resource("res://addons/gaea/modifiers/2D/modifier_2d.gd")]([Su
 [sub_resource type="CircleShape2D" id="CircleShape2D_5ifqq"]
 radius = 47.2017
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_7niwy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_6wgso")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_04cdk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_djxx2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_vjlhi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_3a21h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_f60ul")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_coqk3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_ty4gi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_cmjf7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_7xael")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_eq5r2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_dgudi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_a7l2c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_n1wqk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_0u76u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_vmjee")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_r53jw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_q75pw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_hsec0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_i75ot")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_i4v52")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_gqfr7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_nn7j3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_1qqi2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_r4q2n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_vy6uo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_qsg6i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_qm7lo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_jivdm")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
 [node name="World" type="Node2D"]
 script = ExtResource("1_1wl8f")
 
@@ -349,13 +472,17 @@ sprite_texture = ExtResource("11_ku6nn")
 [node name="Portal" type="Sprite2D" parent="."]
 position = Vector2(58.1053, 248)
 scale = Vector2(0.210526, 0.210526)
-texture = ExtResource("12_dknw0")
 script = ExtResource("13_5u4k0")
 
 [node name="Area2D" type="Area2D" parent="Portal"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Portal/Area2D"]
 shape = SubResource("CircleShape2D_5ifqq")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Portal"]
+position = Vector2(-0.500185, 1.14441e-05)
+scale = Vector2(0.570001, 0.938127)
+sprite_frames = SubResource("SpriteFrames_7niwy")
 
 [connection signal="area_rendered" from="ThreadedTilemapGaeaRenderer" to="." method="_on_threaded_tilemap_gaea_renderer_area_rendered"]
 [connection signal="grid_rendered" from="ThreadedTilemapGaeaRenderer" to="." method="_on_threaded_tilemap_gaea_renderer_grid_rendered"]
