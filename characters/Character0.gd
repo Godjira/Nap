@@ -12,6 +12,7 @@ signal died
 @export var mouse_sensitivity := 0.0015
 @export var rotation_speed := 12.0
 @export var ghost_node : PackedScene
+
 var swing := false
 var direction = Vector2.ZERO
 @onready var animation_tree := $AnimationTree

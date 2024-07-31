@@ -17,7 +17,7 @@ config/features=PackedStringArray("4.2", "GL Compatibility")
 
 [autoload]
 
-ScreenUi="*res://ui/ScreenUI.tscn"
+ScreenUi="res://ui/ScreenUI.tscn"
 Mouse="*res://ui/Mouse.tscn"
 PlayerUi="res://ui/PlayerUI.tscn"
 GenerationData="*res://level_generator/GenerationData.gd"

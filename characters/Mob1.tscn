@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://df0o1ljcagn8i" path="res://effects/Attack_0.tscn" id="2_lvwpk"]
 [ext_resource type="Shader" path="res://characters/Mob1.gdshader" id="4_6bw22"]
 [ext_resource type="Texture2D" uid="uid://vqtx4csripij" path="res://assets/kenney_googly-eyes 2/PNG/googly-d.png" id="4_yxguh"]
-[ext_resource type="PackedScene" path="res://characters/MobSensor.tscn" id="5_t8k74"]
+[ext_resource type="PackedScene" uid="uid://cns2t7xs840n2" path="res://characters/MobSensor.tscn" id="5_t8k74"]
 [ext_resource type="PackedScene" path="res://characters/HealthBar.tscn" id="6_e2kcv"]
 [ext_resource type="PackedScene" uid="uid://c3rxgi0earrg8" path="res://effects/Skill_0.tscn" id="7_6355l"]
 

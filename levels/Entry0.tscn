@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bgryt6d3vrb8w" path="res://effects/fog.tscn" id="8_8fthr"]
 [ext_resource type="Script" path="res://levels/MouseLight.gd" id="11_n61o1"]
 [ext_resource type="Shader" path="res://levels/MouseLight.gdshader" id="11_votgy"]
-[ext_resource type="Texture2D" uid="uid://babcaoo31y0qj" path="res://assets/Dungeon Gathering Free Version/Set 1.png" id="13_m3kux"]
+[ext_resource type="Texture2D" uid="uid://bco4o6hij0tld" path="res://assets/Dungeon Gathering Free Version/Set 1.png" id="13_m3kux"]
 [ext_resource type="PackedScene" uid="uid://b4dmwb5ebu3qy" path="res://characters/Player0.tscn" id="16_qiqib"]
 [ext_resource type="PackedScene" uid="uid://dqnkrq0m4648p" path="res://ui/PlayerUI.tscn" id="20_gobaf"]
 

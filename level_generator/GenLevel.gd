@@ -9,7 +9,7 @@ extends Node2D
 @onready var portal = $Portal
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	await get_tree().create_timer(0.2).timeout
+	await get_tree().create_timer(0.5).timeout
 	player.position += Vector2(0, 8)
 	var script = spriteGen.get_script()	
 	var cells = tileMap.get_used_cells_by_id(0, 0, Vector2i(0, 5))

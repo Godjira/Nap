@@ -1,10 +1,7 @@
 [gd_scene load_steps=49 format=3 uid="uid://b5euuwsw60c5n"]
 
 [ext_resource type="Script" path="res://characters/Mob0.gd" id="1_j2x42"]
-[ext_resource type="PackedScene" uid="uid://bkt7i6qo3g88a" path="res://characters/skeleton_rogue.tscn" id="1_wvcuk"]
-[ext_resource type="Resource" uid="uid://hqn1nrpu73x8" path="res://items/coin.tres" id="2_p2kt6"]
-[ext_resource type="Shader" path="res://levels/PixelSprite.gdshader" id="3_qhe0e"]
-[ext_resource type="PackedScene" path="res://characters/MobSensor.tscn" id="4_hk7gu"]
+[ext_resource type="PackedScene" uid="uid://cns2t7xs840n2" path="res://characters/MobSensor.tscn" id="4_hk7gu"]
 [ext_resource type="PackedScene" path="res://characters/HealthBar.tscn" id="6_esvap"]
 [ext_resource type="PackedScene" uid="uid://df0o1ljcagn8i" path="res://effects/Attack_0.tscn" id="6_k6lqk"]
 [ext_resource type="Shader" path="res://levels/GetDamaged.gdshader" id="7_ix5wp"]
