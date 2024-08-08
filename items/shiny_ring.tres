@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ArtefactItem" load_steps=3 format=3 uid="uid://cun3jvk3o207i"]
+
+[ext_resource type="Script" path="res://artefact_item.gd" id="1_386wt"]
+[ext_resource type="Texture2D" uid="uid://cvppqbhdwsd3s" path="res://assets/16x16 RPG Item Pack/Item__42.png" id="2_4bed0"]
+
+[resource]
+script = ExtResource("1_386wt")
+artefact_id = 0
+name = "Shiny ring"
+texture = ExtResource("2_4bed0")
+type = 3

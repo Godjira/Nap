@@ -1,0 +1,67 @@
+[gd_scene load_steps=11 format=3 uid="uid://joqt26b6wpkg"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1b512"]
+blend_mode = 2
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_i1j6o"]
+
+[sub_resource type="Curve" id="Curve_m65k3"]
+_data = [Vector2(0.0670103, 0.0923913), 0.0, 0.0, 0, 0, Vector2(0.587629, 0.429348), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_f1peo"]
+curve = SubResource("Curve_m65k3")
+
+[sub_resource type="Gradient" id="Gradient_iccab"]
+offsets = PackedFloat32Array(0.147059, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rt2xk"]
+gradient = SubResource("Gradient_iccab")
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_idywv"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wp2ct"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 0.1
+directional_velocity_min = -1.0
+directional_velocity_max = 1.0
+directional_velocity_curve = SubResource("CurveXYZTexture_idywv")
+gravity = Vector3(2.08165e-12, -10, 2.08165e-12)
+color = Color(1, 0.473179, 0.368538, 1)
+color_ramp = SubResource("GradientTexture1D_rt2xk")
+alpha_curve = SubResource("CurveTexture_f1peo")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ggdjo"]
+load_path = "res://.godot/imported/Okxtd.png-14816b09dc22fbf37b2bec758f146825.ctex"
+
+[sub_resource type="GDScript" id="GDScript_tq8lg"]
+script/source = "extends PointLight2D
+@export var follow: Node2D
+
+func _process(delta:float)->void:
+	position = follow.position
+"
+
+[node name="Torch" type="Node2D"]
+scale = Vector2(6.79, 6.79)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_1b512")
+scale = Vector2(0.17, 3.59)
+texture = SubResource("CanvasTexture_i1j6o")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(2.08165e-12, -1.72)
+scale = Vector2(7.17, 7.17)
+amount = 400
+process_material = SubResource("ParticleProcessMaterial_wp2ct")
+
+[node name="PointLight2D" type="PointLight2D" parent="." node_paths=PackedStringArray("follow")]
+z_index = -1
+position = Vector2(0, -1.7673)
+color = Color(1, 0.184314, 0.215686, 1)
+texture = SubResource("CompressedTexture2D_ggdjo")
+texture_scale = 0.07
+script = SubResource("GDScript_tq8lg")
+follow = NodePath("../Sprite2D")

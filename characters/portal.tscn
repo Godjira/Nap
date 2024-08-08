@@ -1,0 +1,226 @@
+[gd_scene load_steps=31 format=3 uid="uid://bwlgicivpj83j"]
+
+[ext_resource type="Script" path="res://Portal.gd" id="1_6056y"]
+[ext_resource type="Texture2D" uid="uid://dvaw34rfpbhun" path="res://assets/art/Green Portal Sprite Sheet.png" id="2_b78c5"]
+[ext_resource type="Shader" path="res://characters/portal.gdshader" id="2_o7vrt"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1gfku"]
+radius = 6.0
+height = 25.8
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tlolx"]
+shader = ExtResource("2_o7vrt")
+shader_parameter/effect_strength = 0.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gseew"]
+atlas = ExtResource("2_b78c5")
+region = Rect2(0, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gi1t1"]
+atlas = ExtResource("2_b78c5")
+region = Rect2(64, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_07y4h"]
+atlas = ExtResource("2_b78c5")
+region = Rect2(128, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7seqr"]
+atlas = ExtResource("2_b78c5")
+region = Rect2(192, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ad76d"]
+atlas = ExtResource("2_b78c5")
+region = Rect2(256, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yucto"]
+atlas = ExtResource("2_b78c5")
+region = Rect2(320, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6xnyv"]
+atlas = ExtResource("2_b78c5")
+region = Rect2(384, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xbtk0"]
+atlas = ExtResource("2_b78c5")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pdtw6"]
+atlas = ExtResource("2_b78c5")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6fwil"]
+atlas = ExtResource("2_b78c5")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1mmju"]
+atlas = ExtResource("2_b78c5")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t6t16"]
+atlas = ExtResource("2_b78c5")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o752t"]
+atlas = ExtResource("2_b78c5")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_er46d"]
+atlas = ExtResource("2_b78c5")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kwfl6"]
+atlas = ExtResource("2_b78c5")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5avm3"]
+atlas = ExtResource("2_b78c5")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ikeqm"]
+atlas = ExtResource("2_b78c5")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5qsbm"]
+atlas = ExtResource("2_b78c5")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kmcpd"]
+atlas = ExtResource("2_b78c5")
+region = Rect2(192, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bd4ix"]
+atlas = ExtResource("2_b78c5")
+region = Rect2(256, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oma8x"]
+atlas = ExtResource("2_b78c5")
+region = Rect2(320, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3s22m"]
+atlas = ExtResource("2_b78c5")
+region = Rect2(384, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_87cjp"]
+atlas = ExtResource("2_b78c5")
+region = Rect2(448, 64, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3dsxo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gseew")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gi1t1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_07y4h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7seqr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ad76d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yucto")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6xnyv")
+}],
+"loop": false,
+"name": &"close",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xbtk0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pdtw6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6fwil")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1mmju")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t6t16")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o752t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_er46d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kwfl6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5avm3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ikeqm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5qsbm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kmcpd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bd4ix")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oma8x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3s22m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_87cjp")
+}],
+"loop": false,
+"name": &"opening",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ayoqv"]
+radius = 38.69
+
+[node name="Portal" type="Node2D"]
+script = ExtResource("1_6056y")
+
+[node name="ActiveSensor" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ActiveSensor"]
+shape = SubResource("CapsuleShape2D_1gfku")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 10
+material = SubResource("ShaderMaterial_tlolx")
+position = Vector2(0, -5)
+scale = Vector2(1.21813, 1)
+sprite_frames = SubResource("SpriteFrames_3dsxo")
+autoplay = "close"
+frame_progress = 0.488424
+
+[node name="PlayerSensor" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerSensor"]
+shape = SubResource("CircleShape2D_ayoqv")
+
+[node name="PortalTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="body_entered" from="ActiveSensor" to="." method="_on_active_sensor_body_entered"]
+[connection signal="body_exited" from="ActiveSensor" to="." method="_on_active_sensor_body_exited"]
+[connection signal="body_entered" from="PlayerSensor" to="." method="_on_player_sensor_body_entered"]
+[connection signal="body_exited" from="PlayerSensor" to="." method="_on_player_sensor_body_exited"]
+[connection signal="timeout" from="PortalTimer" to="." method="_on_portal_timer_timeout"]

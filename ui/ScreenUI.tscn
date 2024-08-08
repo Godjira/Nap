@@ -42,6 +42,7 @@ shader_parameter/blurAmount = 0.1
 
 [node name="ScreenUI" type="CanvasLayer"]
 process_mode = 3
+layer = 2
 follow_viewport_scale = 0.001
 script = ExtResource("1_xa10j")
 
@@ -64,20 +65,38 @@ texture = SubResource("NoiseTexture2D_76mlf")
 wait_time = 2.0
 one_shot = true
 
+[node name="Message2" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -228.5
+offset_right = 228.5
+offset_bottom = 289.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_p0y7h")
+theme_override_font_sizes/font_size = 64
+text = "NAP"
+horizontal_alignment = 1
+
 [node name="Message" type="Label" parent="Control"]
 layout_mode = 1
-anchors_preset = 14
+anchors_preset = 8
+anchor_left = 0.5
 anchor_top = 0.5
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 0.5
-offset_top = -39.0
-offset_bottom = 39.0
+offset_left = -228.5
+offset_top = -144.5
+offset_right = 228.5
+offset_bottom = 144.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("2_p0y7h")
 theme_override_font_sizes/font_size = 64
-text = "Getting ready"
+text = "WHO"
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="StartButton" type="Button" parent="Control"]
 layout_mode = 1
@@ -85,13 +104,16 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -86.0
+offset_top = -130.0
+offset_bottom = -44.0
 grow_horizontal = 2
 grow_vertical = 0
+size_flags_horizontal = 0
 theme_override_fonts/font = ExtResource("2_p0y7h")
 theme_override_font_sizes/font_size = 64
 shortcut = SubResource("Shortcut_ngi2i")
 text = "Start"
+icon_alignment = 1
 
 [node name="CustomPass" type="Sprite2D" parent="Control"]
 process_mode = 3

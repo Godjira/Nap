@@ -1,13 +1,35 @@
-[gd_scene load_steps=12 format=3 uid="uid://dqnkrq0m4648p"]
+[gd_scene load_steps=28 format=3 uid="uid://dqnkrq0m4648p"]
 
 [ext_resource type="Script" path="res://ui/PlayerUI.gd" id="1_i8v6a"]
+[ext_resource type="Shader" path="res://ui/Stamina.gdshader" id="3_dwmd0"]
 [ext_resource type="FontFile" uid="uid://jgumakw2jrae" path="res://assets/fonts/Xolonium-Regular.ttf" id="3_x44x0"]
 [ext_resource type="Shader" path="res://ui/Helth2.gdshader" id="4_ix6nq"]
-[ext_resource type="Texture2D" uid="uid://dtrkmllhbcu3r" path="res://assets/art/helth-bar.png" id="5_io3og"]
+[ext_resource type="Texture2D" uid="uid://b0cwrao4jx04q" path="res://assets/Fantasy Minimal Pixel Art GUI by eta-commercial-free/UI/HealthBarPanel_160x41.png" id="5_cq74w"]
 [ext_resource type="Shader" path="res://levels/GetDamaged.gdshader" id="5_ondx6"]
 [ext_resource type="Script" path="res://ui/GetDamaged.gd" id="6_6uern"]
 [ext_resource type="Script" path="res://ui/Invertory.gd" id="7_xg4hx"]
 [ext_resource type="PackedScene" uid="uid://4y2sothc6pnb" path="res://ui/invertory_ui_slot.tscn" id="9_ofu8d"]
+[ext_resource type="PackedScene" uid="uid://cholwdor8p51" path="res://effects/minimap.tscn" id="9_on7wq"]
+[ext_resource type="Script" path="res://ui/Armor.gd" id="10_6rvny"]
+[ext_resource type="Texture2D" uid="uid://boi4f5kak441e" path="res://assets/Fantasy Minimal Pixel Art GUI by eta-commercial-free/UI/BlackMediumCircleBoxWithBorder_27x27.png" id="10_bj507"]
+[ext_resource type="Script" path="res://ui/Tooltip.gd" id="10_eslki"]
+[ext_resource type="Texture2D" uid="uid://26xjkudirfdi" path="res://assets/Fantasy Minimal Pixel Art GUI by eta-commercial-free/UI/MenusBox_34x34.png" id="10_j3ufc"]
+[ext_resource type="Shader" path="res://ui/PlayerUI.gdshader" id="11_cia3k"]
+[ext_resource type="Script" path="res://invertory_slot.gd" id="11_hgtwb"]
+[ext_resource type="Texture2D" uid="uid://cdrydyib8xp4w" path="res://assets/Fantasy Minimal Pixel Art GUI by eta-commercial-free/UI/BlankEquipmentIcons_20x17.png" id="12_ixskc"]
+[ext_resource type="Script" path="res://ui/Weapon.gd" id="14_tghle"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a3iq7"]
+resource_local_to_scene = true
+shader = ExtResource("3_dwmd0")
+shader_parameter/stamina = 0.094
+shader_parameter/fog_color = Vector3(0.8, 0.66, 0.36)
+shader_parameter/fog_intensity = 0.2
+shader_parameter/glow_color = Color(0.355517, 0.908059, 0.283661, 1)
+shader_parameter/glow_power = 6.8
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_v8uvp"]
+load_path = "res://.godot/imported/stamina_bar.png-b9f1463d74548bad224a40658b1f1fda.ctex"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8dimf"]
 resource_local_to_scene = true
@@ -28,11 +50,28 @@ shader_parameter/damage_color = Color(0.7, 0, 0, 1)
 shader_parameter/edge_softness = 0.3
 shader_parameter/SCREEN_TEXTURE = SubResource("ImageTexture_giemy")
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_15dj2"]
+
+[sub_resource type="Resource" id="Resource_247st"]
+script = ExtResource("11_hgtwb")
+amount = 0
+is_armor_slot = true
+is_weapon_slot = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aglw7"]
+shader = ExtResource("11_cia3k")
+
+[sub_resource type="Resource" id="Resource_ajs23"]
+script = ExtResource("11_hgtwb")
+amount = 0
+is_armor_slot = false
+is_weapon_slot = true
+
 [node name="PlayerUI" type="CanvasLayer"]
-layer = 0
 script = ExtResource("1_i8v6a")
 
 [node name="Tooltips" type="BoxContainer" parent="."]
+visible = false
 layout_direction = 2
 anchors_preset = 2
 anchor_top = 1.0
@@ -78,12 +117,34 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="Stamina" type="Control" parent="ParentControl"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -9.0
+offset_top = 70.0
+offset_right = 31.0
+offset_bottom = 110.0
+grow_horizontal = 0
+scale = Vector2(-9.92, 1)
+
+[node name="StaminaTexture" type="Sprite2D" parent="ParentControl/Stamina"]
+z_index = -1
+material = SubResource("ShaderMaterial_a3iq7")
+position = Vector2(9, 27.371)
+rotation = 3.14159
+scale = Vector2(0.0417191, -0.323329)
+texture = SubResource("CompressedTexture2D_v8uvp")
+region_rect = Rect2(42.2842, 23.303, 1016.09, 201.579)
+
 [node name="Helth" type="Control" parent="ParentControl"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -40.0
+offset_left = -3.0
+offset_right = 37.0
 offset_bottom = 40.0
 grow_horizontal = 0
 scale = Vector2(-9.92, 1)
@@ -91,12 +152,11 @@ scale = Vector2(-9.92, 1)
 [node name="HelthTexture" type="Sprite2D" parent="ParentControl/Helth"]
 z_index = -1
 material = SubResource("ShaderMaterial_8dimf")
-position = Vector2(10.8871, 35)
+position = Vector2(9.788, 40)
 rotation = 3.14159
-scale = Vector2(0.0273884, -0.241294)
-texture = ExtResource("5_io3og")
+scale = Vector2(0.0940799, -1.22719)
+texture = ExtResource("5_cq74w")
 offset = Vector2(0.04, 0)
-region_enabled = true
 region_rect = Rect2(42.2842, 23.303, 1016.09, 201.579)
 
 [node name="ColorRect" type="ColorRect" parent="ParentControl"]
@@ -110,6 +170,7 @@ grow_vertical = 2
 script = ExtResource("6_6uern")
 
 [node name="wasd" type="BoxContainer" parent="."]
+visible = false
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -160,6 +221,74 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("7_xg4hx")
 
+[node name="Tooltip" type="GridContainer" parent="Inventory"]
+z_index = 10
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 191.0
+offset_bottom = 84.0
+grow_vertical = 2
+scale = Vector2(3, 3)
+script = ExtResource("10_eslki")
+
+[node name="BG" type="Sprite2D" parent="Inventory/Tooltip"]
+self_modulate = Color(0.187176, 0.187176, 0.187176, 1)
+position = Vector2(85, 42.3333)
+scale = Vector2(5.69608, 3.5)
+texture = ExtResource("10_j3ufc")
+
+[node name="NamePanel" type="Panel" parent="Inventory/Tooltip"]
+custom_minimum_size = Vector2(110, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxEmpty_15dj2")
+
+[node name="L2" type="Label" parent="Inventory/Tooltip/NamePanel"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("3_x44x0")
+theme_override_font_sizes/font_size = 12
+text = "name:"
+
+[node name="Name" type="Label" parent="Inventory/Tooltip/NamePanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.009
+anchor_top = 0.067
+anchor_right = 1.455
+anchor_bottom = 1.0
+offset_left = 0.00999994
+offset_top = -2.01
+offset_right = -0.0500047
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_x44x0")
+theme_override_font_sizes/font_size = 16
+text = "asdasd"
+clip_text = true
+
+[node name="DescriptionPanel" type="Panel" parent="Inventory/Tooltip"]
+custom_minimum_size = Vector2(110, 30)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_15dj2")
+
+[node name="Description" type="Label" parent="Inventory/Tooltip/DescriptionPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.491
+anchor_bottom = 1.0
+offset_right = -0.0100062
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_x44x0")
+theme_override_font_sizes/font_size = 12
+text = "description"
+
 [node name="NinePatchRect" type="NinePatchRect" parent="Inventory"]
 layout_mode = 1
 anchors_preset = 15
@@ -179,15 +308,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -193.5
-offset_top = -79.0
-offset_right = 193.5
-offset_bottom = 79.0
+offset_left = -143.0
+offset_top = -195.0
+offset_right = 143.0
+offset_bottom = 195.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/h_separation = 80
-theme_override_constants/v_separation = 80
-columns = 5
+theme_override_constants/h_separation = 100
+theme_override_constants/v_separation = 100
+columns = 3
 
 [node name="Invertory_UI_slot1" parent="Inventory/NinePatchRect/GridContainer" instance=ExtResource("9_ofu8d")]
 layout_mode = 2
@@ -220,6 +349,104 @@ layout_mode = 2
 [node name="Invertory_UI_slot10" parent="Inventory/NinePatchRect/GridContainer" instance=ExtResource("9_ofu8d")]
 layout_mode = 2
 
+[node name="NinePatchRect2" type="NinePatchRect" parent="Inventory"]
+layout_mode = 1
+offset_left = 250.0
+offset_top = 210.0
+offset_right = 450.0
+offset_bottom = 310.0
+
+[node name="Armor" type="Panel" parent="Inventory/NinePatchRect2"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 1
+offset_right = 60.0
+offset_bottom = 60.0
+size_flags_stretch_ratio = 5.24
+tooltip_text = "Armor"
+script = ExtResource("10_6rvny")
+inventory_slot = SubResource("Resource_247st")
+
+[node name="BackPanel" type="Sprite2D" parent="Inventory/NinePatchRect2/Armor"]
+scale = Vector2(2, 2)
+texture = ExtResource("10_bj507")
+
+[node name="ArmorPlaceholder" type="Sprite2D" parent="Inventory/NinePatchRect2/Armor"]
+z_index = 1
+material = SubResource("ShaderMaterial_aglw7")
+scale = Vector2(2, 2)
+texture = ExtResource("12_ixskc")
+region_enabled = true
+region_rect = Rect2(0, 0, 20.3368, 17.9873)
+
+[node name="CenterContainer" type="CenterContainer" parent="Inventory/NinePatchRect2/Armor"]
+z_index = 2
+layout_mode = 0
+offset_right = 60.0
+offset_bottom = 59.0
+
+[node name="Panel" type="Panel" parent="Inventory/NinePatchRect2/Armor/CenterContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="ItemDisplay" type="Sprite2D" parent="Inventory/NinePatchRect2/Armor/CenterContainer/Panel"]
+
+[node name="ItemCount" type="Label" parent="Inventory/NinePatchRect2/Armor/CenterContainer/Panel"]
+layout_mode = 0
+offset_left = -32.0
+offset_top = 9.0
+offset_right = 31.0
+offset_bottom = 32.0
+theme_override_fonts/font = ExtResource("3_x44x0")
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Weapon" type="Panel" parent="Inventory/NinePatchRect2"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 0
+offset_left = 70.0
+offset_right = 130.0
+offset_bottom = 60.0
+size_flags_stretch_ratio = 2.9
+tooltip_text = "Weapon"
+script = ExtResource("14_tghle")
+inventory_slot = SubResource("Resource_ajs23")
+
+[node name="BackPanel" type="Sprite2D" parent="Inventory/NinePatchRect2/Weapon"]
+scale = Vector2(2, 2)
+texture = ExtResource("10_bj507")
+
+[node name="ArmorPlaceholder" type="Sprite2D" parent="Inventory/NinePatchRect2/Weapon"]
+z_index = 1
+material = SubResource("ShaderMaterial_aglw7")
+scale = Vector2(2, 2)
+texture = ExtResource("12_ixskc")
+region_enabled = true
+region_rect = Rect2(22.7428, 16.7409, 16.1991, 17.2358)
+
+[node name="CenterContainer" type="CenterContainer" parent="Inventory/NinePatchRect2/Weapon"]
+z_index = 2
+layout_mode = 0
+offset_right = 59.0
+offset_bottom = 59.0
+
+[node name="Panel" type="Panel" parent="Inventory/NinePatchRect2/Weapon/CenterContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="ItemDisplay" type="Sprite2D" parent="Inventory/NinePatchRect2/Weapon/CenterContainer/Panel"]
+
+[node name="ItemCount" type="Label" parent="Inventory/NinePatchRect2/Weapon/CenterContainer/Panel"]
+layout_mode = 0
+offset_left = -32.0
+offset_top = 9.0
+offset_right = 31.0
+offset_bottom = 32.0
+theme_override_fonts/font = ExtResource("3_x44x0")
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 2
+vertical_alignment = 1
+
 [node name="TimeInGame" type="Label" parent="."]
 anchors_preset = 5
 anchor_left = 0.5
@@ -231,3 +458,20 @@ grow_horizontal = 2
 theme_override_fonts/font = ExtResource("3_x44x0")
 theme_override_font_sizes/font_size = 32
 text = "00:00"
+
+[node name="Minimap" parent="." instance=ExtResource("9_on7wq")]
+visible = false
+clip_contents = true
+custom_minimum_size = Vector2(150, 150)
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+scale = Vector2(2.23, 1.472)
+
+[connection signal="update_slot" from="Inventory" to="." method="_on_inventory_update_slot"]
+[connection signal="mouse_entered" from="Inventory/NinePatchRect2/Armor" to="Inventory/NinePatchRect2/Armor" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Inventory/NinePatchRect2/Armor" to="Inventory/NinePatchRect2/Armor" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="Inventory/NinePatchRect2/Weapon" to="Inventory/NinePatchRect2/Weapon" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Inventory/NinePatchRect2/Weapon" to="Inventory/NinePatchRect2/Weapon" method="_on_mouse_exited"]

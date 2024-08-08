@@ -6,6 +6,8 @@ extends Node
 @onready var mob_0_template:PackedScene = preload("res://characters/Mob0.tscn")
 @onready var mob_1_template:PackedScene = preload("res://characters/Mob1.tscn")
 @onready var mob_2_template:PackedScene = preload("res://characters/mob_2.tscn")
+@onready var mob_3_template:PackedScene = preload("res://characters/mob_3.tscn")
+@onready var game_global = $"/root/GameGlobalNode"
 var mouse_position:Vector2
 
 # handle on click to ui_node/Control/StartButton
@@ -26,6 +28,7 @@ func game_over():
 	player.helths = player.default_healths
 
 func new_game():
+	game_global.clean_scores()
 	$StartTimer.start()
 	$MobTimer.start()
 	player.show()
@@ -44,8 +47,9 @@ func _on_start_timer_timeout():
 func _on_mob_timer_timeout():
 	var coin = load("res://items/coin.tres")
 	var heal = load("res://items/heal_potion_1.tres")
+	var shiny_ring = load("res://items/shiny_ring.tres")
 	
-	for mob_scene in [mob_0_template,mob_1_template,mob_2_template]:
+	for mob_scene in [mob_0_template,mob_1_template,mob_2_template, mob_3_template]:
 		randomize()
 		
 		if mobs.size() > 20:
@@ -61,9 +65,8 @@ func _on_mob_timer_timeout():
 		mob.position = mob_spawn_location.position * r
 		
 		var empty = null
-		#if r > 0.1:
-		#else: if r > 0.12:
-		var random_entity = [coin, heal, empty].pick_random()
+		var random_entity = [coin, heal, empty, shiny_ring, coin, heal, empty, coin, heal, empty].pick_random()
+		#var random_entity = [shiny_ring].pick_random()
 		mob.item = random_entity
 		
 		#if col_shape: col_shape.scale += Vector2(r, r)
@@ -76,7 +79,6 @@ func _ready():
 		ui_node.connect("start_game", self._on_start_game)
 	AIPerformanceMonitor.initialize_performance_counters()
 	NodeQuerySystem.initialize_performance_counters()
-	
 
 func _physics_process(delta):
 	AIPerformanceMonitor.update_performance_counters()

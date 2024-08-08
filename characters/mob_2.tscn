@@ -49,15 +49,15 @@ _data = [Vector2(0.497, 0.3), 0.0, 0.0, 0, 0]
 point_count = 1
 
 [sub_resource type="Curve" id="Curve_o6v2s"]
-_data = [Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.2, 2.08165e-12), 0.0, 0.0, 0, 0]
+_data = [Vector2(0.92093, 0.995151), 0.0, 0.0, 0, 0, Vector2(0.969767, 0.00596797), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_gjwpp"]
-_data = [Vector2(0.487, 0.3), 0.0, 0.0, 0, 0]
+_data = [Vector2(0.504651, 0.953935), 0.0, 0.0, 0, 0]
 point_count = 1
 
 [sub_resource type="Curve" id="Curve_1cqou"]
-_data = [Vector2(0.791925, 1), 0.0, 0.0, 0, 0, Vector2(0.89441, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.955771), 0.0, 0.0, 0, 0]
+_data = [Vector2(0.165116, 1), 0.0, 0.0, 0, 0, Vector2(0.616279, 0.995151), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tax8d"]
@@ -316,4 +316,5 @@ sprite_frames = SubResource("SpriteFrames_diykc")
 autoplay = "default"
 
 [connection signal="body_entered" from="MobSensor" to="." method="_on_mob_sensor_body_entered"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="behaviour_changed" from="UtilityAIAgent" to="." method="_on_utility_ai_agent_behaviour_changed"]

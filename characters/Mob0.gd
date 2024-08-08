@@ -1,38 +1,29 @@
 extends CharacterBody2D
 class_name Mob0
 
-# Enums
 enum State { SURROUND, HIT, IDLE, DEAD }
 
-# Export variables for easy tuning
 @export var speed := 50.2
-@export var attack_area_radius := 10
-@export var max_health := 10.0
-@export var damage := 3.0
-@export var avoidance_distance := 1.0
-@export var avoidance_force := 2.0
-
+@export var attack_area_radius := 7
+@export var max_health := 15.0
+@export var damage := 2.5
+@onready var game_global := $"/root/GameGlobalNode"
 @export var item: InventoryItem
 @onready var item_collectable: PackedScene = load("res://items/item_collactable.tscn")
-
-# Onready variables
 @onready var sprite_mob := $AnimatedSprite2D as AnimatedSprite2D
 @onready var attack_timer := $AttackTimer
 @onready var health_bar := $HelthsBar
 @onready var idle_timer := $IdleTimer
 @onready var deth_timer := $DethTimer
-
-# This is the distance sensor. 
 @onready var sensor_distance:UtilityAIDistanceVector2Sensor = $UtilityAIAgent/UtilityAIDistanceVector2Sensor
 
 
 # Member variables
-var dangers := [0, 0, 0, 0, 0, 0, 0, 0]
 var player: Character0
 var is_dead := false
 var base_position: Vector2
 var current_state
-var health = 10
+var health = 20
 var is_active := false
 
 func _ready() -> void:
@@ -78,10 +69,11 @@ func handle_hit() -> void:
 	player.on_hit(damage)
 	#anim_state.travel(ATTACK_ANIMATIONS.pick_random())
 
-func on_hit(damage: float) -> void:
+func on_hit(damage: float) -> bool:
+	print(damage, self.health)
 	if is_dead:
-		return
-	
+		# for not reapeat counter
+		return false
 
 	sprite_mob.play("take_hit")
 	$Attack0.run_effect()
@@ -89,13 +81,15 @@ func on_hit(damage: float) -> void:
 	
 	await get_tree().create_timer(0.5).timeout
 	sprite_mob.play("default")
-
-	if health <= 0:
+	var is_now_dead: bool = health <= 0
+	
+	if is_now_dead:
 		die()
-
+	
 	animate_hit()
 	health_bar.value = health
-
+	
+	return is_now_dead
 	
 
 func animate_hit() -> void:
@@ -160,7 +154,7 @@ func _on_utility_ai_agent_behaviour_changed(behaviour_node):
 		speed -= 50
 		sprite_mob.play("run")
 	elif behaviour_node.name == "Flee":
-		#speed += 50
+		speed += 10
 		sprite_mob.play("run")
 		pass
 	else:

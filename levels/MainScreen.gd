@@ -5,6 +5,7 @@ signal start_game
 
 @onready var start_button = $Control/StartButton
 @onready var custom_pass = $Control/CustomPass
+@onready var game_global = $"/root/GameGlobalNode"
 @export var hidden = false
 
 func _ready():
@@ -24,16 +25,22 @@ func change_pass_blur(value, dur):
 	return tween
 
 func show_message(text):
-	$Control/Message.text = text
+	$Control/Message2.text = text
 	$Control/MessageTimer.start()
 	
 	
 func show_game_over():
+	var score = game_global.get_score() as Dictionary
+	var jstr = JSON.stringify(score)
 	show_message("Game Over")
+	show_score(score)
 	show_ui()
 
+func show_score(score:Dictionary) -> void:
+	$Control/Message.text = "Kills: " + str(score.kills) + "\nTime in game: " + score.time_in_game
+
 func handle_pause():
-	$Control/Message.text = default_message
+	$Control/Message2.text = default_message
 	var tween = change_pass_blur(.8, 0.5)
 	await tween.finished
 	var tween2 = change_pass_blur(0.05, 0.01)
@@ -52,6 +59,7 @@ func _on_start_button_pressed():
 
 func _on_message_timer_timeout():
 	$Control/Message.hide()
+	$Control/Message2.hide()
 	
 #handle escape pressed
 func _unhandled_key_input(_event):
@@ -64,6 +72,7 @@ func _unhandled_key_input(_event):
 func hide_ui():
 	$Control/BG.hide()
 	$Control/Message.hide()
+	$Control/Message2.hide()
 	$Control/StartButton.hide()
 	get_tree().paused = false
 	hidden = true
@@ -71,6 +80,7 @@ func hide_ui():
 func show_ui():
 	$Control/BG.show()
 	$Control/Message.show()
+	$Control/Message2.hide()
 	$Control/StartButton.show()
 	get_tree().paused = true
 	hidden = false

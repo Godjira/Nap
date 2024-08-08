@@ -8,4 +8,5 @@ enum Types {
 
 @export var damage := 10.0
 @export var speed := 1.0
-@export var weapon_type:int = Types.MELEE
+@export var weapon_type:Types = Types.MELEE
+@export var ammo_texture:Texture2D

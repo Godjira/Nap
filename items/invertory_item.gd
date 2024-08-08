@@ -4,7 +4,8 @@ class_name InventoryItem
 enum Type {
 	DEFAULT,
 	WEAPON,
-	POTION
+	POTION,
+	ARTEFACT
 }
 
 @export var name:String = ""

@@ -1,9 +1,13 @@
 extends Mob0
 @onready var sprite_mob_2 = $AnimatedSprite2D
+
+func _init():
+	attack_timer = $"AttackTimer"
+
 func _ready() -> void:
 	initialize_health()
 	initialize_position()
-	damage = 5.0
+	damage = 2.5
 
 func _physics_process(delta: float) -> void:
 	if !player or is_dead: return
@@ -44,20 +48,24 @@ func handle_hit() -> void:
 	player.on_hit(damage)
 	#anim_state.travel(ATTACK_ANIMATIONS.pick_random())
 
-func on_hit(damage: float) -> void:
+func on_hit(damage: float) -> bool:
 	if is_dead:
-		return
+		return false
 
 	sprite_mob.play("hit")
 	$Attack0.run_effect()
 	health -= damage
 	health_bar.value = health
+	var is_dead_now:bool = health <= 0
 
-	if health <= 0:
+	if is_dead_now:
 		die()
+		return is_dead_now
 	else:
 		await get_tree().create_timer(1.0).timeout
 		sprite_mob.play("default")
+
+	return is_dead_now
 
 
 func die() -> void:

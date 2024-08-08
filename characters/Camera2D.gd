@@ -1,12 +1,12 @@
 extends Camera2D
 
 @export var min_zoom := 1.0
-@export var max_zoom := 4.0
+@export var max_zoom := 10.0
 @export var zoom_speed := 0.9
 @export var shake_strength := 5.0
 @export var shake_decay := 0.8
 
-var _current_zoom := 1.5
+var _current_zoom := 8.5
 var _shake_strength := 0.2
 var _initial_offset := Vector2.ZERO
 
@@ -21,8 +21,6 @@ func _process(delta):
 		_current_zoom -= zoom_speed * delta
 	_current_zoom = clamp(_current_zoom, min_zoom, max_zoom)
 	zoom = Vector2(_current_zoom, _current_zoom)
-	print(zoom)
-	
 	# Handle camera shake
 	if _shake_strength > 0:
 		_shake_strength *= shake_decay

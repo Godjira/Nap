@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://bq0cco8eamwwi"]
+
+[ext_resource type="Script" path="res://characters/mob_damage.gd" id="1_7q2n0"]
+[ext_resource type="FontFile" uid="uid://jgumakw2jrae" path="res://assets/fonts/Xolonium-Regular.ttf" id="1_i088a"]
+
+[node name="MobDamageParent" type="Node2D"]
+z_index = 15
+script = ExtResource("1_7q2n0")
+
+[node name="MobDamage" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="MobDamage"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.992157, 0, 0.0392157, 1)
+theme_override_fonts/font = ExtResource("1_i088a")
+theme_override_font_sizes/font_size = 60

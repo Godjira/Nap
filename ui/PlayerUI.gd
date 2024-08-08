@@ -1,4 +1,5 @@
 extends CanvasLayer
+class_name PlayerUI
 
 @onready var up := $wasd/Up
 @onready var left := $wasd/Left
@@ -9,14 +10,13 @@ extends CanvasLayer
 @onready var dash := $Tooltips/Dash
 @onready var attack := $Tooltips/Attack
 @onready var screen_ui = $"/root/ScreenUi"
+@onready var game_global := $"/root/GameGlobalNode"
 
 var time_in_game := ""
 var time_in_begging := ""
 @onready var time_in_game_ui := $TimeInGame
 
 static var player: Character0
-
-signal use_item
 
 func parse_time_string(time_str: String) -> int:
 	if time_str.length() > 0:
@@ -42,8 +42,10 @@ func calculate_time_difference(time1: String, time2: String) -> String:
 func attach_player(player: Character0):
 	if player:
 		var ui_slots = $Inventory/NinePatchRect/GridContainer.get_children() as Array[Panel] 
+		ui_slots.append_array($Inventory/NinePatchRect2.get_children() as Array[Panel])
 		for slot in ui_slots:
 			slot.attach_player(player)
+		$Minimap.attach_player(player)
 	
 func _ready():
 	# reset timer on restart
@@ -93,6 +95,7 @@ func _process(delta):
 	var current_time = Time.get_time_string_from_system()
 	var time_diff = calculate_time_difference(current_time, time_in_begging)
 	time_in_game_ui.text = time_diff
+	game_global.update_time(time_diff)
 	
 
 
@@ -105,3 +108,7 @@ func update_ui_color(action: String, label: Label):
 func set_ui_color(l: Label, c: Color) -> void:
 	l.add_theme_color_override("font_color", c)
 
+
+
+func _on_inventory_update_slot(slot: InventorySlot):
+	if player: player.show_equipment(slot)

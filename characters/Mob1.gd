@@ -20,12 +20,12 @@ var player: Character0
 var target: Vector2
 var attack_happens := false
 @export var damage := 1.5
-var helths  := 10.0
-@export var max_helths := 10.0
+var helths  := 15.0
+@export var max_helths := 15.0
 var is_dead := false
 var base_position: Vector2
 var idle_timer: Timer
-@export var speed := 25
+@export var speed := 35
 @export var avoidance_distance := 1
 @export var avoidance_force := 10
 @export var item:InventoryItem
@@ -128,7 +128,7 @@ func handle_hit() -> void:
 		$Attack0.run_effect()
 		player.on_hit(damage)
 
-func on_hit(damage: float) -> void:
+func on_hit(damage: float) -> bool:
 	if not is_dead: 
 		$Attack0.run_effect()
 		self.helths =  self.helths - damage
@@ -161,6 +161,8 @@ func on_hit(damage: float) -> void:
 			tween.tween_property(self, "global_position", self.global_position * 0.9, 1.5)
 			await tween.finished
 			queue_free()
+		return is_dead
+	return false
 
 
 func _on_mob_sensor_body_entered(body: CharacterBody2D) -> void:
